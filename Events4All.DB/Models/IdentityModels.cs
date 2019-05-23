@@ -20,7 +20,7 @@ namespace Events4All.DB.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext() : base("Tech4AllDB", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("Events4AllDB", throwIfV1Schema: false)
         {
         }
 
