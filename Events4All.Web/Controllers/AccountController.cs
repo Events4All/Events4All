@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Events4All.Web.Models;
+using Events4All.DB.Models;
 
 namespace Events4All.Web.Controllers
 {

@@ -5,7 +5,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using Events4All.Web.Models;
+using Events4All.DB.Models;
 
 namespace Events4All.Web
 {
