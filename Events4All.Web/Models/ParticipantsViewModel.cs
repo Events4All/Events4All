@@ -11,5 +11,7 @@ namespace Events4All.Web.Models
     {
         public int NumberOfTicket { get; set; }
         public DateTime? Reminder { get; set; }
+        public double TicketPrice { get; set; }
+        public double Subtotal { get; set; }
     }
 }

@@ -16,11 +16,17 @@ namespace Events4All.Web.Controllers
         private ParticipantQuery query = new ParticipantQuery();
         private ParticipantDTO dto = new ParticipantDTO();
 
+        private EventQuery eventQuery = new EventQuery();
+        private EventDTO eventDTO = new EventDTO();
 
         [HttpGet]
         public ActionResult Create(int id)
         {           
             ParticipantsViewModel vm = new ParticipantsViewModel();
+
+            eventDTO = eventQuery.FindEvent(id);
+            vm.TicketPrice = eventDTO.TicketPrice;
+
             return View(vm);
         }
 
@@ -43,7 +49,6 @@ namespace Events4All.Web.Controllers
             }
 
             return View(participantsViewModel);
-        }
-
+        }        
     }
 }
