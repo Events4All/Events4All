@@ -13,7 +13,7 @@ namespace Events4All.DB.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201905231411487_Initial"; }
+            get { return "201905231816296_Initial"; }
         }
         
         string IMigrationMetadata.Source
