@@ -9,31 +9,63 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+        <div class="containerFORnav">
             <div class="navbar-header">
+                <a class="navbar-brand" href="/"><img class="logo1" src="~/images/events4AllLogo.png"></a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Events4All", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @Html.Partial("_LoginPartial")
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
+
     <div class="container body-content">
         @RenderBody()
-        <hr />
+
+    </div>
+
+    
+           
+           
+   
+
+    <div id="container">
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <hr />
+            <span class="foots">
+                <div id="left">
+                    <a class="footIcons" href="/">
+                        <img class="logo2" src="~/images/eLogo.png">
+                    </a>
+                </div>
+                <div id="center">
+                    <p class="footText">Events&nbsp4&nbspAll&copy;</p>
+
+                </div>
+                <div id="right">
+                    <a href="https://www.facebook.com/events4all2019" target="_blank">
+                        <img src="https://img.icons8.com/color/48/000000/facebook.png">
+                    </a>
+                    <a href="https://twitter.com/events4_all" target="_blank">
+                        <img src="https://img.icons8.com/color/48/000000/twitter.png">
+                    </a>
+                    <a class="test" href=" https://www.instagram.com/events4_all/?hl=en" target="_blank">
+                        <img src="https://img.icons8.com/color/48/000000/instagram-new.png">
+                    </a>
+                </div>
+            </span>
         </footer>
     </div>
 
