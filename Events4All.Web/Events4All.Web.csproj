@@ -286,6 +286,10 @@
       <Project>{89e9c88e-d04f-460c-980e-c2d04923a57e}</Project>
       <Name>Events4All.DBQuery</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Events4All.Business\Events4All.Business.csproj">
+      <Project>{7db81d1b-f60e-4fe7-ae00-b417797d97e3}</Project>
+      <Name>Events4All.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Events4All.DB\Events4All.DB.csproj">
       <Project>{c9a89f42-eaa9-4ef8-ad0d-c37793f18038}</Project>
       <Name>Events4All.DB</Name>
