@@ -174,6 +174,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AllowNotificationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -260,6 +261,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Events4All.Business\Events4All.Business.csproj">
+      <Project>{7db81d1b-f60e-4fe7-ae00-b417797d97e3}</Project>
+      <Name>Events4All.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Events4All.DB\Events4All.DB.csproj">
       <Project>{c9a89f42-eaa9-4ef8-ad0d-c37793f18038}</Project>
       <Name>Events4All.DB</Name>
