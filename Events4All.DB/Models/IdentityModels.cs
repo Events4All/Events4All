@@ -24,6 +24,11 @@ namespace Events4All.DB.Models
         {
         }
 
+        public DbSet<Events> Events {get; set;}
+        public DbSet<Participants> Participants { get; set; }
+        public DbSet<EventCategories> EventCategories { get; set; }
+
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
