@@ -21,7 +21,7 @@ namespace Events4All.Web.Controllers
 
         [HttpGet]
         public ActionResult Create(int id)
-        {           
+        {
             ParticipantsViewModel vm = new ParticipantsViewModel();
 
             eventDTO = eventQuery.FindEvent(id);
@@ -36,19 +36,33 @@ namespace Events4All.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "NumberOfTicket, Reminder")] ParticipantsViewModel participantsViewModel, int id)
-        {            
+        {
             if (ModelState.IsValid)
             {
                 dto.NumberOfTicket = participantsViewModel.NumberOfTicket;
                 dto.Reminder = participantsViewModel.Reminder;
                 dto.eventId = id;
 
-                query.CreateParticipant(dto);
+                int participantID = query.CreateParticipant(dto);
 
-                return RedirectToAction("Index", "Events");
+                return RedirectToAction("RegistrationConfirmation/" + participantID, "Participants");
             }
 
             return View(participantsViewModel);
-        }        
+        }
+
+        [HttpGet]
+        public ActionResult RegistrationConfirmation(int id)
+        {
+            ParticipantsViewModel vm = new ParticipantsViewModel();
+            dto = query.FindParticipant(id);
+            eventDTO = eventQuery.FindEvent(dto.eventId);
+           
+            vm.EventName = eventDTO.Name;
+            vm.NumberOfTicket = dto.NumberOfTicket;
+            vm.EventStartDate = eventDTO.TimeStart;
+
+            return View(vm);
+        }
     }
 }
