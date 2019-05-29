@@ -10,6 +10,7 @@ using Events4All.DB.Models;
 using Events4All.DBQuery;
 using Events4All.Web.Models;
 
+
 namespace Events4All.Web.Controllers
 {
     public class EventsController : Controller
@@ -58,9 +59,9 @@ namespace Events4All.Web.Controllers
         public ActionResult Index()
         {
             List<EventsViewModel> vmList = new List<EventsViewModel>();
-            List<EventDTO> dtoEventList = query.QueryIndexData();            
+            List<EventDTO> dtoEventList = query.QueryIndexData();
 
-            foreach(EventDTO dto in dtoEventList)
+            foreach (EventDTO dto in dtoEventList)
             {
                 EventsViewModel vm = new EventsViewModel();
 
@@ -88,5 +89,75 @@ namespace Events4All.Web.Controllers
 
             return View(vmList);
         }
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            dto = query.FindEvent(id);
+
+            if (dto == null)
+            {
+                return HttpNotFound();
+            }
+
+            EventsViewModel vm = new EventsViewModel();
+            vm.Address = dto.Address;
+            vm.Categories = dto.Categories;
+            vm.City = dto.City;
+            vm.Description = dto.Description;
+            vm.Detail = dto.Detail;
+            vm.HashTag = dto.HashTag;
+            vm.Id = dto.Id;
+            vm.IsActive = dto.IsActive;
+            vm.Logo = dto.Logo;
+            vm.Name = dto.Name;
+            vm.State = dto.State;
+            vm.TicketPrice = dto.TicketPrice;
+            vm.TimeStart = dto.TimeStart;
+            vm.TimeStop = dto.TimeStop;
+            vm.TwitterHandle = dto.TwitterHandle;
+            vm.Web = dto.Web;
+            vm.Zip = dto.Zip;
+
+            return View(vm);
+        }
+
+     
+
+
+
+        // GET
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            dto = query.FindEvent(id);
+            if (dto == null)
+            {
+                return HttpNotFound();
+            }
+            EventsViewModel VM = new EventsViewModel();
+            VM.Address = dto.Address;
+            VM.City = dto.City;
+            VM.CreatedDate = dto.CreatedDate;
+            VM.Description = dto.Description;
+           
+            return View(VM);
+
+        }// POST
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmDelete(int id)
+        {
+            query.DeleteConfirmed(id);
+            return RedirectToAction("Index");
+        }
+
+       
     }
 }

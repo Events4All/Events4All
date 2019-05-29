@@ -1,9 +1,9 @@
 ﻿using Events4All.DB.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
+
 
 namespace Events4All.DBQuery
 {
@@ -29,7 +29,7 @@ namespace Events4All.DBQuery
             foreach (Events events in eventList)
             {
                 EventDTO dto = MapEventToDTO(events);
-                dtoList.Add(dto);           
+                dtoList.Add(dto);
             }
 
             return dtoList;
@@ -59,5 +59,24 @@ namespace Events4All.DBQuery
 
             return dto;
         }
+
+        
+        public void DeleteConfirmed(int id)
+        {
+            Events Ev = db.Events.Find(id);
+            db.Events.Remove(Ev);
+            db.SaveChanges();
+            
+        }
+
+        public void EditEvent(int Id)
+        {
+            Events Ev = db.Events.Find(Id);
+            
+
+              
+        }
+
     }
 }
+
