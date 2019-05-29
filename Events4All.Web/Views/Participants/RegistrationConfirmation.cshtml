@@ -1,0 +1,44 @@
+﻿@model Events4All.Web.Models.ParticipantsViewModel
+
+@{
+    ViewBag.Title = "RegistrationConfirmation";
+}
+
+<link href="~/Content/RegistratioConfirmation.css" type="text/css" rel="stylesheet" />
+
+<h2>Registration Confirmation</h2>
+
+<div>
+    <h4>Thank you for registering. See you there!</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Number Of Tickets")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfTicket)
+        </dd>
+        <dt>
+            @Html.DisplayName("Event Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventName)
+        </dd>
+        <dt>
+            @Html.DisplayName("Event Time")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventStartDate)
+        </dd>
+
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Home","Index","Home", null, new { id = "home" })
+</p>

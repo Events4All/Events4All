@@ -200,6 +200,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\EventDetails.css" />
+    <Content Include="Content\EventsIndex.css" />
+    <Content Include="Content\RegistratioConfirmation.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -209,6 +212,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\CalculateTicketPrice.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -257,7 +261,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Participants\Create.cshtml" />
     <Content Include="Views\Events\Details.cshtml" />
-    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Events\Index2.cshtml" />
+    <Content Include="Views\Participants\RegistrationConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -280,6 +285,10 @@
     <ProjectReference Include="..\Events4All.DBQuery\Events4All.DBQuery.csproj">
       <Project>{89e9c88e-d04f-460c-980e-c2d04923a57e}</Project>
       <Name>Events4All.DBQuery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Events4All.Business\Events4All.Business.csproj">
+      <Project>{7db81d1b-f60e-4fe7-ae00-b417797d97e3}</Project>
+      <Name>Events4All.Business</Name>
     </ProjectReference>
     <ProjectReference Include="..\Events4All.DB\Events4All.DB.csproj">
       <Project>{c9a89f42-eaa9-4ef8-ad0d-c37793f18038}</Project>
