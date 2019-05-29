@@ -58,7 +58,7 @@ namespace Events4All.Web.Controllers
             return View(vm);
         }
 
-        public ActionResult Index()
+        public ActionResult Index2()
         {
             List<EventsViewModel> vmList = new List<EventsViewModel>();
             List<EventDTO> dtoEventList = query.QueryIndexData();

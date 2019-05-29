@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity;
 
 namespace Events4All.DBQuery
 {
@@ -14,7 +15,7 @@ namespace Events4All.DBQuery
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public void CreateParticipant(ParticipantDTO participantsDTO)
+        public int CreateParticipant(ParticipantDTO participantsDTO)
         {
             string userId = HttpContext.Current.User.Identity.GetUserId();
             ApplicationUser user = db.Users.Find(userId);
@@ -33,6 +34,25 @@ namespace Events4All.DBQuery
 
             db.Participants.Add(participants);
             db.SaveChanges();
+            return participants.Id;
+        }
+
+        public ParticipantDTO FindParticipant(int id)
+        {
+            Participants participant = db.Participants.Include(i=>i.EventID).Include(i=>i.AccountID).SingleOrDefault(x => x.Id == id);
+            ParticipantDTO dto = MapParticipantToDTO(participant);
+            return dto;
+        }
+
+        public ParticipantDTO MapParticipantToDTO(Participants participant)
+        {
+            ParticipantDTO dto = new ParticipantDTO();
+            dto.eventId = participant.EventID.Id;
+            dto.NumberOfTicket = participant.NumberOfTicket;
+            dto.Reminder = participant.Reminder;
+            dto.userId = participant.AccountID.Id;
+
+            return dto;
         }
 
     }

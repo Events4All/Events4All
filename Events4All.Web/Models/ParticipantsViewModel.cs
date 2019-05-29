@@ -9,9 +9,13 @@ namespace Events4All.Web.Models
 {
     public class ParticipantsViewModel
     {
+        public string EventName { get; set; }
+        public DateTime? EventStartDate { get; set; }
         public int NumberOfTicket { get; set; }
         public DateTime? Reminder { get; set; }
         public double TicketPrice { get; set; }
         public double Subtotal { get; set; }
     }
+
+
 }
