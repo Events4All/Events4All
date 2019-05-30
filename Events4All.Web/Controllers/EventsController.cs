@@ -18,10 +18,19 @@ namespace Events4All.Web.Controllers
         private EventQuery query = new EventQuery();
         private EventDTO dto = new EventDTO();
 
+        private ParticipantQuery participantQuery = new ParticipantQuery();
+
         private ApplicationDbContext db = new ApplicationDbContext();
 
         public ActionResult Details(int? id)
         {
+            
+
+            if (participantQuery.IsRegistered(id))
+            {
+                ViewBag.Registered = "You have already registered for this event.";
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -131,8 +140,8 @@ namespace Events4All.Web.Controllers
                 dto.HashTag = eventsViewModel.HashTag;
 
                 query.CreateEvent(dto);
-                
-                return RedirectToAction("Index2");
+
+                return RedirectToAction("Index");
             }
 
             return View(eventsViewModel);
