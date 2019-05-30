@@ -130,10 +130,9 @@ namespace Events4All.Web.Controllers
                 dto.TicketPrice = eventsViewModel.TicketPrice;
                 dto.HashTag = eventsViewModel.HashTag;
 
-
                 query.CreateEvent(dto);
-
-                return RedirectToAction("Index");
+                
+                return RedirectToAction("Index2");
             }
 
             return View(eventsViewModel);
