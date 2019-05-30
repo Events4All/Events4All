@@ -18,8 +18,19 @@ namespace Events4All.Web.Controllers
         private EventQuery query = new EventQuery();
         private EventDTO dto = new EventDTO();
 
+        private ParticipantQuery participantQuery = new ParticipantQuery();
+
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Details(int? id)
         {
+            
+
+            if (participantQuery.IsRegistered(id))
+            {
+                ViewBag.Registered = "You have already registered for this event.";
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -91,6 +102,52 @@ namespace Events4All.Web.Controllers
             }
 
             return View(vmList);
+        }
+
+
+        //*****************************************************************
+        //Gary's code:
+        //*****************************************************************
+        // GET: Events/Create
+        public ActionResult Create()
+        {
+            EventsViewModel eventsViewModel = new EventsViewModel();
+
+            return View(eventsViewModel);
+        }
+
+        // POST: Events/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Name,Address,City,State,Zip,Web,TwitterHandle,TimeStart,TimeStop,Description,Detail,TicketPrice,HashTag")] EventsViewModel eventsViewModel)
+        {
+            //ModelState.Remove("CreatedBy");
+            if (ModelState.IsValid)
+            {
+                //db.Events.Add(events);
+                //db.SaveChanges();
+                dto.Name = eventsViewModel.Name;
+                dto.Address = eventsViewModel.Address;
+                dto.City = eventsViewModel.City;
+                dto.State = eventsViewModel.State;
+                dto.Zip = eventsViewModel.Zip;
+                dto.Web = eventsViewModel.Web;
+                dto.TwitterHandle = eventsViewModel.TwitterHandle;
+                dto.TimeStart = eventsViewModel.TimeStart;
+                dto.TimeStop = eventsViewModel.TimeStop;
+                dto.Description = eventsViewModel.Description;
+                dto.Detail = eventsViewModel.Detail;
+                dto.TicketPrice = eventsViewModel.TicketPrice;
+                dto.HashTag = eventsViewModel.HashTag;
+
+                query.CreateEvent(dto);
+
+                return RedirectToAction("Index");
+            }
+
+            return View(eventsViewModel);
         }
 
         //get

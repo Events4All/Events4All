@@ -200,9 +200,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\EventDetails.css" />
-    <Content Include="Content\EventsIndex.css" />
-    <Content Include="Content\RegistratioConfirmation.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -268,6 +265,8 @@
     <Content Include="Views\Events\Details.cshtml" />
     <Content Include="Views\Events\Delete.cshtml" />
     <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Events\Create.cshtml" />
     <Content Include="Views\Events\Index2.cshtml" />
     <Content Include="Views\Participants\RegistrationConfirmation.cshtml" />
   </ItemGroup>

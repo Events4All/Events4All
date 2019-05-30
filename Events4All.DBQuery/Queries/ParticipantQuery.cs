@@ -15,6 +15,20 @@ namespace Events4All.DBQuery
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public bool IsRegistered(int? id)
+        {
+            bool isRegistered = false;
+            string userId = HttpContext.Current.User.Identity.GetUserId();
+            List<Participants> participants = db.Participants.Include(i => i.EventID).Include(i => i.AccountID).Where(x => x.AccountID.Id == userId).Where(y => y.EventID.Id == id).ToList();
+
+            if(participants.Count > 0)
+            {
+                isRegistered = true;
+            }
+
+            return isRegistered;
+        }
+
         public int CreateParticipant(ParticipantDTO participantsDTO)
         {
             string userId = HttpContext.Current.User.Identity.GetUserId();

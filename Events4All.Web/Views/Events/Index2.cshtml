@@ -3,9 +3,8 @@
 @{
     ViewBag.Title = "Index";
 }
-<link href="~/Content/EventsIndex.css" type="text/css" rel="stylesheet" />
 
-<h2>Index</h2>
+<h2>Events</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -14,6 +13,9 @@
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Address)
@@ -40,9 +42,6 @@
             @Html.DisplayNameFor(model => model.TimeStop)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Detail)
         </th>
         <th>
@@ -51,9 +50,6 @@
         <th>
             @Html.DisplayNameFor(model => model.HashTag)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
         <th></th>
     </tr>
 
@@ -61,6 +57,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Address)
@@ -85,9 +84,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TimeStop)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Detail)
