@@ -1,11 +1,9 @@
 ﻿using Events4All.DB.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
 using System.Web;
-using System.Data.Entity.Validation;
 
 
 namespace Events4All.DBQuery
@@ -96,20 +94,19 @@ namespace Events4All.DBQuery
             //}
             db.SaveChanges();
         }
-    }
-}
 
-        
+
+
         public void DeleteConfirmed(int id)
         {
             Events Ev = db.Events.Find(id);
-            if(Ev.IsActive == true)
+            if (Ev.IsActive == true)
             {
                 Ev.IsActive = false;
             }
-           
+
             db.SaveChanges();
-            
+
         }
 
         public void EditEvent(EventDTO DT)
@@ -131,10 +128,9 @@ namespace Events4All.DBQuery
             Ev.TwitterHandle = DT.TwitterHandle;
             Ev.Web = DT.Web;
             db.SaveChanges();
-          
-            
         }
 
     }
 }
+
 
