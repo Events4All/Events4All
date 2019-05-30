@@ -3,20 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-
-
 namespace Events4All.DBQuery
 {
-
-
     public class EventQuery
     {
-
         private ApplicationDbContext db = new ApplicationDbContext();
 
         public EventDTO FindEvent(int? id)
         {
-            Events events = db.Events.Find(id);
+            Events events = db.Events.Where( x=> x.Id == id).Where(x=> x.IsActive == true).FirstOrDefault();
             EventDTO dto = MapEventToDTO(events);
             return dto;
         }
@@ -64,17 +59,36 @@ namespace Events4All.DBQuery
         public void DeleteConfirmed(int id)
         {
             Events Ev = db.Events.Find(id);
-            db.Events.Remove(Ev);
+            if(Ev.IsActive == true)
+            {
+                Ev.IsActive = false;
+            }
+           
             db.SaveChanges();
             
         }
 
-        public void EditEvent(int Id)
+        public void EditEvent(EventDTO DT)
         {
-            Events Ev = db.Events.Find(Id);
+            Events Ev = db.Events.Find(DT.Id);
+            Ev.Name = DT.Name;
+            Ev.Address = DT.Address;
+            Ev.City = DT.City;
+            Ev.State = DT.State;
+            Ev.Zip = DT.Zip;
+            Ev.Categories = DT.Categories;
+            Ev.Description = DT.Description;
+            Ev.Logo = DT.Logo;
+            Ev.Detail = DT.Detail;
+            Ev.TimeStart = DT.TimeStart;
+            Ev.TimeStop = DT.TimeStop;
+            Ev.HashTag = DT.HashTag;
+            Ev.TicketPrice = DT.TicketPrice;
+            Ev.TwitterHandle = DT.TwitterHandle;
+            Ev.Web = DT.Web;
+            db.SaveChanges();
+          
             
-
-              
         }
 
     }
