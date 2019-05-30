@@ -5,7 +5,7 @@
 }
 <link href="~/Content/EventsIndex.css" type="text/css" rel="stylesheet" />
 
-<h2>Index</h2>
+<h2>Events</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -51,9 +51,9 @@
         <th>
             @Html.DisplayNameFor(model => model.HashTag)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -98,12 +98,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.HashTag)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
+        </td>*@
+        @*<td>
             @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
+        </td>*@
         <td>            
             @Html.ActionLink("Details", "Details", new { id=item.Id }, new { @id = "details" }) 
         </td>

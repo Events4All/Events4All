@@ -47,6 +47,8 @@ namespace Events4All.Web.Models
         public byte?[] Logo { get; set; }
 
         [Display(Name = "Ticket Price")]
+        //[DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
+        [Range(0, 1000)]
         public double TicketPrice { get; set; }
 
         [Display(Name = "Hashtag")]

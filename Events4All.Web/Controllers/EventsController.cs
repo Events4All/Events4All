@@ -133,7 +133,7 @@ namespace Events4All.Web.Controllers
 
                 query.CreateEvent(dto);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index2");
             }
 
             return View(eventsViewModel);
