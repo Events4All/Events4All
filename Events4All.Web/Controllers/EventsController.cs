@@ -22,6 +22,12 @@ namespace Events4All.Web.Controllers
 
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+        private ParticipantQuery Pquery = new ParticipantQuery();
+        private ParticipantDTO Pdto = new ParticipantDTO();
+
+
+
         public ActionResult Details(int? id)
         {
             
@@ -144,7 +150,7 @@ namespace Events4All.Web.Controllers
 
                 query.CreateEvent(dto);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index2");
             }
 
             return View(eventsViewModel);
@@ -261,6 +267,46 @@ namespace Events4All.Web.Controllers
             return RedirectToAction("Index2");
         }
 
+
+       public ActionResult allEvents()
+        {
+            allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
+            List<EventsViewModel> events = new List<EventsViewModel>();
+
+
+            List<EventDTO> dtoUserEventsCreated = query.QueryUserEventsCreated();
+
+            foreach (EventDTO Edto in dtoUserEventsCreated)
+            {
+                EventsViewModel vm = new EventsViewModel();
+
+                vm.Id = Edto.Id;
+                vm.Name = Edto.Name;
+                vm.TimeStart = Edto.TimeStart;
+                vm.Description = Edto.Description;
+
+                events.Add(vm);
+            }
+
+            List<ParticipantsViewModel> Pevents = new List<ParticipantsViewModel>();
+            List<ParticipantDTO> ParticipantDTO = Pquery.QueryUserEventsAttending();
+
+            foreach (ParticipantDTO Pdto in ParticipantDTO)
+            {
+                ParticipantsViewModel vm = new ParticipantsViewModel();
+
+                vm.EventName = query.FindEvent(Pdto.eventId).Name;
+                vm.EventStartDate = query.FindEvent(Pdto.eventId).TimeStart;
+                vm.Description = query.FindEvent(Pdto.eventId).Description;
+
+                Pevents.Add(vm);
+            }
+
+            UserEventsCreatedList.EventsCreated = events;
+            UserEventsCreatedList.EventsAttend = Pevents;
+
+            return View(UserEventsCreatedList);
+        }
        
     }
 }

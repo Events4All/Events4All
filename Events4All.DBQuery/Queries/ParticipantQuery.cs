@@ -69,5 +69,22 @@ namespace Events4All.DBQuery
             return dto;
         }
 
+        public List<ParticipantDTO> QueryUserEventsAttending()
+        {
+            string userId = HttpContext.Current.User.Identity.GetUserId();
+            ApplicationUser user = db.Users.Find(userId);
+
+            List<ParticipantDTO> dtoList = new List<ParticipantDTO>();
+            List<Participants> participantsList = db.Participants.Include(i => i.EventID).Include(i => i.AccountID).Where(i => i.AccountID.Id == userId).ToList();
+
+            foreach (Participants userEvents in participantsList)
+            {
+                ParticipantDTO dto = MapParticipantToDTO(userEvents);
+                dtoList.Add(dto);
+            }
+
+            return dtoList;
+        }
+
     }
 }

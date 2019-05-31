@@ -189,6 +189,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\allEventsViewModel.cs" />
     <Compile Include="Models\EventsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ParticipantsViewModel.cs" />
@@ -269,6 +270,7 @@
     <Content Include="Views\Events\Create.cshtml" />
     <Content Include="Views\Events\Index2.cshtml" />
     <Content Include="Views\Participants\RegistrationConfirmation.cshtml" />
+    <Content Include="Views\Events\allEvents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

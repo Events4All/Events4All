@@ -10,16 +10,18 @@ namespace Events4All.Web.Models
 {
     public class ParticipantsViewModel
     {
+        public int id { get; set; }
         public string EventName { get; set; }
         public DateTime? EventStartDate { get; set; }
 
-        [Range(1,3, ErrorMessage = "You must select between 1 and 3 tickets." )]
+        [Range(1, 3, ErrorMessage = "You must select between 1 and 3 tickets.")]
         public int NumberOfTicket { get; set; }
 
         public DateTime? Reminder { get; set; }
         public double TicketPrice { get; set; }
         public double Subtotal { get; set; }
+        public string Description { get; set; }
     }
-
-
 }
+
+
