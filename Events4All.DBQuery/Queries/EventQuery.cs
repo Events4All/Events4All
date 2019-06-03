@@ -12,6 +12,8 @@ namespace Events4All.DBQuery
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+
         public EventDTO FindEvent(int? id)
         {
             Events events = db.Events.Where( x=> x.Id == id).Where(x=> x.IsActive == true).FirstOrDefault();
