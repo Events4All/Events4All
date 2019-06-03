@@ -15,7 +15,7 @@ dd {
     margin-bottom: 10px;
 }
 
-a:link#register, a:visited#register, a:active#register {
+div#pagelink a:link, a:visited, a:active {
     color: blue;
 }
 
