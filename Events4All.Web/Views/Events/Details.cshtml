@@ -94,17 +94,27 @@
     </dl>
 </div>
 <p>
-    
-    @{ 
+
+    @{
         string styleValue;
         if (ViewBag.Registered == null)
         {
-            styleValue = "block";
+            styleValue = "inline";
         }
         else
         {
             styleValue = "none";
         }
     }
-    @Html.ActionLink("Register", "Create/" + @Model.Id, "Participants", null, new { id = "register", style = "display:" + @styleValue  })
+    <div id="pagelink">
+        @Html.ActionLink("Register", "Create/" + @Model.Id, "Participants", null, new { id = "register", style = "display:" + @styleValue }) |
+        @Ajax.ActionLink("Add to Calendar", "SelectCalendarType/" + Model.Id, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })
+    </div>
 </p>
+<div id="result" style="display:none;"></div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/GenerateCalendarPopup.js")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
+    @Scripts.Render("~/Scripts/jquery-ui-1.12.1.js")
+}

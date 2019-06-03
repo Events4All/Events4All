@@ -9,7 +9,10 @@ using System.Web.Mvc;
 using Events4All.DB.Models;
 using Events4All.DBQuery;
 using Events4All.Web.Models;
-
+using Ical.Net;
+using Ical.Net.CalendarComponents;
+using Ical.Net.DataTypes;
+using Ical.Net.Serialization;
 
 namespace Events4All.Web.Controllers
 {
@@ -103,7 +106,6 @@ namespace Events4All.Web.Controllers
 
             return View(vmList);
         }
-
 
         //*****************************************************************
         //Gary's code:
@@ -214,9 +216,6 @@ namespace Events4All.Web.Controllers
             return RedirectToAction("Index2");
         }
         
-
-
-
         // GET
         public ActionResult Delete(int? id)
         {
@@ -252,7 +251,9 @@ namespace Events4All.Web.Controllers
 
             return View(vm);
 
-        }// POST
+        }
+        
+        // POST
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult ConfirmDelete(int id)
@@ -261,6 +262,45 @@ namespace Events4All.Web.Controllers
             return RedirectToAction("Index2");
         }
 
-       
+        public PartialViewResult SelectCalendarType(int id)
+        {
+            ViewBag.EventId = id;
+            return PartialView();
+        }
+
+        public void DownloadCalendar(int id)
+        {
+            EventQuery query = new EventQuery();
+            EventDTO dto = query.FindEvent(id);
+            byte[] ics = GenerateICSFile(dto);
+            Response.Clear();
+            Response.ContentType = "text/calendar";
+            Response.AddHeader("content-disposition", "attachment: filename=" +"event.ics");
+            Response.BinaryWrite(ics);
+            Response.End();
+        }
+
+        public byte[] GenerateICSFile(EventDTO dto)
+        {
+            var calendar = new Calendar();
+
+            calendar.Events.Add(new CalendarEvent
+            {
+                Class = "PUBLIC",
+                Summary = dto.Name + " - " + dto.Description,
+                Created = new CalDateTime(DateTime.Now),
+                Description = dto.Detail,
+                Start = new CalDateTime(dto.TimeStart.Value),
+                End = new CalDateTime(dto.TimeStop.Value),
+                Sequence = 0,
+                Uid = Guid.NewGuid().ToString(),
+                Location = dto.Address + " " + dto.City + " " + dto.State + " " + dto.Zip,
+            });
+
+            var serializer = new CalendarSerializer();
+            var serializedCalendar = serializer.SerializeToString(calendar);
+            byte[] calendarBytes = System.Text.Encoding.UTF8.GetBytes(serializedCalendar);
+            return calendarBytes;
+        }
     }
 }

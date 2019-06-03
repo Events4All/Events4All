@@ -95,8 +95,6 @@ namespace Events4All.DBQuery
             db.SaveChanges();
         }
 
-
-
         public void DeleteConfirmed(int id)
         {
             Events Ev = db.Events.Find(id);
