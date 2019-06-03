@@ -10,6 +10,7 @@ using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
 using Ical.Net.Serialization;
+using System;
 
 namespace Events4All.Web.Controllers
 {
@@ -284,7 +285,7 @@ namespace Events4All.Web.Controllers
         }
 
 
-       public ActionResult allEvents()
+        public ActionResult allEvents()
         {
             EventQuery Equery = new EventQuery();
             ParticipantQuery Pquery = new ParticipantQuery();
@@ -321,6 +322,12 @@ namespace Events4All.Web.Controllers
 
                 Pevents.Add(vm);
             }
+
+            UserEventsCreatedList.EventsAttend = Pevents;
+            UserEventsCreatedList.EventsCreated = events;
+
+            return View(UserEventsCreatedList);
+        }
 
         public PartialViewResult SelectCalendarType(int id)
         {
