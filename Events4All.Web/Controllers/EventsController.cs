@@ -342,7 +342,7 @@ namespace Events4All.Web.Controllers
             byte[] ics = GenerateICSFile(dto);
             Response.Clear();
             Response.ContentType = "text/calendar";
-            Response.AddHeader("content-disposition", "attachment: filename=" +"event.ics");
+            Response.AddHeader("content-disposition", "attachment; filename=" + dto.Name + ".ics");
             Response.BinaryWrite(ics);
             Response.End();
         }
