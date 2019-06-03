@@ -67,7 +67,7 @@ namespace Events4All.Web.Controllers
             return View(vm);
         }
 
-        public ActionResult Index2()
+        public ActionResult Index()
         {
             EventQuery Equery = new EventQuery();
 
@@ -150,7 +150,7 @@ namespace Events4All.Web.Controllers
 
                 Equery.CreateEvent(Edto);
 
-                return RedirectToAction("Index2");
+                return RedirectToAction("Index");
             }
 
             return View(eventsViewModel);
@@ -223,7 +223,7 @@ namespace Events4All.Web.Controllers
             Edto.Web = EVM.Web;
 
             Equery.EditEvent(Edto);
-            return RedirectToAction("Index2");
+            return RedirectToAction("Index");
         }
         
         // GET
@@ -273,7 +273,7 @@ namespace Events4All.Web.Controllers
             EventQuery Equery = new EventQuery();
 
             Equery.DeleteConfirmed(id);
-            return RedirectToAction("Index2");
+            return RedirectToAction("Index");
         }
 
 

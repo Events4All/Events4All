@@ -266,9 +266,8 @@
     <Content Include="Views\Events\Details.cshtml" />
     <Content Include="Views\Events\Delete.cshtml" />
     <Content Include="Views\Events\Edit.cshtml" />
-    <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Events\Create.cshtml" />
-    <Content Include="Views\Events\Index2.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Participants\RegistrationConfirmation.cshtml" />
     <Content Include="Views\Events\allEvents.cshtml" />
   </ItemGroup>
