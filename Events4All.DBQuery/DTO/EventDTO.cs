@@ -27,5 +27,10 @@ namespace Events4All.DBQuery
         public byte?[] Logo { get; set; }
         public double TicketPrice { get; set; }
         public string HashTag { get; set; }
+        public DateTime? Reminder { get; set; }
+
+        public bool emailNotificationOn { get; set; }
+        public bool SMSNotificationOn { get; set; }
+
     }
 }

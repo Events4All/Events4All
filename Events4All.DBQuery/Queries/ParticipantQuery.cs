@@ -9,6 +9,8 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 
+
+
 namespace Events4All.DBQuery
 {
     public class ParticipantQuery
@@ -38,6 +40,7 @@ namespace Events4All.DBQuery
         }
 
         public ParticipantDTO FindParticipant(int id)
+
         {
             Participants participant = db.Participants.Include(i=>i.EventID).Include(i=>i.AccountID).SingleOrDefault(x => x.Id == id);
             ParticipantDTO dto = MapParticipantToDTO(participant);
@@ -51,9 +54,26 @@ namespace Events4All.DBQuery
             dto.NumberOfTicket = participant.NumberOfTicket;
             dto.Reminder = participant.Reminder;
             dto.userId = participant.AccountID.Id;
+            dto.emailNotificationOn = participant.emailNotificationOn;
+            dto.SMSNotificationOn = participant.SMSNotificationOn;
 
             return dto;
         }
+        
+       public void UpdateParticipantReminders(ParticipantDTO pDTO)
+        {            
+            string userId = HttpContext.Current.User.Identity.GetUserId();
+            ApplicationUser user = db.Users.Find(userId);
 
+            Participants pRec = db.Participants.Find(pDTO.Id);
+            pRec.Reminder = pDTO.Reminder;
+            pRec.emailNotificationOn = pDTO.emailNotificationOn;
+            pRec.SMSNotificationOn = pDTO.SMSNotificationOn;
+
+            db.Entry(pRec).State = EntityState.Modified;
+            db.SaveChanges();                     
+        }
+ 
+      
     }
 }
