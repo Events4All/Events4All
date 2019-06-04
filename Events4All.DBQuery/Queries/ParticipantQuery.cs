@@ -17,6 +17,20 @@ namespace Events4All.DBQuery
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public bool IsRegistered(int? id)
+        {
+            bool isRegistered = false;
+            string userId = HttpContext.Current.User.Identity.GetUserId();
+            List<Participants> participants = db.Participants.Include(i => i.EventID).Include(i => i.AccountID).Where(x => x.AccountID.Id == userId).Where(y => y.EventID.Id == id).ToList();
+
+            if(participants.Count > 0)
+            {
+                isRegistered = true;
+            }
+
+            return isRegistered;
+        }
+
         public int CreateParticipant(ParticipantDTO participantsDTO)
         {
             string userId = HttpContext.Current.User.Identity.GetUserId();
@@ -59,6 +73,24 @@ namespace Events4All.DBQuery
 
             return dto;
         }
+
+        public List<ParticipantDTO> QueryUserEventsAttending()
+        {
+            string userId = HttpContext.Current.User.Identity.GetUserId();
+            ApplicationUser user = db.Users.Find(userId);
+
+            List<ParticipantDTO> dtoList = new List<ParticipantDTO>();
+            List<Participants> participantsList = db.Participants.Include(i => i.EventID).Include(i => i.AccountID).Where(i => i.AccountID.Id == userId).ToList();
+
+            foreach (Participants userEvents in participantsList)
+            {
+                ParticipantDTO dto = MapParticipantToDTO(userEvents);
+                dtoList.Add(dto);
+            }
+
+            return dtoList;
+        }
+
         
        public void UpdateParticipantReminders(ParticipantDTO pDTO)
         {            

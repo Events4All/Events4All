@@ -23,7 +23,7 @@ namespace Events4All.Web.Controllers
 
         [HttpGet]
         public ActionResult Create(int id)
-        {
+        {         
             ParticipantsViewModel vm = new ParticipantsViewModel();
 
             eventDTO = eventQuery.FindEvent(id);

@@ -2,6 +2,28 @@
 /* Start default MVC styles*/
 /*---------------------------------------------*/
 
+#warning {
+    color: red;
+    font-weight: bold;
+}
+
+a:link#details, a:visited#details, a:active#details {
+    color: blue;
+}
+
+dd {
+    margin-bottom: 10px;
+}
+
+div#pagelink a:link, a:visited, a:active {
+    color: blue;
+}
+
+a:link#home, a:visited#home, a:active#home {
+    color: blue !important;
+}
+
+
 body {
     padding-top: 50px;
     padding-bottom: 20px;
@@ -79,8 +101,12 @@ div.navbar-collapse.collapse.in, .navbar-collapse {
     background-color: #0691F9;
 }
 
+.navbar-nav > li > a {
+    color:white;
+}
+
 a {
-    color: white;
+    //color: white;
     outline: 0;
 }
 
@@ -154,6 +180,7 @@ a:hover, a:active, a:focus {
     float: right;
     width: 150px;
 }
+
 
 /*---------------------------------------------*/
 /* End of header(nav bar) and footer styles*/
