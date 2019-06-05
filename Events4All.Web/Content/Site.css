@@ -69,6 +69,33 @@ textarea {
     background-color: #212529;
     color: #0691F9;
     margin: 0px;
+    font-size: 14px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+    display: none;
+    min-width: 140px;
+    background-color: #212529;
+    border-top: 1px solid #212529;
+}
+
+@media only screen and (max-width: 768px) {
+    div.dropdown-menu {
+        text-align: left;
+        position: relative;
+        width: 100%;
+        font-size: 15px;
+        align-content: center;
+        background-color: transparent;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        padding-left: 23%;
+        border-bottom: 0.5px solid white!important;
+    }
 }
 
 .navbar-header {
@@ -78,7 +105,6 @@ textarea {
 div.navbar-collapse.collapse.in, .navbar-collapse {
     padding: 0px;
     border-top: 1px solid #212529;
-    border-left: 10px solid #212529;
 }
 
 .navbar-brand {
@@ -88,8 +114,17 @@ div.navbar-collapse.collapse.in, .navbar-collapse {
 .fixedNav .nav-container {
     position: fixed;
     top: 0;
-    background-color: white;
+    background-color: #D3D3D3;
     width: 100%;
+}
+
+ul.nav li.dropdown:hover div.dropdown-menu {
+    display: block;
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background-color: #212529;
+    border-color: #212529;
 }
 
 .containerFORnav{
@@ -102,11 +137,33 @@ div.navbar-collapse.collapse.in, .navbar-collapse {
 }
 
 .navbar-nav > li > a {
-    color:white;
+    color: #D3D3D3;
+}
+
+.navbar-nav > li > a:hover {
+     color: white;
+     background-color: #212529;
+}
+
+.navbar-nav > li > a:focus {
+     background-color: #212529;
+}
+
+.dropdown-menu > a:hover {
+      color: white;
+}
+
+.dropdown-menu > a {
+    color: #D3D3D3;
+    margin-left: 2px;
+}
+
+.dropdown-divider {
+    margin-bottom: 14px;
 }
 
 a {
-    //color: white;
+    /*color: white;*/
     outline: 0;
 }
 
@@ -180,7 +237,6 @@ a:hover, a:active, a:focus {
     float: right;
     width: 150px;
 }
-
 
 /*---------------------------------------------*/
 /* End of header(nav bar) and footer styles*/

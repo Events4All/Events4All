@@ -22,7 +22,58 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Event Makers <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item">@Html.ActionLink("Create Event", "Create", "Events")</a>
+                            <div class="dropdown-divider">
+                            </div>
+                            <a class="dropdown-item">@Html.ActionLink("All My Events", "allEvents", "Events")</a>
+                            <div class="dropdown-divider">
+                            </div>
+                            <a class="dropdown-item">@Html.ActionLink("Edit Event Created", "Index", "Events")</a>
+                            <div class="dropdown-divider">
+                            </div>
+                            <a class="dropdown-item">@Html.ActionLink("Cancel Event", "Index", "Events")</a>
+                            <div class="dropdown-divider">
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Event Attendees <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item">@Html.ActionLink("Browse All Events ", "Index", "Events")</a>
+                            <div class="dropdown-divider">
+                            </div>
+                            <a class="dropdown-item">@Html.ActionLink("Register For Event", "allEvents", "Events")</a>
+                            <div class="dropdown-divider">
+                            </div>
+                            <a class="dropdown-item">@Html.ActionLink("Print Tickets", "Index", "Events")</a>
+                            <div class="dropdown-divider">
+                            </div>
+                            <a class="dropdown-item">@Html.ActionLink("Edit Registration", "Index", "Events")</a>
+                            <div class="dropdown-divider">
+                            </div>
+                            <a class="dropdown-item">@Html.ActionLink("Cancel Registration", "Index", "Events")</a>
+                            <div class="dropdown-divider">
+                            </div>
+                        </div>
+                    </li>
+
+
+
+
+                    <li>@Html.ActionLink("Show All My Events", "allEvents", "Events")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @Html.Partial("_LoginPartial")
