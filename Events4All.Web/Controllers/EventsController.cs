@@ -36,6 +36,7 @@ namespace Events4All.Web.Controllers
             if (participantQuery.IsRegistered(id))
             {
                 ViewBag.Registered = "You have already registered for this event.";
+                ViewBag.ParticipantID = participantQuery.FindParticipantByEventAndUser(id);
             }
 
             if (id == null)
@@ -49,6 +50,8 @@ namespace Events4All.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            
 
             EventsViewModel vm = new EventsViewModel();
 

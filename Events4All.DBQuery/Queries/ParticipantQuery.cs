@@ -58,6 +58,14 @@ namespace Events4All.DBQuery
             return dto;
         }
 
+        public int FindParticipantByEventAndUser(int? id)
+        {
+            string userId = HttpContext.Current.User.Identity.GetUserId();
+            Participants participant = db.Participants.Include(i => i.EventID).Include(i => i.AccountID).Where(x => x.AccountID.Id == userId).SingleOrDefault(y => y.EventID.Id == id);
+            int participantID = participant.Id;
+            return participantID;
+        }
+
         public ParticipantDTO MapParticipantToDTO(Participants participant)
         {
             ParticipantDTO dto = new ParticipantDTO();

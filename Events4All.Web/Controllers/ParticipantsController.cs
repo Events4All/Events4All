@@ -8,24 +8,22 @@ using System.Web;
 using System.Web.Mvc;
 using Events4All.Web.Models;
 using Events4All.DBQuery;
+using System.IO;
+
 
 namespace Events4All.Web.Controllers
 {
     public class ParticipantsController : Controller
     {
-        private ParticipantQuery query = new ParticipantQuery();
-        private ParticipantDTO dto = new ParticipantDTO();
-
-        private EventQuery eventQuery = new EventQuery();
-        private EventDTO eventDTO = new EventDTO();
-
         [HttpGet]
         public ActionResult Create(int id)
         {         
             ParticipantsViewModel vm = new ParticipantsViewModel();
+            EventQuery query = new EventQuery();
+            EventDTO dto = new EventDTO();
 
-            eventDTO = eventQuery.FindEvent(id);
-            vm.TicketPrice = eventDTO.TicketPrice;
+            dto = query.FindEvent(id);
+            vm.TicketPrice = dto.TicketPrice;
 
             return View(vm);
         }
@@ -37,6 +35,9 @@ namespace Events4All.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "NumberOfTicket, Reminder")] ParticipantsViewModel participantsViewModel, int id)
         {
+            ParticipantDTO dto = new ParticipantDTO();
+            ParticipantQuery query = new ParticipantQuery();
+
             if (ModelState.IsValid)
             {
                 dto.NumberOfTicket = participantsViewModel.NumberOfTicket;
@@ -54,13 +55,28 @@ namespace Events4All.Web.Controllers
         [HttpGet]
         public ActionResult RegistrationConfirmation(int id)
         {
+            ParticipantQuery participantQuery = new ParticipantQuery();
+            ParticipantDTO participantDTO = new ParticipantDTO();
+            EventQuery eventQuery = new EventQuery();
+            EventDTO eventDTO = new EventDTO();
+            UserDTO userDTO = new UserDTO();
+            UserQuery userQuery = new UserQuery();
+
             ParticipantsViewModel vm = new ParticipantsViewModel();
-            dto = query.FindParticipant(id);
-            eventDTO = eventQuery.FindEvent(dto.eventId);
-           
+
+            participantDTO = participantQuery.FindParticipant(id);
+            eventDTO = eventQuery.FindEvent(participantDTO.eventId);
+            userDTO = userQuery.FindCurrentUser();
+
             vm.EventName = eventDTO.Name;
-            vm.NumberOfTicket = dto.NumberOfTicket;
+            vm.NumberOfTicket = participantDTO.NumberOfTicket;
             vm.EventStartDate = eventDTO.TimeStart;
+
+            ViewBag.NumberOfTickets = participantDTO.NumberOfTicket;
+            ViewBag.Username = userDTO.Username.Replace("@","").Replace(".com","");
+            ViewBag.UserId = userDTO.Id;
+            ViewBag.EventName = eventDTO.Name;
+            ViewBag.EventId = eventDTO.Id;
 
             return View(vm);
         }
