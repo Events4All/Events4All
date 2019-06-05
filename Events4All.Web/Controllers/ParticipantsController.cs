@@ -96,9 +96,11 @@ namespace Events4All.Web.Controllers
         public ActionResult Reminders(int id)
         {         
             ParticipantsViewModel pvm = new ParticipantsViewModel();
+            ParticipantQuery pq = new ParticipantQuery();
+            EventQuery eq = new EventQuery();
 
-            ParticipantDTO pDTO = query.FindParticipant(id);
-            EventDTO evDTO = eventQuery.FindEvent(pDTO.eventId);
+            ParticipantDTO pDTO = pq.FindParticipant(id);
+            EventDTO evDTO = eq.FindEvent(pDTO.eventId);
 
             //Map DTO fields to pvm
             pvm.EventStartDate = evDTO.TimeStart;
@@ -120,18 +122,18 @@ namespace Events4All.Web.Controllers
             if(id <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            } 
-
+            }
 
             if(ModelState.IsValid)
             {
+                ParticipantQuery pq = new ParticipantQuery();
                 ParticipantDTO pDTO = new ParticipantDTO();
                 pDTO.Reminder = participantsViewModel.Reminder;
                 pDTO.emailNotificationOn= participantsViewModel.emailNotificationOn;
                 pDTO.SMSNotificationOn= participantsViewModel.SMSNotificationOn;
                 pDTO.Id = id;
 
-                query.UpdateParticipantReminders(pDTO);
+                pq.UpdateParticipantReminders(pDTO);
                 return RedirectToAction("Index", "Home");
             }
 
@@ -139,12 +141,11 @@ namespace Events4All.Web.Controllers
         }
 
 
-
-
         public ActionResult BackToIndex()
         {
             return RedirectToAction("Index", "Home");
         }
+
     }
 }
 
