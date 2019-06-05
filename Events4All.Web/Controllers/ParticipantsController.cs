@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Events4All.Web.Models;
 using Events4All.DBQuery;
+using Events4All.Web.Controllers;
+using Events4All.DB.Models;
 using System.IO;
 
 
@@ -80,5 +82,69 @@ namespace Events4All.Web.Controllers
 
             return View(vm);
         }
+        // public ParticipantsController() { }
+        //GET REMINDER
+        //public Participants pt = new Participants();
+        //public IQueryable<ParticipantDTO> GetParticipants()
+        //{ 
+        //    var participants = from p in 
+
+        //}
+
+
+        [HttpGet]
+        public ActionResult Reminders(int id)
+        {         
+            ParticipantsViewModel pvm = new ParticipantsViewModel();
+
+            ParticipantDTO pDTO = query.FindParticipant(id);
+            EventDTO evDTO = eventQuery.FindEvent(pDTO.eventId);
+
+            //Map DTO fields to pvm
+            pvm.EventStartDate = evDTO.TimeStart;
+            pvm.Reminder = pDTO.Reminder;
+            //if (pvm.emailNotificationOn == true)
+                
+            pvm.emailNotificationOn = pDTO.emailNotificationOn;
+            pvm.SMSNotificationOn = pDTO.SMSNotificationOn;
+             
+            return View(pvm);
+        }
+
+
+        //POST REMINDER
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reminders(int id, [Bind(Include ="reminder, emailNotificationOn, SMSNotificationOn, TimeStart")] ParticipantsViewModel participantsViewModel)
+        {
+            if(id <= 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            } 
+
+
+            if(ModelState.IsValid)
+            {
+                ParticipantDTO pDTO = new ParticipantDTO();
+                pDTO.Reminder = participantsViewModel.Reminder;
+                pDTO.emailNotificationOn= participantsViewModel.emailNotificationOn;
+                pDTO.SMSNotificationOn= participantsViewModel.SMSNotificationOn;
+                pDTO.Id = id;
+
+                query.UpdateParticipantReminders(pDTO);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(participantsViewModel);
+        }
+
+
+
+
+        public ActionResult BackToIndex()
+        {
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
+

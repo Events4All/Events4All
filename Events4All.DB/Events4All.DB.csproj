@@ -58,6 +58,10 @@
     <Compile Include="Migrations\201905231816296_Initial.Designer.cs">
       <DependentUpon>201905231816296_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906041815493_AddNotificationFields.cs" />
+    <Compile Include="Migrations\201906041815493_AddNotificationFields.Designer.cs">
+      <DependentUpon>201906041815493_AddNotificationFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Base.cs" />
     <Compile Include="Models\EventCategories.cs" />
@@ -76,6 +80,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201905231816296_Initial.resx">
       <DependentUpon>201905231816296_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906041815493_AddNotificationFields.resx">
+      <DependentUpon>201906041815493_AddNotificationFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
