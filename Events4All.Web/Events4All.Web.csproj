@@ -285,6 +285,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\PrintRegistration.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -328,6 +329,7 @@
     <Content Include="Views\Events\Create.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Participants\RegistrationConfirmation.cshtml" />
+    <Content Include="Views\Participants\Reminders.cshtml" />
     <Content Include="Views\Events\SelectCalendarType.cshtml" />
     <Content Include="Views\Events\allEvents.cshtml" />
   </ItemGroup>
