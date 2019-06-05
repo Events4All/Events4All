@@ -319,6 +319,7 @@ namespace Events4All.Web.Controllers
             {
                 ParticipantsViewModel vm = new ParticipantsViewModel();
 
+                vm.id = Pdto.Id;
                 vm.EventName = Equery.FindEvent(Pdto.eventId).Name;
                 vm.EventStartDate = Equery.FindEvent(Pdto.eventId).TimeStart;
                 vm.Description = Equery.FindEvent(Pdto.eventId).Description;
