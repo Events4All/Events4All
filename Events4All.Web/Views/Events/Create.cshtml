@@ -3,21 +3,23 @@
     ViewBag.Title = "Create";
 }
 
+<script type='text/javascript' src="~/Scripts/SpellCheck_BadWords.js"></script>
+<script type='text/javascript' src="~/JavaScriptSpellCheck/include.js"></script>
+
 <h2>Create Event</h2>
 
-
-@using (Html.BeginForm("Create", "Events", "POST"))
+@using (Html.BeginForm("Create", "Events", FormMethod.Post, new { id = "createform", onsubmit = "return (validateFormSpelling() && check_val('nameInput') && check_val('addressInput') && check_val('cityInput') && check_val('webInput') && check_val('twitterInput') && check_val('descInput') && check_val('detailInput') && check_val('hashtagInput'))" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        @*<h4>Events</h4>*@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
+
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", id = "nameInput" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -25,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", id = "addressInput" } })
                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -33,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @style = "width:200px" } })
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @style = "width:200px", id = "cityInput" } })
                 @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,7 +52,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Zip, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @maxlength = "5", @style = "width:75px" } })
+                @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @style = "width:75px" } })
                 @Html.ValidationMessageFor(model => model.Zip, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -58,17 +60,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Web, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Web, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Web, new { htmlAttributes = new { @class = "form-control", id = "webInput" } })
                 @Html.ValidationMessageFor(model => model.Web, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            
+
             @Html.LabelFor(model => model.TwitterHandle, htmlAttributes: new { @class = "control-label col-md-2" })
             @*@Html.Label("Twitter Handle", htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TwitterHandle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TwitterHandle, new { htmlAttributes = new { @class = "form-control", id = "twitterInput" } })
                 @Html.ValidationMessageFor(model => model.TwitterHandle, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -96,7 +98,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", id = "descInput" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -104,7 +106,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Detail, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Detail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Detail, new { htmlAttributes = new { @class = "form-control", id = "detailInput" } })
                 @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -122,7 +124,7 @@
             @Html.LabelFor(model => model.HashTag, htmlAttributes: new { @class = "control-label col-md-2" })
             @*@Html.Label("Hash Tag", htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
-                @Html.EditorFor(model => model.HashTag, new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @style = "width:200px" } })
+                @Html.EditorFor(model => model.HashTag, new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @style = "width:200px", id = "hashtagInput" } })
                 @Html.ValidationMessageFor(model => model.HashTag, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -158,16 +160,18 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" /> &emsp; &ensp; &emsp; &ensp; &emsp; &ensp;
+                @Html.ActionLink("Back to List", "Index2")
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
