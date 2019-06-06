@@ -16,7 +16,7 @@ namespace Events4All.Web.Controllers
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>
-        public ActionResult RenderBarcode(string userid)
+        public ActionResult RenderBarcode(string id)
         {
             Image img = null;
             using (var ms = new MemoryStream())
@@ -25,7 +25,7 @@ namespace Events4All.Web.Controllers
                 writer.Options.Height = 80;
                 writer.Options.Width = 280;
                 writer.Options.PureBarcode = true;
-                img = writer.Write(userid);
+                img = writer.Write(id);
                 img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                 return File(ms.ToArray(), "image/jpeg");
             }

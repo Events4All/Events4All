@@ -9,6 +9,8 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 
+
+
 namespace Events4All.DBQuery
 {
     public class ParticipantQuery
@@ -52,19 +54,31 @@ namespace Events4All.DBQuery
         }
 
         public ParticipantDTO FindParticipant(int id)
+
         {
             Participants participant = db.Participants.Include(i=>i.EventID).Include(i=>i.AccountID).SingleOrDefault(x => x.Id == id);
             ParticipantDTO dto = MapParticipantToDTO(participant);
             return dto;
         }
 
+        public int FindParticipantByEventAndUser(int? id)
+        {
+            string userId = HttpContext.Current.User.Identity.GetUserId();
+            Participants participant = db.Participants.Include(i => i.EventID).Include(i => i.AccountID).Where(x => x.AccountID.Id == userId).SingleOrDefault(y => y.EventID.Id == id);
+            int participantID = participant.Id;
+            return participantID;
+        }
+
         public ParticipantDTO MapParticipantToDTO(Participants participant)
         {
             ParticipantDTO dto = new ParticipantDTO();
+            dto.Id = participant.Id;
             dto.eventId = participant.EventID.Id;
             dto.NumberOfTicket = participant.NumberOfTicket;
             dto.Reminder = participant.Reminder;
             dto.userId = participant.AccountID.Id;
+            dto.emailNotificationOn = participant.emailNotificationOn;
+            dto.SMSNotificationOn = participant.SMSNotificationOn;
 
             return dto;
         }
@@ -86,5 +100,21 @@ namespace Events4All.DBQuery
             return dtoList;
         }
 
+        
+       public void UpdateParticipantReminders(ParticipantDTO pDTO)
+        {            
+            string userId = HttpContext.Current.User.Identity.GetUserId();
+            ApplicationUser user = db.Users.Find(userId);
+
+            Participants pRec = db.Participants.Find(pDTO.Id);
+            pRec.Reminder = pDTO.Reminder;
+            pRec.emailNotificationOn = pDTO.emailNotificationOn;
+            pRec.SMSNotificationOn = pDTO.SMSNotificationOn;
+
+            db.Entry(pRec).State = EntityState.Modified;
+            db.SaveChanges();                     
+        }
+ 
+      
     }
 }

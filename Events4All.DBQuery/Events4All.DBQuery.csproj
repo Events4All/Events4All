@@ -92,6 +92,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\EventDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="Queries\UserQuery.cs" />
     <Compile Include="Queries\EventQuery.cs" />
     <Compile Include="DTO\ParticipantDTO.cs" />
     <Compile Include="Queries\ParticipantQuery.cs" />
