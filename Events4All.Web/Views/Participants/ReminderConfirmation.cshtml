@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "ReminderConfirmation";
+}
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ReminderConfirmation</title>
+    <style>
+        .RC {
+            text-align: center;
+            border: solid;
+            padding:5%;
+            margin:5%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="RC">
+        <h3>Thank you for updating your reminders.</h3>
+        <input type="button" value="Click here to return to the home page." class="btn btn-default" onclick="location.href='@Url.Action("BackToIndex", "participants")'" />
+    </div>
+</body>
+</html>

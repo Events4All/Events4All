@@ -78,56 +78,62 @@ namespace Events4All.Web.Controllers
 
         [HttpGet]
         public ActionResult Reminders(int id)
-        {         
-            ParticipantsViewModel pvm = new ParticipantsViewModel();
+        {
+            RemindersViewModel rvm = new RemindersViewModel();
 
             ParticipantDTO pDTO = query.FindParticipant(id);
             EventDTO evDTO = eventQuery.FindEvent(pDTO.eventId);
 
-            //Map DTO fields to pvm
-            pvm.EventStartDate = evDTO.TimeStart;
-            pvm.Reminder = pDTO.Reminder;
-            //if (pvm.emailNotificationOn == true)
-                
-            pvm.emailNotificationOn = pDTO.emailNotificationOn;
-            pvm.SMSNotificationOn = pDTO.SMSNotificationOn;
+            //Map DTO fields to rvm
+            
+            rvm.EventStartDate = evDTO.TimeStart;
+            rvm.Reminder = pDTO.Reminder;
+            rvm.emailNotificationOn = pDTO.emailNotificationOn;
+            rvm.SMSNotificationOn = pDTO.SMSNotificationOn;
              
-            return View(pvm);
+            return View(rvm);
         }
 
 
         //POST REMINDER
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Reminders(int id, [Bind(Include ="reminder, emailNotificationOn, SMSNotificationOn, TimeStart")] ParticipantsViewModel participantsViewModel)
+        public ActionResult Reminders(int id, [Bind(Include ="Reminder, emailNotificationOn, SMSNotificationOn, TimeStart")] RemindersViewModel remindersViewModel)
         {
             if(id <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            } 
+            }
 
-
-            if(ModelState.IsValid)
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            
+            if (ModelState.IsValid)
             {
                 ParticipantDTO pDTO = new ParticipantDTO();
-                pDTO.Reminder = participantsViewModel.Reminder;
-                pDTO.emailNotificationOn= participantsViewModel.emailNotificationOn;
-                pDTO.SMSNotificationOn= participantsViewModel.SMSNotificationOn;
+                // pDTO.EventStart = participantsViewModel.EventStartDate;
+                
+                pDTO.Reminder = remindersViewModel.Reminder;
+                pDTO.emailNotificationOn = remindersViewModel.emailNotificationOn;
+                pDTO.SMSNotificationOn = remindersViewModel.SMSNotificationOn;
                 pDTO.Id = id;
 
                 query.UpdateParticipantReminders(pDTO);
-                return RedirectToAction("Index", "Home");
+                
+                 return RedirectToAction("ReminderConfirmation", "Participants");
             }
 
-            return View(participantsViewModel);
+            return View(remindersViewModel);
         }
-
-
-
 
         public ActionResult BackToIndex()
         {
             return RedirectToAction("Index", "Home");
+        }
+        
+        public ActionResult ReminderConfirmation()
+        {
+            //   return RedirectToAction("ReminderConfirmation", "Participants");
+            return View();
         }
     }
 }
