@@ -12,6 +12,8 @@ namespace Events4All.DBQuery
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+
         public EventDTO FindEvent(int? id)
         {
             Events events = db.Events.Where( x=> x.Id == id).Where(x=> x.IsActive == true).FirstOrDefault();
@@ -95,8 +97,6 @@ namespace Events4All.DBQuery
             db.SaveChanges();
         }
 
-
-
         public void DeleteConfirmed(int id)
         {
             Events Ev = db.Events.Find(id);
@@ -128,6 +128,23 @@ namespace Events4All.DBQuery
             Ev.TwitterHandle = DT.TwitterHandle;
             Ev.Web = DT.Web;
             db.SaveChanges();
+        }
+
+           public List<EventDTO> QueryUserEventsCreated()
+        {
+            string userId = HttpContext.Current.User.Identity.GetUserId();
+            ApplicationUser user = db.Users.Find(userId);
+
+            List<EventDTO> dtoList = new List<EventDTO>();
+            List<Events> eventList = db.Events.Where(i => i.CreatedBy.Id == userId).ToList();
+
+            foreach (Events userEvents in eventList)
+            {
+                EventDTO dto = MapEventToDTO(userEvents);
+                dtoList.Add(dto);
+            }
+
+            return dtoList;
         }
 
     }

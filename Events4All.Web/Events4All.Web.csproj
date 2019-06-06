@@ -45,13 +45,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ical.Net, Version=4.1.8.0, Culture=neutral, PublicKeyToken=65c0446cd019ea53, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ical.Net.4.1.11\lib\net46\Ical.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NodaTime, Version=2.0.2.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NodaTime.2.0.2\lib\net45\NodaTime.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Reflection.TypeExtensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.TypeExtensions.4.1.0\lib\net46\System.Reflection.TypeExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Primitives, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Serialization.Primitives.4.3.0\lib\net46\System.Runtime.Serialization.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -189,9 +202,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\allEventsViewModel.cs" />
     <Compile Include="Models\EventsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ParticipantsViewModel.cs" />
+    <Compile Include="Models\RemindersViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -200,6 +215,47 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -211,20 +267,175 @@
     <Content Include="images\slide4.jpg" />
     <Content Include="images\slide3.jpg" />
     <Content Include="images\slide5.jpg" />
+    <Content Include="JavaScriptSpellCheck\01-HELP.txt" />
+    <Content Include="JavaScriptSpellCheck\aspnetspell.dll\ASPNetSpell.dll" />
+    <Content Include="JavaScriptSpellCheck\aspnetspell.dll\What is this for.txt" />
+    <Content Include="JavaScriptSpellCheck\core\asp\ASPSpellClass.asp" />
+    <Content Include="JavaScriptSpellCheck\core\default.asp" />
+    <Content Include="JavaScriptSpellCheck\core\Default.aspx" />
+    <Content Include="JavaScriptSpellCheck\core\dialog.js" />
+    <Content Include="JavaScriptSpellCheck\core\index.php" />
+    <Content Include="JavaScriptSpellCheck\core\settings\default-settings.asp" />
+    <Content Include="JavaScriptSpellCheck\core\settings\default-settings.php" />
+    <Content Include="JavaScriptSpellCheck\core\test-assets\error.png" />
+    <Content Include="JavaScriptSpellCheck\core\test-assets\info.png" />
+    <Content Include="JavaScriptSpellCheck\core\test-assets\itest.css" />
+    <Content Include="JavaScriptSpellCheck\core\test-assets\reup.png" />
+    <Content Include="JavaScriptSpellCheck\core\test-assets\test.asp" />
+    <Content Include="JavaScriptSpellCheck\core\test-assets\test.aspx" />
+    <Content Include="JavaScriptSpellCheck\core\test-assets\test.html" />
+    <Content Include="JavaScriptSpellCheck\core\test-assets\test.php" />
+    <Content Include="JavaScriptSpellCheck\core\test-assets\tick.png" />
+    <Content Include="JavaScriptSpellCheck\core\test-assets\warn.png" />
+    <Content Include="JavaScriptSpellCheck\dialog.html" />
+    <Content Include="JavaScriptSpellCheck\dictionaries\custom.txt" />
+    <Content Include="JavaScriptSpellCheck\dictionaries\language-rules\banned-words.txt" />
+    <Content Include="JavaScriptSpellCheck\dictionaries\language-rules\common-mistakes.txt" />
+    <Content Include="JavaScriptSpellCheck\dictionaries\language-rules\enforced-corrections.txt" />
+    <Content Include="JavaScriptSpellCheck\dictionaries\README.txt" />
+    <Content Include="JavaScriptSpellCheck\extensions\copyright.txt" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\blank.gif" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancybox-x.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancybox-y.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancybox.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_close.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_loading.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_nav_left.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_nav_right.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_shadow_e.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_shadow_n.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_shadow_ne.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_shadow_nw.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_shadow_s.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_shadow_se.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_shadow_sw.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_shadow_w.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_title_left.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_title_main.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_title_over.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\fancy_title_right.png" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\jquery.easing-1.3.pack.js" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\jquery.fancybox-1.3.4.css" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\jquery.fancybox-1.3.4.js" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\jquery.fancybox-1.3.4.pack.js" />
+    <Content Include="JavaScriptSpellCheck\extensions\fancybox\jquery.mousewheel-3.0.4.pack.js" />
+    <Content Include="JavaScriptSpellCheck\extensions\jquery-1.6.4.min.js" />
+    <Content Include="JavaScriptSpellCheck\extensions\modalbox\lib\effects.js" />
+    <Content Include="JavaScriptSpellCheck\extensions\modalbox\lib\prototype.js" />
+    <Content Include="JavaScriptSpellCheck\extensions\modalbox\lib\scriptaculous.js" />
+    <Content Include="JavaScriptSpellCheck\extensions\modalbox\lib\unittest.js" />
+    <Content Include="JavaScriptSpellCheck\extensions\modalbox\modalbox.combined.js" />
+    <Content Include="JavaScriptSpellCheck\extensions\modalbox\modalbox.css" />
+    <Content Include="JavaScriptSpellCheck\extensions\modalbox\spinner.gif" />
+    <Content Include="JavaScriptSpellCheck\include.js" />
+    <Content Include="JavaScriptSpellCheck\license.txt" />
+    <Content Include="JavaScriptSpellCheck\themes\bright\ajax-loader.gif" />
+    <Content Include="JavaScriptSpellCheck\themes\bright\context-menu.css" />
+    <Content Include="JavaScriptSpellCheck\themes\bright\dialog-window.css" />
+    <Content Include="JavaScriptSpellCheck\themes\bright\ieonly.css" />
+    <Content Include="JavaScriptSpellCheck\themes\buttons\spellicon.gif" />
+    <Content Include="JavaScriptSpellCheck\themes\buttons\spelliconover.gif" />
+    <Content Include="JavaScriptSpellCheck\themes\classic\ajax-loader.gif" />
+    <Content Include="JavaScriptSpellCheck\themes\classic\context-menu.css" />
+    <Content Include="JavaScriptSpellCheck\themes\classic\dialog-window.css" />
+    <Content Include="JavaScriptSpellCheck\themes\classic\gwiggle.png" />
+    <Content Include="JavaScriptSpellCheck\themes\classic\ieonly.css" />
+    <Content Include="JavaScriptSpellCheck\themes\classic\wiggle.png" />
+    <Content Include="JavaScriptSpellCheck\themes\clean\ajax-loader.gif" />
+    <Content Include="JavaScriptSpellCheck\themes\clean\context-menu.css" />
+    <Content Include="JavaScriptSpellCheck\themes\clean\dialog-window.css" />
+    <Content Include="JavaScriptSpellCheck\themes\clean\gwiggle.png" />
+    <Content Include="JavaScriptSpellCheck\themes\clean\ieonly.css" />
+    <Content Include="JavaScriptSpellCheck\themes\clean\wiggle.png" />
+    <Content Include="JavaScriptSpellCheck\themes\modern\ajax-loader.gif" />
+    <Content Include="JavaScriptSpellCheck\themes\modern\context-menu.css" />
+    <Content Include="JavaScriptSpellCheck\themes\modern\dialog-window.css" />
+    <Content Include="JavaScriptSpellCheck\themes\modern\gwiggle.png" />
+    <Content Include="JavaScriptSpellCheck\themes\modern\ieonly.css" />
+    <Content Include="JavaScriptSpellCheck\themes\modern\wiggle.png" />
+    <Content Include="JavaScriptSpellCheck\themes\modern\xp.gif" />
+    <Content Include="JavaScriptSpellCheck\translations\af.js" />
+    <Content Include="JavaScriptSpellCheck\translations\ar.js" />
+    <Content Include="JavaScriptSpellCheck\translations\be.js" />
+    <Content Include="JavaScriptSpellCheck\translations\bg.js" />
+    <Content Include="JavaScriptSpellCheck\translations\ca.js" />
+    <Content Include="JavaScriptSpellCheck\translations\cn.js" />
+    <Content Include="JavaScriptSpellCheck\translations\cs.js" />
+    <Content Include="JavaScriptSpellCheck\translations\cy.js" />
+    <Content Include="JavaScriptSpellCheck\translations\da.js" />
+    <Content Include="JavaScriptSpellCheck\translations\de.js" />
+    <Content Include="JavaScriptSpellCheck\translations\el.js" />
+    <Content Include="JavaScriptSpellCheck\translations\en.js" />
+    <Content Include="JavaScriptSpellCheck\translations\es.js" />
+    <Content Include="JavaScriptSpellCheck\translations\et.js" />
+    <Content Include="JavaScriptSpellCheck\translations\fa.js" />
+    <Content Include="JavaScriptSpellCheck\translations\fi.js" />
+    <Content Include="JavaScriptSpellCheck\translations\fr.js" />
+    <Content Include="JavaScriptSpellCheck\translations\ga.js" />
+    <Content Include="JavaScriptSpellCheck\translations\gl.js" />
+    <Content Include="JavaScriptSpellCheck\translations\hi.js" />
+    <Content Include="JavaScriptSpellCheck\translations\hr.js" />
+    <Content Include="JavaScriptSpellCheck\translations\hu.js" />
+    <Content Include="JavaScriptSpellCheck\translations\id.js" />
+    <Content Include="JavaScriptSpellCheck\translations\is.js" />
+    <Content Include="JavaScriptSpellCheck\translations\it.js" />
+    <Content Include="JavaScriptSpellCheck\translations\iw.js" />
+    <Content Include="JavaScriptSpellCheck\translations\ja.js" />
+    <Content Include="JavaScriptSpellCheck\translations\ko.js" />
+    <Content Include="JavaScriptSpellCheck\translations\lt.js" />
+    <Content Include="JavaScriptSpellCheck\translations\lv.js" />
+    <Content Include="JavaScriptSpellCheck\translations\mk.js" />
+    <Content Include="JavaScriptSpellCheck\translations\ms.js" />
+    <Content Include="JavaScriptSpellCheck\translations\mt.js" />
+    <Content Include="JavaScriptSpellCheck\translations\nl.js" />
+    <Content Include="JavaScriptSpellCheck\translations\no.js" />
+    <Content Include="JavaScriptSpellCheck\translations\pl.js" />
+    <Content Include="JavaScriptSpellCheck\translations\pt.js" />
+    <Content Include="JavaScriptSpellCheck\translations\ro.js" />
+    <Content Include="JavaScriptSpellCheck\translations\ru.js" />
+    <Content Include="JavaScriptSpellCheck\translations\simple.js" />
+    <Content Include="JavaScriptSpellCheck\translations\sk.js" />
+    <Content Include="JavaScriptSpellCheck\translations\sl.js" />
+    <Content Include="JavaScriptSpellCheck\translations\sq.js" />
+    <Content Include="JavaScriptSpellCheck\translations\sr.js" />
+    <Content Include="JavaScriptSpellCheck\translations\sw.js" />
+    <Content Include="JavaScriptSpellCheck\translations\template.js" />
+    <Content Include="JavaScriptSpellCheck\translations\th.js" />
+    <Content Include="JavaScriptSpellCheck\translations\tl.js" />
+    <Content Include="JavaScriptSpellCheck\translations\tr.js" />
+    <Content Include="JavaScriptSpellCheck\translations\tw.js" />
+    <Content Include="JavaScriptSpellCheck\translations\uk.js" />
+    <Content Include="JavaScriptSpellCheck\translations\vi.js" />
+    <Content Include="JavaScriptSpellCheck\translations\yi.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="JavaScriptSpellCheck\.DS_Store" />
+    <Content Include="JavaScriptSpellCheck\core\default.ashx" />
+    <Content Include="JavaScriptSpellCheck\dictionaries\.DS_Store" />
+    <Content Include="JavaScriptSpellCheck\dictionaries\English %28International%29.dic" />
+    <Content Include="JavaScriptSpellCheck\dictionaries\Francais.dic" />
+    <Content Include="JavaScriptSpellCheck\extensions\modalbox\README" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CalculateTicketPrice.js" />
+    <Content Include="Scripts\GenerateCalendarPopup.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.flashmessage.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\PrintRegistration.js" />
+    <Content Include="Scripts\SpellCheck_BadWords.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -265,10 +476,14 @@
     <Content Include="Views\Events\Details.cshtml" />
     <Content Include="Views\Events\Delete.cshtml" />
     <Content Include="Views\Events\Edit.cshtml" />
-    <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Events\Create.cshtml" />
-    <Content Include="Views\Events\Index2.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Participants\RegistrationConfirmation.cshtml" />
+    <Content Include="Views\Events\SelectCalendarType.cshtml" />
+    <Content Include="Views\Events\allEvents.cshtml" />
+    <Content Include="Views\Shared\_Flash.cshtml" />
+    <Content Include="Views\Participants\ReminderConfirmation.cshtml" />
+    <Content Include="Views\Participants\Reminders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -283,7 +498,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
