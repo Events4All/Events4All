@@ -3,9 +3,9 @@ using Events4All.Web.Models;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
-using Events4All.DB.Models;
-using Events4All.DBQuery;
-using Events4All.Web.Models;
+//using Events4All.DB.Models;
+//using Events4All.DBQuery;
+//using Events4All.Web.Models;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
@@ -36,6 +36,7 @@ namespace Events4All.Web.Controllers
             if (participantQuery.IsRegistered(id))
             {
                 ViewBag.Registered = "You have already registered for this event.";
+                ViewBag.ParticipantID = participantQuery.FindParticipantByEventAndUser(id);
             }
 
             if (id == null)
@@ -49,6 +50,8 @@ namespace Events4All.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            
 
             EventsViewModel vm = new EventsViewModel();
 
@@ -316,6 +319,7 @@ namespace Events4All.Web.Controllers
             {
                 ParticipantsViewModel vm = new ParticipantsViewModel();
 
+                vm.id = Pdto.Id;
                 vm.EventName = Equery.FindEvent(Pdto.eventId).Name;
                 vm.EventStartDate = Equery.FindEvent(Pdto.eventId).TimeStart;
                 vm.Description = Equery.FindEvent(Pdto.eventId).Description;

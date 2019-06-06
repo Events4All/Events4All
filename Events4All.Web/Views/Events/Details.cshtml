@@ -96,19 +96,24 @@
 <p>
 
     @{
-        string styleValue;
+        string registerStyleValue;
+        string viewTicketStyleValue;
+
         if (ViewBag.Registered == null)
         {
-            styleValue = "inline";
+            registerStyleValue = "inline";
+            viewTicketStyleValue = "none";
         }
         else
         {
-            styleValue = "none";
+            registerStyleValue = "none";
+            viewTicketStyleValue = "inline";
         }
     }
     <div id="pagelink">
-        @Html.ActionLink("Register", "Create/" + @Model.Id, "Participants", null, new { id = "register", style = "display:" + @styleValue }) |
-        @Ajax.ActionLink("Add to Calendar", "SelectCalendarType/" + Model.Id, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })
+        @Html.ActionLink("View Ticket","RegistrationConfirmation","Participants", new { id = ViewBag.ParticipantID }, new { style = "display:" + viewTicketStyleValue, @class="btn btn-primary", type = "button" })
+        @Html.ActionLink("Register", "Create/" + @Model.Id, "Participants", null, new { id = "register", style = "display:" + registerStyleValue, @class="link" } ) |
+        @Ajax.ActionLink("Add to Calendar", "SelectCalendarType", new { id = Model.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class="link"})
     </div>
 </p>
 <div id="result" style="display:none;"></div>
