@@ -1,10 +1,4 @@
-﻿using Events4All.DB.Models;
-using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Events4All.Web.Models
