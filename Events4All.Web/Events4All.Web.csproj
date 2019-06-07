@@ -481,9 +481,12 @@
     <Content Include="Views\Participants\RegistrationConfirmation.cshtml" />
     <Content Include="Views\Events\SelectCalendarType.cshtml" />
     <Content Include="Views\Events\allEvents.cshtml" />
-    <Content Include="Views\Shared\_Flash.cshtml" />
     <Content Include="Views\Participants\ReminderConfirmation.cshtml" />
     <Content Include="Views\Participants\Reminders.cshtml" />
+    <Content Include="Views\Events\_eventsCreated.cshtml" />
+    <Content Include="Views\Events\_eventsAttended.cshtml" />
+    <Content Include="Views\Events\eventsCreated.cshtml" />
+    <Content Include="Views\Events\eventsAttended.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

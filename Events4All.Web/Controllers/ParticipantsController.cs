@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using Events4All.DBQuery;
 using Events4All.Web.Models;
-using Events4All.DBQuery;
-using Events4All.Web.Controllers;
-using Events4All.DB.Models;
-using System.IO;
+using System.Net;
+using System.Web.Mvc;
 
 
 namespace Events4All.Web.Controllers
@@ -139,7 +130,6 @@ namespace Events4All.Web.Controllers
         
         public ActionResult ReminderConfirmation()
         {
-            //   return RedirectToAction("ReminderConfirmation", "Participants");
             return View();
         }
     }
