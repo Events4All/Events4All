@@ -19,14 +19,19 @@ namespace Events4All.DBQuery.Queries
 
         /* Method to get the participants that have elected to have reminder notifications sent to them
                 -queries the database and gets the results as a list
-                -passes the list into a DTO object and returns a DTO with the query results*/
+                -passes the list into a DTO object and returns a DTO with the query results */
         public List<ReminderDTO> GetReminderData()
         {
-            /* LINQ syntax to query the database for participants with reminder notifications 
-                    -creates a list from the query results*/
+            /* LINQ syntax to query the database for participants with reminder notifications set for today
+                    -creates a list from the query results */
             var reminderList = (from u in db.Users
                                 join e in db.Events on u.Id equals e.CreatedBy.Id
                                 join p in db.Participants on e.Id equals p.EventID.Id
+                                where p.emailNotificationOn == true
+                                where p.Reminder.Value.Year == DateTime.Now.Year
+                                where p.Reminder.Value.Month == DateTime.Now.Month
+                                where p.Reminder.Value.Day == DateTime.Now.Day
+
                                 select new
                                 {
                                     u.Email,

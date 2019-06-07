@@ -82,26 +82,19 @@ namespace Events4All.Web.Controllers
 
             return View(vm);
         }
-        // public ParticipantsController() { }
-        //GET REMINDER
-        //public Participants pt = new Participants();
-        //public IQueryable<ParticipantDTO> GetParticipants()
-        //{ 
-        //    var participants = from p in 
-
-        //}
 
 
         [HttpGet]
         public ActionResult Reminders(int id)
         {
             RemindersViewModel rvm = new RemindersViewModel();
+            ParticipantQuery pq = new ParticipantQuery();
+            EventQuery eq = new EventQuery();
 
             ParticipantDTO pDTO = pq.FindParticipant(id);
             EventDTO evDTO = eq.FindEvent(pDTO.eventId);
 
-            //Map DTO fields to rvm
-            
+            //Map DTO fields to rvm            
             rvm.EventStartDate = evDTO.TimeStart;
             rvm.Reminder = pDTO.Reminder;
             rvm.emailNotificationOn = pDTO.emailNotificationOn;
@@ -125,14 +118,13 @@ namespace Events4All.Web.Controllers
             {
                 ParticipantQuery pq = new ParticipantQuery();
                 ParticipantDTO pDTO = new ParticipantDTO();
-                // pDTO.EventStart = participantsViewModel.EventStartDate;
                 
                 pDTO.Reminder = remindersViewModel.Reminder;
                 pDTO.emailNotificationOn = remindersViewModel.emailNotificationOn;
                 pDTO.SMSNotificationOn = remindersViewModel.SMSNotificationOn;
                 pDTO.Id = id;
 
-                query.UpdateParticipantReminders(pDTO);
+                pq.UpdateParticipantReminders(pDTO);
                 
                  return RedirectToAction("ReminderConfirmation", "Participants");
             }
