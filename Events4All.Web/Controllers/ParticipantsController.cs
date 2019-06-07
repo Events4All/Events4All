@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using Events4All.DBQuery;
 using Events4All.Web.Models;
-using Events4All.DBQuery;
-using Events4All.Web.Controllers;
-using Events4All.DB.Models;
-using System.IO;
+using System.Net;
+using System.Web.Mvc;
 
 
 namespace Events4All.Web.Controllers
@@ -96,6 +87,8 @@ namespace Events4All.Web.Controllers
         public ActionResult Reminders(int id)
         {
             RemindersViewModel rvm = new RemindersViewModel();
+            ParticipantQuery pq = new ParticipantQuery();
+            EventQuery eq = new EventQuery();
 
             ParticipantDTO pDTO = pq.FindParticipant(id);
             EventDTO evDTO = eq.FindEvent(pDTO.eventId);
@@ -125,14 +118,13 @@ namespace Events4All.Web.Controllers
             {
                 ParticipantQuery pq = new ParticipantQuery();
                 ParticipantDTO pDTO = new ParticipantDTO();
-                // pDTO.EventStart = participantsViewModel.EventStartDate;
                 
                 pDTO.Reminder = remindersViewModel.Reminder;
                 pDTO.emailNotificationOn = remindersViewModel.emailNotificationOn;
                 pDTO.SMSNotificationOn = remindersViewModel.SMSNotificationOn;
                 pDTO.Id = id;
 
-                query.UpdateParticipantReminders(pDTO);
+                pq.UpdateParticipantReminders(pDTO);
                 
                  return RedirectToAction("ReminderConfirmation", "Participants");
             }
@@ -147,7 +139,6 @@ namespace Events4All.Web.Controllers
         
         public ActionResult ReminderConfirmation()
         {
-            //   return RedirectToAction("ReminderConfirmation", "Participants");
             return View();
         }
     }
