@@ -72,6 +72,7 @@ namespace Events4All.DBQuery
         public ParticipantDTO MapParticipantToDTO(Participants participant)
         {
             ParticipantDTO dto = new ParticipantDTO();
+            dto.Id = participant.Id;
             dto.eventId = participant.EventID.Id;
             dto.NumberOfTicket = participant.NumberOfTicket;
             dto.Reminder = participant.Reminder;

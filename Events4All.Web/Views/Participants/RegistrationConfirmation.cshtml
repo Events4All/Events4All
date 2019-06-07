@@ -39,6 +39,10 @@
     string barcodeUrl2 = Url.Action("RenderBarcode", "Barcode") + "/" + ViewBag.Username + ViewBag.EventName + "guest2";
     string barcodeUrl3 = Url.Action("RenderBarcode", "Barcode") + "/" + ViewBag.Username + ViewBag.EventName + "guest3";
 
+    string barcodeRaw1 = ViewBag.Username + ViewBag.EventName + "guest1";
+    string barcodeRaw2 = ViewBag.Username + ViewBag.EventName + "guest2";
+    string barcodeRaw3 = ViewBag.Username + ViewBag.EventName + "guest3";
+
     string show2 = "display:none";
     string show3 = "display:none";
 
@@ -57,14 +61,17 @@
     <div class="col-md-12" style="display:inline">
         <div>Guest 1</div>
         <iframe src=@barcodeUrl1 frameborder="0" height="100" width="1000"></iframe>
+        <div>@barcodeRaw1</div>
     </div>
     <div class="col-md-12" style=@show2>
         <div>Guest 2</div>
         <iframe src=@barcodeUrl2 frameborder="0" height="100" width="1000"></iframe>
+        <div>@barcodeRaw2</div>
     </div>
     <div class="col-md-12" style=@show3>
         <div>Guest 3</div>
         <iframe src=@barcodeUrl3 frameborder="0" height="100" width="1000"></iframe>
+        <div>@barcodeRaw3</div>
     </div>
 </div>
 <p>
