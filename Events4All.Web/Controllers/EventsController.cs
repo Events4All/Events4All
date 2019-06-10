@@ -321,7 +321,6 @@ namespace Events4All.Web.Controllers
                 allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
                 List<EventsViewModel> events = new List<EventsViewModel>();
 
-
                 List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
 
                 foreach (EventDTO Edto in dtoUserEventsCreated)
@@ -512,6 +511,8 @@ namespace Events4All.Web.Controllers
 
                 List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
 
+              
+
                 foreach (EventDTO Edto in dtoUserEventsCreated)
                 {
                     EventsViewModel vm = new EventsViewModel();
@@ -545,6 +546,13 @@ namespace Events4All.Web.Controllers
                 return View(UserEventsCreatedList);
             }
         }
+
+
+        public PartialViewResult _SocialMediaShare()
+        {
+            return PartialView();
+        }
+
     }
 }
     

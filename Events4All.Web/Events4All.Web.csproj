@@ -487,6 +487,7 @@
     <Content Include="Views\Events\_eventsAttended.cshtml" />
     <Content Include="Views\Events\eventsCreated.cshtml" />
     <Content Include="Views\Events\eventsAttended.cshtml" />
+    <Content Include="Views\Events\_SocialMediaShare.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
