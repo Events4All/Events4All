@@ -114,7 +114,15 @@ namespace Events4All.DBQuery
             db.Entry(pRec).State = EntityState.Modified;
             db.SaveChanges();                     
         }
- 
+        
+        //public IQueryable<Participants> GetParticipantID(int id)
+        //{
+        //    var participants = db.Participants;
+        //    var events = db.Events;
+        //    IQueryable<Participants> ParticipantID = participants.Where(x => x.EventID.Id == id);
+        //    return ParticipantID;
+        //}
       
+        
     }
 }

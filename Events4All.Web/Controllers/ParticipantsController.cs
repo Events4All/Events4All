@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using Events4All.DBQuery;
 using Events4All.Web.Models;
-using Events4All.DBQuery;
-using Events4All.Web.Controllers;
-using Events4All.DB.Models;
-using System.IO;
+using System.Net;
+using System.Web.Mvc;
 
 
 namespace Events4All.Web.Controllers
@@ -82,26 +73,19 @@ namespace Events4All.Web.Controllers
 
             return View(vm);
         }
-        // public ParticipantsController() { }
-        //GET REMINDER
-        //public Participants pt = new Participants();
-        //public IQueryable<ParticipantDTO> GetParticipants()
-        //{ 
-        //    var participants = from p in 
-
-        //}
 
 
         [HttpGet]
         public ActionResult Reminders(int id)
         {
             RemindersViewModel rvm = new RemindersViewModel();
+            ParticipantQuery pq = new ParticipantQuery();
+            EventQuery eq = new EventQuery();
 
             ParticipantDTO pDTO = pq.FindParticipant(id);
             EventDTO evDTO = eq.FindEvent(pDTO.eventId);
 
-            //Map DTO fields to rvm
-            
+            //Map DTO fields to rvm            
             rvm.EventStartDate = evDTO.TimeStart;
             rvm.Reminder = pDTO.Reminder;
             rvm.emailNotificationOn = pDTO.emailNotificationOn;
@@ -125,20 +109,20 @@ namespace Events4All.Web.Controllers
             {
                 ParticipantQuery pq = new ParticipantQuery();
                 ParticipantDTO pDTO = new ParticipantDTO();
-                // pDTO.EventStart = participantsViewModel.EventStartDate;
                 
                 pDTO.Reminder = remindersViewModel.Reminder;
                 pDTO.emailNotificationOn = remindersViewModel.emailNotificationOn;
                 pDTO.SMSNotificationOn = remindersViewModel.SMSNotificationOn;
                 pDTO.Id = id;
 
-                query.UpdateParticipantReminders(pDTO);
+                pq.UpdateParticipantReminders(pDTO);
                 
                  return RedirectToAction("ReminderConfirmation", "Participants");
             }
 
             return View(remindersViewModel);
         }
+
 
         public ActionResult BackToIndex()
         {
@@ -150,6 +134,15 @@ namespace Events4All.Web.Controllers
             //   return RedirectToAction("ReminderConfirmation", "Participants");
             return View();
         }
+
+        //public ActionResult SetReminder(int eventID)
+        //{
+        //    ParticipantQuery pq = new ParticipantQuery();
+            
+        //    var ParticipantID = pq.GetParticipantID(eventID);
+            
+        //    return RedirectToAction("Reminders/"+ ParticipantID,"Participants");
+        //}
     }
 }
 
