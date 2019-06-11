@@ -14,9 +14,9 @@ namespace Events4All.DBQuery
         public int NumberOfTicket { get; set; }
         public DateTime? Reminder { get; set; }
         public string userId { get; set; }
-
         public bool emailNotificationOn { get; set; }
         public bool SMSNotificationOn { get; set; }
+        public List<Guid> Barcodes { get; set; }
         //public DateTime? EventStart { get; set; }
     }
 }

@@ -56,6 +56,7 @@ namespace Events4All.DBQuery
             dto.TwitterHandle = events.TwitterHandle;
             dto.Web = events.Web;
             dto.Zip = events.Zip;
+            dto.AttendeeCap = events.AttendeeCap;
 
             return dto;
         }
@@ -84,7 +85,8 @@ namespace Events4All.DBQuery
                 Detail = EventsDTO.Detail,
                 Logo = EventsDTO.Logo,
                 TicketPrice = EventsDTO.TicketPrice,
-                HashTag = EventsDTO.HashTag
+                HashTag = EventsDTO.HashTag,
+                AttendeeCap = EventsDTO.AttendeeCap
             };
 
             db.Events.Add(Events);
@@ -127,6 +129,7 @@ namespace Events4All.DBQuery
             Ev.TicketPrice = DT.TicketPrice;
             Ev.TwitterHandle = DT.TwitterHandle;
             Ev.Web = DT.Web;
+            Ev.AttendeeCap = DT.AttendeeCap;
             db.SaveChanges();
         }
 

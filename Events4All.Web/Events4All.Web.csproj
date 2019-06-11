@@ -203,6 +203,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\allEventsViewModel.cs" />
+    <Compile Include="Models\CheckInsViewModel.cs" />
     <Compile Include="Models\EventsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ParticipantsViewModel.cs" />
@@ -271,6 +272,7 @@
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CalculateTicketPrice.js" />
     <Content Include="Scripts\GenerateCalendarPopup.js" />
+    <Content Include="Scripts\ParseBarcode.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -332,6 +334,7 @@
     <Content Include="Views\Participants\Reminders.cshtml" />
     <Content Include="Views\Events\SelectCalendarType.cshtml" />
     <Content Include="Views\Events\allEvents.cshtml" />
+    <Content Include="Views\Events\CheckIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

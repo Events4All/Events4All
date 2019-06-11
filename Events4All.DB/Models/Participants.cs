@@ -8,7 +8,8 @@ namespace Events4All.DB.Models
 {
     public class Participants : Base
     {
-        public ApplicationUser AccountID { get; set; }
+        public ApplicationUser AccountID { get; set; }       
+        public ICollection<Barcodes> Barcodes { get; set; }
         public Events EventID { get; set; }       
         public int NumberOfTicket { get; set; }  
         public DateTime? Reminder { get; set; }
