@@ -74,6 +74,10 @@
     <Compile Include="Migrations\201906071502343_added_barcode_table.Designer.cs">
       <DependentUpon>201906071502343_added_barcode_table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906091355384_AddEmailNtfctnSntTimeToPrtcpnts.cs" />
+    <Compile Include="Migrations\201906091355384_AddEmailNtfctnSntTimeToPrtcpnts.Designer.cs">
+      <DependentUpon>201906091355384_AddEmailNtfctnSntTimeToPrtcpnts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Barcodes.cs" />
     <Compile Include="Models\Base.cs" />
@@ -97,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906041815493_AddNotificationFields.resx">
       <DependentUpon>201906041815493_AddNotificationFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906091355384_AddEmailNtfctnSntTimeToPrtcpnts.resx">
+      <DependentUpon>201906091355384_AddEmailNtfctnSntTimeToPrtcpnts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906051857520_add_attendee_cap.resx">
       <DependentUpon>201906051857520_add_attendee_cap.cs</DependentUpon>

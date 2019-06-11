@@ -16,22 +16,11 @@ namespace Events4All.Web.Controllers
 {
     public class EventsController : Controller
     {
-        //private EventQuery Equery = new EventQuery();
-        //private EventDTO Edto = new EventDTO();
-
-        //private ParticipantQuery participantQuery = new ParticipantQuery();
-
-        //private ApplicationDbContext db = new ApplicationDbContext();
-
-
-        //private ParticipantQuery Pquery = new ParticipantQuery();
-        //private ParticipantDTO Pdto = new ParticipantDTO();
-
         public ActionResult Details(int? id)
         {
-             ParticipantQuery participantQuery = new ParticipantQuery();
-             EventQuery Equery = new EventQuery();
-             EventDTO Edto = new EventDTO();
+            ParticipantQuery participantQuery = new ParticipantQuery();
+            EventQuery Equery = new EventQuery();
+            EventDTO Edto = new EventDTO();
 
             if (participantQuery.IsRegistered(id))
             {
@@ -50,8 +39,6 @@ namespace Events4All.Web.Controllers
             {
                 return HttpNotFound();
             }
-
-            
 
             EventsViewModel vm = new EventsViewModel();
 
@@ -118,9 +105,7 @@ namespace Events4All.Web.Controllers
             return View(vmList);
         }
 
-        //*****************************************************************
-        //Gary's code:
-        //*****************************************************************
+
         // GET: Events/Create
         public ActionResult Create()
         {
@@ -209,7 +194,7 @@ namespace Events4All.Web.Controllers
 
             return View(vm);
         }
-    
+
         //post
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
@@ -239,7 +224,7 @@ namespace Events4All.Web.Controllers
             Equery.EditEvent(Edto);
             return RedirectToAction("Index");
         }
-        
+
         // GET
         public ActionResult Delete(int? id)
         {
@@ -281,7 +266,7 @@ namespace Events4All.Web.Controllers
             return View(vm);
 
         }
-        
+
         // POST
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -293,51 +278,6 @@ namespace Events4All.Web.Controllers
             return RedirectToAction("Index");
         }
 
-
-        public ActionResult allEvents()
-        {
-            EventQuery Equery = new EventQuery();
-            ParticipantQuery Pquery = new ParticipantQuery();
-
-
-            allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
-            List<EventsViewModel> events = new List<EventsViewModel>();
-
-
-            List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
-
-            foreach (EventDTO Edto in dtoUserEventsCreated)
-            {
-                EventsViewModel vm = new EventsViewModel();
-
-                vm.Id = Edto.Id;
-                vm.Name = Edto.Name;
-                vm.TimeStart = Edto.TimeStart;
-                vm.Description = Edto.Description;
-
-                events.Add(vm);
-            }
-
-            List<ParticipantsViewModel> Pevents = new List<ParticipantsViewModel>();
-            List<ParticipantDTO> ParticipantDTO = Pquery.QueryUserEventsAttending();
-
-            foreach (ParticipantDTO Pdto in ParticipantDTO)
-            {
-                ParticipantsViewModel vm = new ParticipantsViewModel();
-
-                vm.id = Pdto.Id;
-                vm.EventName = Equery.FindEvent(Pdto.eventId).Name;
-                vm.EventStartDate = Equery.FindEvent(Pdto.eventId).TimeStart;
-                vm.Description = Equery.FindEvent(Pdto.eventId).Description;
-
-                Pevents.Add(vm);
-            }
-
-            UserEventsCreatedList.EventsAttend = Pevents;
-            UserEventsCreatedList.EventsCreated = events;
-
-            return View(UserEventsCreatedList);
-        }
 
         public PartialViewResult SelectCalendarType(int id)
         {
@@ -378,6 +318,248 @@ namespace Events4All.Web.Controllers
             var serializedCalendar = serializer.SerializeToString(calendar);
             byte[] calendarBytes = System.Text.Encoding.UTF8.GetBytes(serializedCalendar);
             return calendarBytes;
+        }
+                                   
+        public PartialViewResult _EventsCreatedPartial()
+        {
+            {
+                EventQuery Equery = new EventQuery();
+                ParticipantQuery Pquery = new ParticipantQuery();
+
+
+                allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
+                List<EventsViewModel> events = new List<EventsViewModel>();
+
+                List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
+
+                foreach (EventDTO Edto in dtoUserEventsCreated)
+                {
+                    EventsViewModel vm = new EventsViewModel();
+
+                    vm.Id = Edto.Id;
+                    vm.Name = Edto.Name;
+                    vm.TimeStart = Edto.TimeStart;
+                    vm.Description = Edto.Description;
+
+                    events.Add(vm);
+                }
+
+                List<ParticipantsViewModel> Pevents = new List<ParticipantsViewModel>();
+                List<ParticipantDTO> ParticipantDTO = Pquery.QueryUserEventsAttending();
+
+                foreach (ParticipantDTO Pdto in ParticipantDTO)
+                {
+                    ParticipantsViewModel vm = new ParticipantsViewModel();
+
+                    vm.id = Equery.FindEvent(Pdto.eventId).Id;
+                    vm.EventName = Equery.FindEvent(Pdto.eventId).Name;
+                    vm.EventStartDate = Equery.FindEvent(Pdto.eventId).TimeStart;
+                    vm.Description = Equery.FindEvent(Pdto.eventId).Description;
+
+                    Pevents.Add(vm);
+                }
+
+                UserEventsCreatedList.EventsAttend = Pevents;
+                UserEventsCreatedList.EventsCreated = events;
+
+                return PartialView(UserEventsCreatedList);
+            }
+        }
+
+        public PartialViewResult _eventsAttended()
+        {
+            {
+                EventQuery Equery = new EventQuery();
+                ParticipantQuery Pquery = new ParticipantQuery();
+
+
+                allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
+                List<EventsViewModel> events = new List<EventsViewModel>();
+
+
+                List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
+
+                foreach (EventDTO Edto in dtoUserEventsCreated)
+                {
+                    EventsViewModel vm = new EventsViewModel();
+
+                    vm.Id = Edto.Id;
+                    vm.Name = Edto.Name;
+                    vm.TimeStart = Edto.TimeStart;
+                    vm.Description = Edto.Description;
+
+                    events.Add(vm);
+                }
+
+                List<ParticipantsViewModel> Pevents = new List<ParticipantsViewModel>();
+                List<ParticipantDTO> ParticipantDTO = Pquery.QueryUserEventsAttending();
+
+                foreach (ParticipantDTO Pdto in ParticipantDTO)
+                {
+                    ParticipantsViewModel vm = new ParticipantsViewModel();
+
+                    vm.id = Equery.FindEvent(Pdto.eventId).Id;
+                    vm.EventName = Equery.FindEvent(Pdto.eventId).Name;
+                    vm.EventStartDate = Equery.FindEvent(Pdto.eventId).TimeStart;
+                    vm.Description = Equery.FindEvent(Pdto.eventId).Description;
+
+                    Pevents.Add(vm);
+                }
+
+                UserEventsCreatedList.EventsAttend = Pevents;
+                UserEventsCreatedList.EventsCreated = events;
+
+                return PartialView(UserEventsCreatedList);
+            }
+        }
+
+        public ActionResult allEvents()
+        {
+            {
+                EventQuery Equery = new EventQuery();
+                ParticipantQuery Pquery = new ParticipantQuery();
+
+
+                allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
+                List<EventsViewModel> events = new List<EventsViewModel>();
+
+
+                List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
+
+                foreach (EventDTO Edto in dtoUserEventsCreated)
+                {
+                    EventsViewModel vm = new EventsViewModel();
+
+                    vm.Id = Edto.Id;
+                    vm.Name = Edto.Name;
+                    vm.TimeStart = Edto.TimeStart;
+                    vm.Description = Edto.Description;
+
+                    events.Add(vm);
+                }
+
+                List<ParticipantsViewModel> Pevents = new List<ParticipantsViewModel>();
+                List<ParticipantDTO> ParticipantDTO = Pquery.QueryUserEventsAttending();
+
+                foreach (ParticipantDTO Pdto in ParticipantDTO)
+                {
+                    ParticipantsViewModel vm = new ParticipantsViewModel();
+
+                    vm.id = Equery.FindEvent(Pdto.eventId).Id;
+                    vm.EventName = Equery.FindEvent(Pdto.eventId).Name;
+                    vm.EventStartDate = Equery.FindEvent(Pdto.eventId).TimeStart;
+                    vm.Description = Equery.FindEvent(Pdto.eventId).Description;
+
+                    Pevents.Add(vm);
+                }
+
+                UserEventsCreatedList.EventsAttend = Pevents;
+                UserEventsCreatedList.EventsCreated = events;
+
+                return View(UserEventsCreatedList);
+            }
+        }
+
+        public ActionResult eventsAttended()
+        {
+            {
+                EventQuery Equery = new EventQuery();
+                ParticipantQuery Pquery = new ParticipantQuery();
+
+
+                allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
+                List<EventsViewModel> events = new List<EventsViewModel>();
+
+
+                List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
+
+                foreach (EventDTO Edto in dtoUserEventsCreated)
+                {
+                    EventsViewModel vm = new EventsViewModel();
+
+                    vm.Id = Edto.Id;
+                    vm.Name = Edto.Name;
+                    vm.TimeStart = Edto.TimeStart;
+                    vm.Description = Edto.Description;
+
+                    events.Add(vm);
+                }
+
+                List<ParticipantsViewModel> Pevents = new List<ParticipantsViewModel>();
+                List<ParticipantDTO> ParticipantDTO = Pquery.QueryUserEventsAttending();
+
+                foreach (ParticipantDTO Pdto in ParticipantDTO)
+                {
+                    ParticipantsViewModel vm = new ParticipantsViewModel();
+
+                    vm.id = Equery.FindEvent(Pdto.eventId).Id;
+                    vm.EventName = Equery.FindEvent(Pdto.eventId).Name;
+                    vm.EventStartDate = Equery.FindEvent(Pdto.eventId).TimeStart;
+                    vm.Description = Equery.FindEvent(Pdto.eventId).Description;
+
+                    Pevents.Add(vm);
+                }
+
+                UserEventsCreatedList.EventsAttend = Pevents;
+                UserEventsCreatedList.EventsCreated = events;
+
+                return View(UserEventsCreatedList);
+            }
+        }
+
+        public ActionResult eventsCreated()
+        {
+            {
+                EventQuery Equery = new EventQuery();
+                ParticipantQuery Pquery = new ParticipantQuery();
+
+
+                allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
+                List<EventsViewModel> events = new List<EventsViewModel>();
+
+
+                List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
+
+              
+
+                foreach (EventDTO Edto in dtoUserEventsCreated)
+                {
+                    EventsViewModel vm = new EventsViewModel();
+
+                    vm.Id = Edto.Id;
+                    vm.Name = Edto.Name;
+                    vm.TimeStart = Edto.TimeStart;
+                    vm.Description = Edto.Description;
+
+                    events.Add(vm);
+                }
+
+                List<ParticipantsViewModel> Pevents = new List<ParticipantsViewModel>();
+                List<ParticipantDTO> ParticipantDTO = Pquery.QueryUserEventsAttending();
+
+                foreach (ParticipantDTO Pdto in ParticipantDTO)
+                {
+                    ParticipantsViewModel vm = new ParticipantsViewModel();
+
+                    vm.id = Equery.FindEvent(Pdto.eventId).Id;
+                    vm.EventName = Equery.FindEvent(Pdto.eventId).Name;
+                    vm.EventStartDate = Equery.FindEvent(Pdto.eventId).TimeStart;
+                    vm.Description = Equery.FindEvent(Pdto.eventId).Description;
+
+                    Pevents.Add(vm);
+                }
+
+                UserEventsCreatedList.EventsAttend = Pevents;
+                UserEventsCreatedList.EventsCreated = events;
+
+                return View(UserEventsCreatedList);
+            }
+        }
+
+
+        public PartialViewResult _SocialMediaShare()
+        {
+            return PartialView();
         }
 
         [HttpGet]
@@ -446,3 +628,5 @@ namespace Events4All.Web.Controllers
         }
     }
 }
+    
+

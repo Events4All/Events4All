@@ -1,0 +1,53 @@
+﻿@model Events4All.Web.Models.allEventsViewModel
+
+
+@{
+    ViewBag.Title = "allEvents";
+}
+
+
+<h2>Events I Created</h2>
+
+<p>
+    @Html.ActionLink("Create New Event", "Create")
+</p>
+<table class="table tableOutline">
+    <tr>
+        <th>
+            @Html.DisplayName("Name")
+        </th>
+        <th>
+            @Html.DisplayName("Time Start")
+        </th>
+        <th>
+            @Html.DisplayName("Description")
+        </th>
+    </tr>
+
+    @foreach (var item in Model.EventsCreated)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+
+            <td>
+
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+

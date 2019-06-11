@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events4All.DB", "Events4All
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events4All.DBQuery", "Events4All.DBQuery\Events4All.DBQuery.csproj", "{89E9C88E-D04F-460C-980E-C2D04923A57E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events4All.WinServ", "Events4All.WinServ\Events4All.WinServ.csproj", "{FE865F96-75E3-4040-BC13-9526F567D0BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{89E9C88E-D04F-460C-980E-C2D04923A57E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89E9C88E-D04F-460C-980E-C2D04923A57E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89E9C88E-D04F-460C-980E-C2D04923A57E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE865F96-75E3-4040-BC13-9526F567D0BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE865F96-75E3-4040-BC13-9526F567D0BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE865F96-75E3-4040-BC13-9526F567D0BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE865F96-75E3-4040-BC13-9526F567D0BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
