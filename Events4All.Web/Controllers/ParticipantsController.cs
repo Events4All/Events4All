@@ -131,7 +131,6 @@ namespace Events4All.Web.Controllers
         
         public ActionResult ReminderConfirmation()
         {
-            //   return RedirectToAction("ReminderConfirmation", "Participants");
             return View();
         }
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity.Validation;
 
 
 namespace Events4All.DBQuery
@@ -12,11 +13,9 @@ namespace Events4All.DBQuery
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
-
         public EventDTO FindEvent(int? id)
         {
-            Events events = db.Events.Where( x=> x.Id == id).Where(x=> x.IsActive == true).FirstOrDefault();
+            Events events = db.Events.Where(x => x.Id == id).Where(x => x.IsActive == true).FirstOrDefault();
             EventDTO dto = MapEventToDTO(events);
             return dto;
         }
@@ -62,41 +61,51 @@ namespace Events4All.DBQuery
 
         public void CreateEvent(EventDTO EventsDTO)
         {
-            string userId = HttpContext.Current.User.Identity.GetUserId();
-            ApplicationUser user = db.Users.Find(userId);
-
-            var Events = new Events
+            try
             {
-                CreatedBy = user,
-                IsActive = true,
-                CreatedDate = DateTime.Now,
-                Name = EventsDTO.Name,
-                Categories = EventsDTO.Categories,
-                Address = EventsDTO.Address,
-                City = EventsDTO.City,
-                State = EventsDTO.State,
-                Zip = EventsDTO.Zip,
-                Web = EventsDTO.Web,
-                TwitterHandle = EventsDTO.TwitterHandle,
-                TimeStart = EventsDTO.TimeStart,
-                TimeStop = EventsDTO.TimeStop,
-                Description = EventsDTO.Description,
-                Detail = EventsDTO.Detail,
-                Logo = EventsDTO.Logo,
-                TicketPrice = EventsDTO.TicketPrice,
-                HashTag = EventsDTO.HashTag
-            };
+                string userId = HttpContext.Current.User.Identity.GetUserId();
+                ApplicationUser user = db.Users.Find(userId);
 
-            db.Events.Add(Events);
+                var Events = new Events
+                {
+                    CreatedBy = user,
+                    IsActive = true,
+                    CreatedDate = DateTime.Now,
+                    Name = EventsDTO.Name,
+                    Categories = EventsDTO.Categories,
+                    Address = EventsDTO.Address,
+                    City = EventsDTO.City,
+                    State = EventsDTO.State,
+                    Zip = EventsDTO.Zip,
+                    Web = EventsDTO.Web,
+                    TwitterHandle = EventsDTO.TwitterHandle,
+                    TimeStart = EventsDTO.TimeStart,
+                    TimeStop = EventsDTO.TimeStop,
+                    Description = EventsDTO.Description,
+                    Detail = EventsDTO.Detail,
+                    Logo = EventsDTO.Logo,
+                    TicketPrice = EventsDTO.TicketPrice,
+                    HashTag = EventsDTO.HashTag
+                };
 
-            //try { db.SaveChanges(); }
-            //catch (DbEntityValidationException dbEx)
-            //{
-            //    new DbEntityValidationException("You must input event dates");
-            //}
-            db.SaveChanges();
+                db.Events.Add(Events);
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
         }
-
         public void DeleteConfirmed(int id)
         {
             Events Ev = db.Events.Find(id);

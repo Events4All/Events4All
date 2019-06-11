@@ -34,6 +34,6 @@ namespace Events4All.DB.Models
             return new ApplicationDbContext();
         }
 
-        
+        //public System.Data.Entity.DbSet<Events4All.Web.Models.allEventsViewModel> allEventsViewModels { get; set; }
     }
 }
