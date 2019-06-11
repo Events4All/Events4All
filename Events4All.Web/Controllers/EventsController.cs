@@ -8,6 +8,9 @@ using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
 using Ical.Net.Serialization;
 using System;
+using Events4All.DBQuery.DTO;
+using Events4All.DBQuery.Queries;
+using Events4All.Business.Rules;
 
 namespace Events4All.Web.Controllers
 {
@@ -57,6 +60,7 @@ namespace Events4All.Web.Controllers
             vm.TwitterHandle = Edto.TwitterHandle;
             vm.Web = Edto.Web;
             vm.Zip = Edto.Zip;
+            vm.AttendeeCap = Edto.AttendeeCap;
 
             return View(vm);
         }
@@ -92,6 +96,7 @@ namespace Events4All.Web.Controllers
                     vm.TwitterHandle = dto.TwitterHandle;
                     vm.Web = dto.Web;
                     vm.Zip = dto.Zip;
+                    vm.AttendeeCap = dto.AttendeeCap;
 
                     vmList.Add(vm);
                 }
@@ -114,7 +119,7 @@ namespace Events4All.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,Address,City,State,Zip,Web,TwitterHandle,TimeStart,TimeStop,Description,Detail,TicketPrice,HashTag")] EventsViewModel eventsViewModel)
+        public ActionResult Create([Bind(Include = "Name,Address,City,State,Zip,Web,TwitterHandle,TimeStart,TimeStop,Description,Detail,TicketPrice,HashTag,AttendeeCap")] EventsViewModel eventsViewModel)
         {
             EventDTO Edto = new EventDTO();
             EventQuery Equery = new EventQuery();
@@ -138,6 +143,7 @@ namespace Events4All.Web.Controllers
                 Edto.Detail = eventsViewModel.Detail;
                 Edto.TicketPrice = eventsViewModel.TicketPrice;
                 Edto.HashTag = eventsViewModel.HashTag;
+                Edto.AttendeeCap = eventsViewModel.AttendeeCap;
 
                 Equery.CreateEvent(Edto);
 
@@ -183,7 +189,8 @@ namespace Events4All.Web.Controllers
             vm.TimeStop = Edto.TimeStop;
             vm.TwitterHandle = Edto.TwitterHandle;
             vm.Web = Edto.Web;
-
+            vm.AttendeeCap = Edto.AttendeeCap;
+        
 
             return View(vm);
         }
@@ -212,6 +219,7 @@ namespace Events4All.Web.Controllers
             Edto.HashTag = EVM.HashTag;
             Edto.TwitterHandle = EVM.TwitterHandle;
             Edto.Web = EVM.Web;
+            Edto.AttendeeCap = EVM.AttendeeCap;
 
             Equery.EditEvent(Edto);
             return RedirectToAction("Index");
@@ -252,7 +260,8 @@ namespace Events4All.Web.Controllers
             vm.TimeStop = Edto.TimeStop;
             vm.TwitterHandle = Edto.TwitterHandle;
             vm.Web = Edto.Web;
-
+            vm.AttendeeCap = Edto.AttendeeCap;
+           
 
             return View(vm);
 
@@ -553,6 +562,70 @@ namespace Events4All.Web.Controllers
             return PartialView();
         }
 
+        [HttpGet]
+        public ActionResult CheckIn()
+        {
+            CheckInsViewModel civm = new CheckInsViewModel();
+            return View(civm);
+        }
+
+        [HttpPost]
+        public ActionResult CheckIn(string rawBarcode)
+        {
+            ParticipantQuery pq = new ParticipantQuery();
+            ParticipantDTO pDTO = new ParticipantDTO();           
+            CheckInQuery ciq = new CheckInQuery();
+            CheckInDTO ciDTO = new CheckInDTO();
+            CheckInRules ciRules = new CheckInRules();
+            BarcodeQuery bcq = new BarcodeQuery();
+
+            bool isValidBarcode = bcq.isValidBarcode(rawBarcode);
+            int CheckInTimeCode = 0;
+            bool isDuplicate = false;
+            string colorCode = "";
+
+            if (isValidBarcode)
+            {
+                pDTO = pq.FindParticipantByBarcode(rawBarcode);
+                CheckInTimeCode = ciRules.IsValidCheckInTime(pDTO.eventId);
+                isDuplicate = ciRules.IsDuplicateCheckIn(rawBarcode);
+            }
+
+            if (ModelState.IsValid && CheckInTimeCode == 0 && isDuplicate == false && isValidBarcode)
+            {
+                ciDTO.BarcodeId = bcq.GetBarcodeId(rawBarcode);
+                ciq.CreateCheckIn(ciDTO);
+                colorCode = "green";
+                return Json(new { errorColor = colorCode, error = "Check in is Successful!" });
+            }
+
+            string errorMessage = "";
+
+            if (CheckInTimeCode == -1)
+            {
+                errorMessage += "The check in period for this event has not started yet; ";
+                colorCode = "red";
+            }
+            else if (CheckInTimeCode == 1)
+            {
+                errorMessage += "The check in period for this event has ended; ";
+                colorCode = "red";
+            }
+
+            if (isDuplicate == true)
+            {
+                errorMessage += "This participant has already checked in today; ";
+                colorCode = "yellow";
+            }
+
+            if (!isValidBarcode)
+            {
+                errorMessage += "This is not a valid barcode; ";
+                colorCode = "red";
+            }
+
+            return Json(new { errorColor = colorCode, error = errorMessage });
+        }
     }
 }
     

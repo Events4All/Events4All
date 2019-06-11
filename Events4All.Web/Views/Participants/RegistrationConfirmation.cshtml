@@ -33,47 +33,20 @@
         </dd>
     </dl>
 </div>
-
-@{
-    string barcodeUrl1 = Url.Action("RenderBarcode", "Barcode") + "/" + ViewBag.Username + ViewBag.EventName + "guest1";
-    string barcodeUrl2 = Url.Action("RenderBarcode", "Barcode") + "/" + ViewBag.Username + ViewBag.EventName + "guest2";
-    string barcodeUrl3 = Url.Action("RenderBarcode", "Barcode") + "/" + ViewBag.Username + ViewBag.EventName + "guest3";
-
-    string barcodeRaw1 = ViewBag.Username + ViewBag.EventName + "guest1";
-    string barcodeRaw2 = ViewBag.Username + ViewBag.EventName + "guest2";
-    string barcodeRaw3 = ViewBag.Username + ViewBag.EventName + "guest3";
-
-    string show2 = "display:none";
-    string show3 = "display:none";
-
-    if (ViewBag.NumberOfTickets > 1)
-    {
-        show2 = "display:inline";
-    }
-
-    if (ViewBag.NumberOfTickets > 2)
-    {
-        show3 = "display:inline";
-    }
-}
-
-<div class="row">
-    <div class="col-md-12" style="display:inline">
-        <div>Guest 1</div>
-        <iframe src=@barcodeUrl1 frameborder="0" height="100" width="1000"></iframe>
-        <div>@barcodeRaw1</div>
-    </div>
-    <div class="col-md-12" style=@show2>
-        <div>Guest 2</div>
-        <iframe src=@barcodeUrl2 frameborder="0" height="100" width="1000"></iframe>
-        <div>@barcodeRaw2</div>
-    </div>
-    <div class="col-md-12" style=@show3>
-        <div>Guest 3</div>
-        <iframe src=@barcodeUrl3 frameborder="0" height="100" width="1000"></iframe>
-        <div>@barcodeRaw3</div>
-    </div>
-</div>
+    <table class="table">
+        <tr>
+            <th class="col-md-4" >Barcode</th>           
+        </tr>
+        @foreach (var item in Model.Barcodes)
+        {
+        <tr>
+            <td class="col-md-4">
+                <iframe src=@Url.Action("RenderBarcode", "Barcode",new { id = item.ToString() }) frameborder="0" height="80" width="1100"></iframe>
+                <div style="margin-left: 4px;">@item.ToString()</div>
+            </td>
+         </tr>
+         }
+    </table>
 <p>
     <div id="pagelink">
         <button id="print" class="btn btn-primary">Print</button> |

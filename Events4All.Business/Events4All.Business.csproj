@@ -60,6 +60,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Rules\CheckInRules.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\EmailInfo.resx">
@@ -67,6 +68,12 @@
       <LastGenOutput>EmailInfo.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Events4All.Business.Resource</CustomToolNamespace>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Events4All.DBQuery\Events4All.DBQuery.csproj">
+      <Project>{89e9c88e-d04f-460c-980e-c2d04923a57e}</Project>
+      <Name>Events4All.DBQuery</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
