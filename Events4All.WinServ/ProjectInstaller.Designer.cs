@@ -39,9 +39,11 @@
             // 
             // serviceInstaller1
             // 
+            this.serviceInstaller1.DelayedAutoStart = true;
             this.serviceInstaller1.Description = "Sends email reminders to users of the Events4All web application";
             this.serviceInstaller1.DisplayName = "Events4AllEmailNotification";
             this.serviceInstaller1.ServiceName = "Service1";
+            this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
             // 
