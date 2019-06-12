@@ -31,9 +31,12 @@ namespace Events4All.DBQuery.Queries
                                 where p.Reminder.Value.Year == DateTime.Now.Year
                                 where p.Reminder.Value.Month == DateTime.Now.Month
                                 where p.Reminder.Value.Day == DateTime.Now.Day
+                                where p.EmailNotificationSentTime == null
 
                                 select new
                                 {
+                                    p.EventID,
+                                    p.Id,
                                     u.Email,
                                     e.Name,
                                     e.Address,
@@ -55,6 +58,8 @@ namespace Events4All.DBQuery.Queries
                 //Instantiates a new Reminder DTO object found in the DTO folder
                 ReminderDTO reminderDTO = new ReminderDTO();
 
+                reminderDTO.EventId = u.EventID.ToString();
+                reminderDTO.ParticipantId = u.Id.ToString();
                 reminderDTO.Email = u.Email;
                 reminderDTO.Name = u.Name;
                 reminderDTO.Address = u.Address;
@@ -70,7 +75,7 @@ namespace Events4All.DBQuery.Queries
             }
 
             return reminderDTOList;
-
+         
         }
     }
 }

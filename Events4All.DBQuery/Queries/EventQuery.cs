@@ -55,6 +55,7 @@ namespace Events4All.DBQuery
             dto.TwitterHandle = events.TwitterHandle;
             dto.Web = events.Web;
             dto.Zip = events.Zip;
+            dto.AttendeeCap = events.AttendeeCap;
 
             return dto;
         }
@@ -66,27 +67,28 @@ namespace Events4All.DBQuery
                 string userId = HttpContext.Current.User.Identity.GetUserId();
                 ApplicationUser user = db.Users.Find(userId);
 
-                var Events = new Events
-                {
-                    CreatedBy = user,
-                    IsActive = true,
-                    CreatedDate = DateTime.Now,
-                    Name = EventsDTO.Name,
-                    Categories = EventsDTO.Categories,
-                    Address = EventsDTO.Address,
-                    City = EventsDTO.City,
-                    State = EventsDTO.State,
-                    Zip = EventsDTO.Zip,
-                    Web = EventsDTO.Web,
-                    TwitterHandle = EventsDTO.TwitterHandle,
-                    TimeStart = EventsDTO.TimeStart,
-                    TimeStop = EventsDTO.TimeStop,
-                    Description = EventsDTO.Description,
-                    Detail = EventsDTO.Detail,
-                    Logo = EventsDTO.Logo,
-                    TicketPrice = EventsDTO.TicketPrice,
-                    HashTag = EventsDTO.HashTag
-                };
+            var Events = new Events
+            {
+                CreatedBy = user,
+                IsActive = true,
+                CreatedDate = DateTime.Now,
+                Name = EventsDTO.Name,
+                Categories = EventsDTO.Categories,
+                Address = EventsDTO.Address,
+                City = EventsDTO.City,
+                State = EventsDTO.State,
+                Zip = EventsDTO.Zip,
+                Web = EventsDTO.Web,
+                TwitterHandle = EventsDTO.TwitterHandle,
+                TimeStart = EventsDTO.TimeStart,
+                TimeStop = EventsDTO.TimeStop,
+                Description = EventsDTO.Description,
+                Detail = EventsDTO.Detail,
+                Logo = EventsDTO.Logo,
+                TicketPrice = EventsDTO.TicketPrice,
+                HashTag = EventsDTO.HashTag,
+                AttendeeCap = EventsDTO.AttendeeCap
+            };
 
                 db.Events.Add(Events);
                 db.SaveChanges();
@@ -136,6 +138,7 @@ namespace Events4All.DBQuery
             Ev.TicketPrice = DT.TicketPrice;
             Ev.TwitterHandle = DT.TwitterHandle;
             Ev.Web = DT.Web;
+            Ev.AttendeeCap = DT.AttendeeCap;
             db.SaveChanges();
         }
 

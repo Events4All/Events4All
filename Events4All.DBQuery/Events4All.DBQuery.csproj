@@ -92,8 +92,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\CheckInDTO.cs" />
     <Compile Include="DTO\EventDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="Queries\BarcodeQuery.cs" />
+    <Compile Include="Queries\CheckInQuery.cs" />
     <Compile Include="Queries\UserQuery.cs" />
     <Compile Include="DTO\ReminderDTO.cs" />
     <Compile Include="Queries\EventQuery.cs" />

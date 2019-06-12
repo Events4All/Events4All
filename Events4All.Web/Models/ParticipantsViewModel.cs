@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 
 namespace Events4All.Web.Models
 {
@@ -13,7 +15,7 @@ namespace Events4All.Web.Models
         public int parId { get; set; }
 
 
-        [Range(1, 3, ErrorMessage = "You must select between 1 and 3 tickets."), Display(Name = "Number Of Tickets")]
+        [Range(1, 3, ErrorMessage = "Please enter a value between 1 and 3."), Display(Name = "Number Of Tickets")]
         public int NumberOfTicket { get; set; }
 
         [Display(Name = "Reminder:   ")]
@@ -30,6 +32,7 @@ namespace Events4All.Web.Models
         public bool SMSNotificationOn { get; set; }
 
         public string Description { get; set; }
+        public List<Guid> Barcodes { get; set; }
     }
 
 

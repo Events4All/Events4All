@@ -23,6 +23,27 @@ a:link#home, a:visited#home, a:active#home {
     color: blue !important;
 }
 
+.checkInSuccess {
+    background-color: green;
+    width: 300px;
+    display: inline-block;
+    height: 34px;
+}
+
+.checkInDuplicate {
+    background-color: yellow;
+    width: 300px;
+    display: inline-block;
+    height: 34px;
+}
+
+.checkInFailure {
+    background-color: red;
+    width: 300px;
+    display: inline-block;
+    height: 34px;
+}
+
 
 body {
     padding-top: 50px;

@@ -20,7 +20,7 @@ namespace Events4All.Web.Models
         public DateTime CreatedDate { get; set; }
 
         [Display(Name = "Event Name")]
-        [Required(ErrorMessage = "You must enter {0}")]
+        [Required(ErrorMessage = "You must enter {0}")]        
         public string Name { get; set; }
 
         public ICollection<EventCategories> Categories { get; set; }
@@ -62,6 +62,9 @@ namespace Events4All.Web.Models
 
         [Display(Name = "Hashtag")]
         public string HashTag { get; set; }
+
+        [Display(Name = "Attendee Cap")]
+        public int AttendeeCap { get; set; }
 
        // public string CreatedBy { get; set; }
     }

@@ -8,6 +8,8 @@ namespace Events4All.DBQuery.DTO
 {
     public class ReminderDTO
     {
+        public string ParticipantId { get; set; }
+        public string EventId { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
