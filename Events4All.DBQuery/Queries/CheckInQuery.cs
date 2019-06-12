@@ -32,25 +32,21 @@ namespace Events4All.DBQuery.Queries
             db.SaveChanges();
         }
 
-        public bool IsDuplicateCheckIn(string guid)
+        public List<DateTime> QueryCheckInTimes(string guid)
         {
-            bool isDuplicate = false;
+            List<DateTime> checkInTimes = new List<DateTime>();
 
             Barcodes barcode = db.Barcodes
                 .Include(x => x.CheckIns)
                 .Where(x => x.Barcode.ToString() == guid && x.IsActive == true)
                 .SingleOrDefault();
 
-            foreach(CheckIns checkIn in barcode.CheckIns)
+            foreach (CheckIns checkIn in barcode.CheckIns)
             {
-                if(checkIn.CheckinTime.Value.Day == DateTime.Now.Day)
-                {
-                    isDuplicate = true;
-                }
+                checkInTimes.Add(checkIn.CheckinTime.Value);
             }
 
-            return isDuplicate;
+            return checkInTimes;
         }
-
     }
 }

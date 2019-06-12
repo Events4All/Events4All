@@ -578,6 +578,7 @@ namespace Events4All.Web.Controllers
         [HttpPost]
         public ActionResult CheckIn(string rawBarcode)
         {
+            EventQuery eq = new EventQuery();
             ParticipantQuery pq = new ParticipantQuery();
             ParticipantDTO pDTO = new ParticipantDTO();           
             CheckInQuery ciq = new CheckInQuery();
@@ -593,8 +594,8 @@ namespace Events4All.Web.Controllers
             if (isValidBarcode)
             {
                 pDTO = pq.FindParticipantByBarcode(rawBarcode);
-                CheckInTimeCode = ciRules.IsValidCheckInTime(pDTO.eventId);
-                isDuplicate = ciRules.IsDuplicateCheckIn(rawBarcode);
+                CheckInTimeCode = ciRules.IsValidCheckInTime(eq.QueryEventTimes(pDTO.eventId));
+                isDuplicate = ciRules.IsDuplicateCheckIn(ciq.QueryCheckInTimes(rawBarcode));
             }
 
             if (ModelState.IsValid && CheckInTimeCode == 0 && isDuplicate == false && isValidBarcode)
@@ -602,37 +603,42 @@ namespace Events4All.Web.Controllers
                 ciDTO.BarcodeId = bcq.GetBarcodeId(rawBarcode);
                 ciq.CreateCheckIn(ciDTO);
                 colorCode = "green";
-                return Json(new { errorColor = colorCode, error = "Check in is Successful!" });
+                return Json(new { errorColor = colorCode, error = "Checkin is Successful!" });
             }
 
             string errorMessage = "";
 
             if (CheckInTimeCode == -1)
             {
-                errorMessage += "The check in period for this event has not started yet; ";
+                errorMessage += "The checkin period has not started";
                 colorCode = "red";
             }
             else if (CheckInTimeCode == 1)
             {
-                errorMessage += "The check in period for this event has ended; ";
+                errorMessage += "The checkin period has ended";
                 colorCode = "red";
             }
 
-            if (isDuplicate == true)
+            else if (isDuplicate == true)
             {
-                errorMessage += "This participant has already checked in today; ";
+                errorMessage += "This participant has already checked in";
                 colorCode = "yellow";
             }
 
-            if (!isValidBarcode)
+            else if (!isValidBarcode)
             {
-                errorMessage += "This is not a valid barcode; ";
+                errorMessage += "This is not a valid barcode";
                 colorCode = "red";
             }
 
             return Json(new { errorColor = colorCode, error = errorMessage });
         }
+
+
+        public ActionResult BackToEvents()
+        {
+            return RedirectToAction("AllEvents", "Events");
+        }
+
     }
 }
-    
-
