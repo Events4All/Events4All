@@ -17,6 +17,9 @@
         <th>
             @Html.DisplayName("Description")
         </th>
+        <th>
+
+        </th>
     </tr>
 
     @foreach (var item in Model.EventsAttend)
@@ -32,7 +35,10 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id = item.id })
+            @Html.ActionLink("View Ticket", "RegistrationConfirmation", "Participants", new { id = item.parId }, new { style = "display: inline", @class = "btn btn-primary", type = "button" })
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.id }, new { style = "display: inline", @class = "btn btn-info", type = "button" })
 
             @*@Html.ActionLink("Cancel Registration", "Details", new { id = item.id })*@
             @*@Html.ActionLink("Delete", "Delete", new { id = item.id }) |

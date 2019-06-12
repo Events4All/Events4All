@@ -10,6 +10,8 @@ namespace Events4All.Web.Models
         [Display(Name = "Event Start: ")]
         public DateTime? EventStartDate { get; set; }
 
+        public int parId { get; set; }
+
 
         [Range(1, 3, ErrorMessage = "You must select between 1 and 3 tickets."), Display(Name = "Number Of Tickets")]
         public int NumberOfTicket { get; set; }

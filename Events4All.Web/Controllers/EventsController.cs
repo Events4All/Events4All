@@ -61,9 +61,16 @@ namespace Events4All.Web.Controllers
             return View(vm);
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            ParticipantQuery participantQuery = new ParticipantQuery();
             EventQuery Equery = new EventQuery();
+            EventDTO Edto = new EventDTO();
+
+            if (participantQuery.IsRegistered(id))
+            {
+                ViewBag.ParticipantID = participantQuery.FindParticipantByEventAndUser(id);
+            }
 
             List<EventsViewModel> vmList = new List<EventsViewModel>();
             List<EventDTO> dtoEventList = Equery.QueryIndexData();
@@ -92,7 +99,11 @@ namespace Events4All.Web.Controllers
                     vm.TwitterHandle = dto.TwitterHandle;
                     vm.Web = dto.Web;
                     vm.Zip = dto.Zip;
-
+                    vm.isRegistered = participantQuery.IsRegistered(dto.Id);
+                    if (vm.isRegistered)
+                    {
+                        vm.participantId = participantQuery.FindParticipantByEventAndUser(dto.Id);
+                    }                  
                     vmList.Add(vm);
                 }
             }
@@ -108,6 +119,7 @@ namespace Events4All.Web.Controllers
 
             return View(eventsViewModel);
         }
+        
 
         // POST: Events/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -357,16 +369,14 @@ namespace Events4All.Web.Controllers
             }
         }
 
-        public PartialViewResult _eventsAttended()
+        public PartialViewResult _eventsAttended(int? id)
         {
             {
                 EventQuery Equery = new EventQuery();
                 ParticipantQuery Pquery = new ParticipantQuery();
 
-
                 allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
                 List<EventsViewModel> events = new List<EventsViewModel>();
-
 
                 List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
 
@@ -378,7 +388,6 @@ namespace Events4All.Web.Controllers
                     vm.Name = Edto.Name;
                     vm.TimeStart = Edto.TimeStart;
                     vm.Description = Edto.Description;
-
                     events.Add(vm);
                 }
 
@@ -393,7 +402,6 @@ namespace Events4All.Web.Controllers
                     vm.EventName = Equery.FindEvent(Pdto.eventId).Name;
                     vm.EventStartDate = Equery.FindEvent(Pdto.eventId).TimeStart;
                     vm.Description = Equery.FindEvent(Pdto.eventId).Description;
-
                     Pevents.Add(vm);
                 }
 
@@ -404,18 +412,17 @@ namespace Events4All.Web.Controllers
             }
         }
 
-        public ActionResult allEvents()
+        public ActionResult allEvents(int? id)
         {
             {
                 EventQuery Equery = new EventQuery();
                 ParticipantQuery Pquery = new ParticipantQuery();
 
-
                 allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
                 List<EventsViewModel> events = new List<EventsViewModel>();
 
-
                 List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
+
 
                 foreach (EventDTO Edto in dtoUserEventsCreated)
                 {
@@ -426,6 +433,11 @@ namespace Events4All.Web.Controllers
                     vm.TimeStart = Edto.TimeStart;
                     vm.Description = Edto.Description;
 
+                    vm.isRegistered = Pquery.IsRegistered(Edto.Id);
+                    if (vm.isRegistered)
+                    {
+                        vm.participantId = Pquery.FindParticipantByEventAndUser(Edto.Id);
+                    }
                     events.Add(vm);
                 }
 
@@ -437,15 +449,16 @@ namespace Events4All.Web.Controllers
                     ParticipantsViewModel vm = new ParticipantsViewModel();
 
                     vm.id = Equery.FindEvent(Pdto.eventId).Id;
+                    vm.parId = Pdto.Id;
                     vm.EventName = Equery.FindEvent(Pdto.eventId).Name;
                     vm.EventStartDate = Equery.FindEvent(Pdto.eventId).TimeStart;
                     vm.Description = Equery.FindEvent(Pdto.eventId).Description;
-
                     Pevents.Add(vm);
                 }
 
                 UserEventsCreatedList.EventsAttend = Pevents;
                 UserEventsCreatedList.EventsCreated = events;
+
 
                 return View(UserEventsCreatedList);
             }
@@ -457,12 +470,11 @@ namespace Events4All.Web.Controllers
                 EventQuery Equery = new EventQuery();
                 ParticipantQuery Pquery = new ParticipantQuery();
 
-
                 allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
                 List<EventsViewModel> events = new List<EventsViewModel>();
 
-
                 List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
+
 
                 foreach (EventDTO Edto in dtoUserEventsCreated)
                 {
@@ -472,7 +484,6 @@ namespace Events4All.Web.Controllers
                     vm.Name = Edto.Name;
                     vm.TimeStart = Edto.TimeStart;
                     vm.Description = Edto.Description;
-
                     events.Add(vm);
                 }
 
@@ -487,12 +498,12 @@ namespace Events4All.Web.Controllers
                     vm.EventName = Equery.FindEvent(Pdto.eventId).Name;
                     vm.EventStartDate = Equery.FindEvent(Pdto.eventId).TimeStart;
                     vm.Description = Equery.FindEvent(Pdto.eventId).Description;
-
                     Pevents.Add(vm);
                 }
 
                 UserEventsCreatedList.EventsAttend = Pevents;
                 UserEventsCreatedList.EventsCreated = events;
+
 
                 return View(UserEventsCreatedList);
             }
@@ -511,8 +522,7 @@ namespace Events4All.Web.Controllers
 
                 List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
 
-              
-
+ 
                 foreach (EventDTO Edto in dtoUserEventsCreated)
                 {
                     EventsViewModel vm = new EventsViewModel();
