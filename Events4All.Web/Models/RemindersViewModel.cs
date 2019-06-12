@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using Events4All.Web.Models;
 
 namespace Events4All.Web.Models
 {
@@ -20,6 +21,8 @@ namespace Events4All.Web.Models
 
         [Display(Name = "Text: ")]
         public bool SMSNotificationOn { get; set; }
-
+         
+        //public virtual EventsViewModel EventID { get; set; }
+       //public IEnumerable<EventsViewModel> EventID { get; set; }
     }
 }

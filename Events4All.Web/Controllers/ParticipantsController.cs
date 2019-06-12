@@ -1,6 +1,8 @@
 ﻿using Events4All.Business.ENotifications;
 using Events4All.DBQuery;
 using Events4All.Web.Models;
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
 
@@ -38,6 +40,13 @@ namespace Events4All.Web.Controllers
                 dto.NumberOfTicket = participantsViewModel.NumberOfTicket;
                 dto.Reminder = participantsViewModel.Reminder;
                 dto.eventId = id;
+                dto.Barcodes = new List<Guid>();
+
+                for(int i = 0; i < dto.NumberOfTicket; i++)
+                {
+                    Guid barcode = Guid.NewGuid();
+                    dto.Barcodes.Add(barcode);
+                }
 
                 int participantID = query.CreateParticipant(dto);
 
@@ -80,23 +89,17 @@ namespace Events4All.Web.Controllers
             ParticipantDTO participantDTO = new ParticipantDTO();
             EventQuery eventQuery = new EventQuery();
             EventDTO eventDTO = new EventDTO();
-            UserDTO userDTO = new UserDTO();
-            UserQuery userQuery = new UserQuery();
 
             ParticipantsViewModel vm = new ParticipantsViewModel();
 
             participantDTO = participantQuery.FindParticipant(id);
             eventDTO = eventQuery.FindEvent(participantDTO.eventId);
-            userDTO = userQuery.FindCurrentUser();
 
             vm.EventName = eventDTO.Name;
             vm.NumberOfTicket = participantDTO.NumberOfTicket;
             vm.EventStartDate = eventDTO.TimeStart;
+            vm.Barcodes = participantDTO.Barcodes;
 
-            ViewBag.NumberOfTickets = participantDTO.NumberOfTicket;
-            ViewBag.Username = userDTO.Username.Replace("@","").Replace(".com","");
-            ViewBag.UserId = userDTO.Id;
-            ViewBag.EventName = eventDTO.Name;
             ViewBag.EventId = eventDTO.Id;
 
             return View(vm);
@@ -178,6 +181,7 @@ namespace Events4All.Web.Controllers
             return View(remindersViewModel);
         }
 
+
         public ActionResult BackToIndex()
         {
             return RedirectToAction("Index", "Home");
@@ -187,6 +191,15 @@ namespace Events4All.Web.Controllers
         {
             return View();
         }
+
+        //public ActionResult SetReminder(int eventID)
+        //{
+        //    ParticipantQuery pq = new ParticipantQuery();
+            
+        //    var ParticipantID = pq.GetParticipantID(eventID);
+            
+        //    return RedirectToAction("Reminders/"+ ParticipantID,"Participants");
+        //}
     }
 }
 

@@ -28,6 +28,7 @@ namespace Events4All.DBQuery
         public double TicketPrice { get; set; }
         public string HashTag { get; set; }
         public DateTime? Reminder { get; set; }
+        public int AttendeeCap { get; set; }
 
         public bool emailNotificationOn { get; set; }
         public bool SMSNotificationOn { get; set; }
