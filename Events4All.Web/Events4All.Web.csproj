@@ -211,6 +211,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ConfirmMail.cshtml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -487,6 +488,8 @@
     <Content Include="Views\Events\_eventsAttended.cshtml" />
     <Content Include="Views\Events\eventsCreated.cshtml" />
     <Content Include="Views\Events\eventsAttended.cshtml" />
+    <Content Include="Views\Participants\RegistrationConfirmationPrint.cshtml" />
+    <Content Include="Views\Events\SelectCalendarEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
