@@ -28,6 +28,7 @@ a:link#home, a:visited#home, a:active#home {
     width: 300px;
     display: inline-block;
     height: 34px;
+    color: white;
 }
 
 .checkInDuplicate {
@@ -35,6 +36,7 @@ a:link#home, a:visited#home, a:active#home {
     width: 300px;
     display: inline-block;
     height: 34px;
+    color: black;
 }
 
 .checkInFailure {
@@ -42,6 +44,7 @@ a:link#home, a:visited#home, a:active#home {
     width: 300px;
     display: inline-block;
     height: 34px;
+    color: white;
 }
 
 
