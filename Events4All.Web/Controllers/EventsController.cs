@@ -553,6 +553,11 @@ namespace Events4All.Web.Controllers
             return PartialView();
         }
 
+        public ActionResult BackToEvents()
+        {
+            return RedirectToAction("AllEvents", "Events");
+        }
+
     }
 }
     
