@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework">
       <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
@@ -89,6 +90,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckInRulesTest.cs" />
     <Compile Include="EmailNotificationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
@@ -103,6 +105,14 @@
     <ProjectReference Include="..\Events4All.Business\Events4All.Business.csproj">
       <Project>{7db81d1b-f60e-4fe7-ae00-b417797d97e3}</Project>
       <Name>Events4All.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Events4All.DBQuery\Events4All.DBQuery.csproj">
+      <Project>{89E9C88E-D04F-460C-980E-C2D04923A57E}</Project>
+      <Name>Events4All.DBQuery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Events4All.DB\Events4All.DB.csproj">
+      <Project>{C9A89F42-EAA9-4EF8-AD0D-C37793F18038}</Project>
+      <Name>Events4All.DB</Name>
     </ProjectReference>
     <ProjectReference Include="..\Events4All.Web\Events4All.Web.csproj">
       <Project>{B412CE7A-AB0C-43D9-A1BB-E3365DAEC449}</Project>

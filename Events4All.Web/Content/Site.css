@@ -28,6 +28,30 @@ a:link#home, a:visited#home, a:active#home
     color: blue !important;
 }
 
+.checkInSuccess {
+    background-color: green;
+    width: 300px;
+    display: inline-block;
+    height: 34px;
+    color: white;
+}
+
+.checkInDuplicate {
+    background-color: yellow;
+    width: 300px;
+    display: inline-block;
+    height: 34px;
+    color: black;
+}
+
+.checkInFailure {
+    background-color: red;
+    width: 300px;
+    display: inline-block;
+    height: 34px;
+    color: white;
+}
+
 
 body 
 {
