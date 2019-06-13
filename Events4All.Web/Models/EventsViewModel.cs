@@ -51,6 +51,8 @@ namespace Events4All.Web.Models
         public string Description { get; set; }
         public string Detail { get; set; }
         public byte?[] Logo { get; set; }
+        public String Number { get; set; }
+        public string Street { get; set; }
 
         [Display(Name = "Ticket Price")]
         //[DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]

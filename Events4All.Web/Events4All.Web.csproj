@@ -18,7 +18,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44361</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -419,6 +419,8 @@
     <Content Include="JavaScriptSpellCheck\extensions\modalbox\README" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CalculateTicketPrice.js" />
+    <Content Include="Scripts\DisplayMap.js" />
+    <Content Include="Scripts\DispMultipleMarkers.js" />
     <Content Include="Scripts\GenerateCalendarPopup.js" />
     <Content Include="Scripts\ParseBarcode.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -492,6 +494,7 @@
     <Content Include="Views\Events\SelectCalendarEmail.cshtml" />
     <Content Include="Views\Events\_SocialMediaShare.cshtml" />
     <Content Include="Views\Events\CheckIn.cshtml" />
+    <Content Include="Views\Events\_Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
