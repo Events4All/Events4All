@@ -54,7 +54,8 @@ namespace Events4All.Web.Controllers
             
 
             EventsViewModel vm = new EventsViewModel();
-
+            
+           
             vm.Address = Edto.Address;
             vm.Categories = Edto.Categories;
             vm.City = Edto.City;
@@ -73,6 +74,16 @@ namespace Events4All.Web.Controllers
             vm.TwitterHandle = Edto.TwitterHandle;
             vm.Web = Edto.Web;
             vm.Zip = Edto.Zip;
+            
+
+            string fullAddressRaw = Edto.Address + " " + Edto.City + " " + Edto.State + " " + Edto.Zip + " ";
+            string trimRawAddress = fullAddressRaw.Trim(); //Edto.Address.Trim();
+            int spaceLoc = trimRawAddress.IndexOf(' ');
+            string number = trimRawAddress.Substring(0, spaceLoc);
+            string street = trimRawAddress.Substring(spaceLoc + 1);
+
+            vm.Number = number;
+            vm.Street = street;
 
             return View(vm);
         }
@@ -372,6 +383,9 @@ namespace Events4All.Web.Controllers
             var serializedCalendar = serializer.SerializeToString(calendar);
             byte[] calendarBytes = System.Text.Encoding.UTF8.GetBytes(serializedCalendar);
             return calendarBytes;
+
         }
+
     }
 }
+

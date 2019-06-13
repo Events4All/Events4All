@@ -87,10 +87,6 @@
 
     </div>
 
-    
-           
-           
-   
 
     <div id="container">
         <footer>
@@ -123,5 +119,30 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
+    <div class="col-md-6 map_agile">
+        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyA0C1LPhGrh_jgCTNU0blCVCFfeJmRZCbo'></script>
+
+        <div style='overflow:hidden;height:599.4px;width:100%;'>
+            <div id='gmap_canvas' style='height:100%;width:520px;'></div>
+            <style>
+                #gmap_canvas img {
+                    max-width: none !important;
+                    background: none !important;
+                    visibility: visible !important;
+                }
+            </style>
+        </div>
+
+        <a href='http://casinos-1.com'>.</a>
+
+        <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=c55cd61f08514ba52d0b28d793953517c0185723'></script>
+        <script src="~/Scripts/DisplayMap.js" type="text/javascript"></script>
+
+    </div>
+
+
+
 </body>
 </html>
