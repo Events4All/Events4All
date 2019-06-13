@@ -3,87 +3,101 @@
 @{
     ViewBag.Title = "Details";
     string fullAddress = Model.Address + ", " + Model.City + " " + Model.State + ", " + Model.Zip;
-}
 
+
+    string registerStyleValue;
+    string viewTicketStyleValue;
 <h2>@Html.DisplayFor(model => model.Name)</h2>
 <h3 id="warning">@ViewBag.Registered</h3>
 <div>
 
-    <hr />
-    <dl class="dl-horizontal">
+    if (ViewBag.Registered == null)
+    {
+        registerStyleValue = "inline";
+        viewTicketStyleValue = "none";
+    }
+    else
+    {
+        registerStyleValue = "none";
+        viewTicketStyleValue = "inline";
+    }
+}
+<div class="row">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <div>
+        <dl class="col-sm-2" style="padding-top:11px">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => fullAddress)
-        </dd>
+            <dd id="number">
+                @Html.DisplayFor(model => fullAddress)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Web)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Web)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Web)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Web)
+            </dd>
 
-        <dt>
-            @Html.DisplayName("Twitter Handle")
-        </dt>
+            <dt>
+                @Html.DisplayName("Twitter Handle")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TwitterHandle)
-        </dd>
-        <dt>
-            @Html.DisplayName("Hash Tag")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TwitterHandle)
+            </dd>
+            <dt>
+                @Html.DisplayName("Hash Tag")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.HashTag)
-        </dd>
-        <dt>
-            @Html.DisplayName("Time Start")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.HashTag)
+            </dd>
+            <dt>
+                @Html.DisplayName("Time Start")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TimeStart)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.TimeStart)
+            </dd>
 
-        <dt>
-            @Html.DisplayName("Time Stop")
-        </dt>
+            <dt>
+                @Html.DisplayName("Time Stop")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TimeStop)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.TimeStop)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Detail)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Detail)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Detail)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Detail)
+            </dd>
 
-        <dt>
-            @Html.DisplayName("Ticket Price")
-        </dt>
+            <dt>
+                @Html.DisplayName("Ticket Price")
+            </dt>
 
         <dd>
             $@Html.DisplayFor(model => model.TicketPrice)
@@ -95,14 +109,13 @@
         <dd>
             @Html.DisplayFor(model => model.AttendeeCap)
         </dd>
+            <dd>
+                @Html.ActionLink("View Ticket", "RegistrationConfirmation", "Participants", new { id = ViewBag.ParticipantID }, new { style = "display:" + viewTicketStyleValue, @class = "btn btn-primary", type = "button" })
+                @Html.ActionLink("Register", "Create/" + @Model.Id, "Participants", null, new { id = "register", style = "display:" + registerStyleValue, @class = "link" }) |
+                @Ajax.ActionLink("Add to Calendar", "SelectCalendarType", new { id = Model.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "link" })
 
-    </dl>
-</div>
-<p>
-
-    @{
-        string registerStyleValue;
-        string viewTicketStyleValue;
+            </dd>
+        </dl>
 
         if (ViewBag.Registered == null)
         {
@@ -125,9 +138,18 @@
     </div>
 </p>
 <div id="result" style="display:none;"></div>
+        <div class="col-md-8" style="display:inline-block;float:right;z-index:1000; padding-top:10px;">
+            @{ Html.RenderPartial("~/Views/Events/_Results.cshtml"); }
+        </div>
 
-@section Scripts {
-    @Scripts.Render("~/Scripts/GenerateCalendarPopup.js")
-    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
-    @Scripts.Render("~/Scripts/jquery-ui-1.12.1.js")
-}
+        @section Scripts {
+            @Scripts.Render("~/Scripts/GenerateCalendarPopup.js")
+            @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
+            @Scripts.Render("~/Scripts/jquery-ui-1.12.1.js")
+
+        }
+
+    </div>
+ </div>
+
+

@@ -41,7 +41,8 @@ namespace Events4All.Web.Controllers
             }
 
             EventsViewModel vm = new EventsViewModel();
-
+            
+           
             vm.Address = Edto.Address;
             vm.Categories = Edto.Categories;
             vm.City = Edto.City;
@@ -60,6 +61,17 @@ namespace Events4All.Web.Controllers
             vm.TwitterHandle = Edto.TwitterHandle;
             vm.Web = Edto.Web;
             vm.Zip = Edto.Zip;
+            
+
+            string fullAddressRaw = Edto.Address + " " + Edto.City + " " + Edto.State + " " + Edto.Zip + " ";
+            string trimRawAddress = fullAddressRaw.Trim(); //Edto.Address.Trim();
+            int spaceLoc = trimRawAddress.IndexOf(' ');
+            string number = trimRawAddress.Substring(0, spaceLoc);
+            string street = trimRawAddress.Substring(spaceLoc + 1);
+
+            vm.Number = number;
+            vm.Street = street;
+
             vm.AttendeeCap = Edto.AttendeeCap;
 
             return View(vm);
@@ -285,6 +297,12 @@ namespace Events4All.Web.Controllers
             return PartialView();
         }
 
+        public ActionResult SelectCalendarEmail(int id)
+        {
+            ViewBag.EventId = id;
+            return View();
+        }
+
         public void DownloadCalendar(int id)
         {
             EventQuery query = new EventQuery();
@@ -306,7 +324,7 @@ namespace Events4All.Web.Controllers
                 Class = "PUBLIC",
                 Summary = dto.Name + " - " + dto.Description,
                 Created = new CalDateTime(DateTime.Now),
-                Description = dto.Detail,
+                //Description = dto.Detail,
                 Start = new CalDateTime(dto.TimeStart.Value),
                 End = new CalDateTime(dto.TimeStop.Value),
                 Sequence = 0,
@@ -629,10 +647,6 @@ namespace Events4All.Web.Controllers
         }
 
 
-        public ActionResult BackToEvents()
-        {
-            return RedirectToAction("AllEvents", "Events");
-        }
-
     }
 }
+

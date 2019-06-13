@@ -38,6 +38,7 @@ namespace Events4All.Web.Models
         [Display(Name = "Twitter Handle")]
         public string TwitterHandle { get; set; }
 
+        [Required(ErrorMessage = "You must enter {0}")]
         [Display(Name = "Start Time")]
         [DisplayFormat(DataFormatString ="{0:MM/dd/yyyy hh:mm tt}")]
         public DateTime? TimeStart { get; set; }
@@ -46,9 +47,12 @@ namespace Events4All.Web.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy hh:mm tt}")]
         public DateTime? TimeStop { get; set; }
 
+        [Required(ErrorMessage = "You must enter {0}")]
         public string Description { get; set; }
         public string Detail { get; set; }
         public byte?[] Logo { get; set; }
+        public String Number { get; set; }
+        public string Street { get; set; }
 
         [Display(Name = "Ticket Price")]
         //[DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
