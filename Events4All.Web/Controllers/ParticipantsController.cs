@@ -36,7 +36,6 @@ namespace Events4All.Web.Controllers
 
             if (ModelState.IsValid)
             {
-
                 dto.NumberOfTicket = participantsViewModel.NumberOfTicket;
                 dto.Reminder = participantsViewModel.Reminder;
                 dto.eventId = id;
@@ -56,10 +55,7 @@ namespace Events4All.Web.Controllers
                 UserDTO userDTO = new UserDTO();
                 UserQuery userQuery = new UserQuery();
                 userDTO = userQuery.FindCurrentUser();
-
                 eventDTO = eventQuery.FindEvent(dto.eventId);
-
-
 
                 string content = System.IO.File.ReadAllText(Server.MapPath("~/ConfirmMail.cshtml"));
                 content = content.Replace("{{Name}}", eventDTO.Name);
@@ -72,8 +68,6 @@ namespace Events4All.Web.Controllers
                 content = content.Replace("{{participantID}}", participantID.ToString());
                 content = content.Replace("{{eventID}}", eventDTO.Id.ToString());
                 var toEmail = userDTO.Username.ToString();
-
-
                 new EmailNotification().SendEmail(toEmail, content, "Confirmation : You have registered for an event!");
 
                 return RedirectToAction("RegistrationConfirmation/" + participantID, "Participants");
