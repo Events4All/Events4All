@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity.Validation;
 
 
 namespace Events4All.DBQuery
@@ -12,11 +13,9 @@ namespace Events4All.DBQuery
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
-
         public EventDTO FindEvent(int? id)
         {
-            Events events = db.Events.Where( x=> x.Id == id).Where(x=> x.IsActive == true).FirstOrDefault();
+            Events events = db.Events.Where(x => x.Id == id).Where(x => x.IsActive == true).FirstOrDefault();
             EventDTO dto = MapEventToDTO(events);
             return dto;
         }
@@ -56,14 +55,17 @@ namespace Events4All.DBQuery
             dto.TwitterHandle = events.TwitterHandle;
             dto.Web = events.Web;
             dto.Zip = events.Zip;
+            dto.AttendeeCap = events.AttendeeCap;
 
             return dto;
         }
 
         public void CreateEvent(EventDTO EventsDTO)
         {
-            string userId = HttpContext.Current.User.Identity.GetUserId();
-            ApplicationUser user = db.Users.Find(userId);
+            try
+            {
+                string userId = HttpContext.Current.User.Identity.GetUserId();
+                ApplicationUser user = db.Users.Find(userId);
 
             var Events = new Events
             {
@@ -84,19 +86,28 @@ namespace Events4All.DBQuery
                 Detail = EventsDTO.Detail,
                 Logo = EventsDTO.Logo,
                 TicketPrice = EventsDTO.TicketPrice,
-                HashTag = EventsDTO.HashTag
+                HashTag = EventsDTO.HashTag,
+                AttendeeCap = EventsDTO.AttendeeCap
             };
 
-            db.Events.Add(Events);
-
-            //try { db.SaveChanges(); }
-            //catch (DbEntityValidationException dbEx)
-            //{
-            //    new DbEntityValidationException("You must input event dates");
-            //}
-            db.SaveChanges();
+                db.Events.Add(Events);
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
         }
-
         public void DeleteConfirmed(int id)
         {
             Events Ev = db.Events.Find(id);
@@ -127,10 +138,11 @@ namespace Events4All.DBQuery
             Ev.TicketPrice = DT.TicketPrice;
             Ev.TwitterHandle = DT.TwitterHandle;
             Ev.Web = DT.Web;
+            Ev.AttendeeCap = DT.AttendeeCap;
             db.SaveChanges();
         }
 
-           public List<EventDTO> QueryUserEventsCreated()
+        public List<EventDTO> QueryUserEventsCreated()
         {
             string userId = HttpContext.Current.User.Identity.GetUserId();
             ApplicationUser user = db.Users.Find(userId);
@@ -147,6 +159,15 @@ namespace Events4All.DBQuery
             return dtoList;
         }
 
+        public DateTime[] QueryEventTimes(int eventId)
+        {
+            EventDTO eDTO = new EventDTO();
+            eDTO = FindEvent(eventId);
+            DateTime checkinStart = eDTO.TimeStart.Value;
+            DateTime checkinEnd = eDTO.TimeStop.Value;
+            DateTime[] eventTimes = { checkinStart, checkinEnd };
+            return eventTimes;
+        }
     }
 }
 

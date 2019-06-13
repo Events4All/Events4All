@@ -115,14 +115,22 @@
             @Html.DisplayFor(model => model.HashTag)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.AttendeeCap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AttendeeCap)
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        @Html.ActionLink("Back to List", "Index")
+        <input type="submit" value="Delete" class="E4AButtons" /> |
+        @Html.ActionLink("Back to List", "AllEvents")
     </div>
     }
 </div>

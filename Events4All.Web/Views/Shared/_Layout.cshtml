@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title-Events4All</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -36,10 +36,10 @@
                             <a class="dropdown-item">@Html.ActionLink("All My Events", "allEvents", "Events")</a>
                             <div class="dropdown-divider">
                             </div>
-                            <a class="dropdown-item">@Html.ActionLink("Edit Event Created", "Index", "Events")</a>
+                            <a class="dropdown-item">@Html.ActionLink("Edit Event Created", "eventsCreated", "Events")</a>
                             <div class="dropdown-divider">
                             </div>
-                            <a class="dropdown-item">@Html.ActionLink("Cancel Event", "Index", "Events")</a>
+                            <a class="dropdown-item">@Html.ActionLink("Cancel Event", "eventsCreated", "Events")</a>
                             <div class="dropdown-divider">
                             </div>
                         </div>
@@ -61,10 +61,10 @@
                             <a class="dropdown-item">@Html.ActionLink("Print Tickets", "Index", "Events")</a>
                             <div class="dropdown-divider">
                             </div>
-                            <a class="dropdown-item">@Html.ActionLink("Edit Registration", "Index", "Events")</a>
+                            <a class="dropdown-item">@Html.ActionLink("Edit Registration", "eventsAttended", "Events")</a>
                             <div class="dropdown-divider">
                             </div>
-                            <a class="dropdown-item">@Html.ActionLink("Cancel Registration", "Index", "Events")</a>
+                            <a class="dropdown-item">@Html.ActionLink("Cancel Registration", "eventsAttended", "Events")</a>
                             <div class="dropdown-divider">
                             </div>
                         </div>
@@ -91,14 +91,14 @@
     <div id="container">
         <footer>
             <hr />
-            <span class="foots">
+            <div class="foots">
                 <div id="left">
                     <a class="footIcons" href="/">
                         <img class="logo2" src="~/images/eLogo.png">
                     </a>
                 </div>
                 <div id="center">
-                    <p class="footText">Events&nbsp4&nbspAll&copy;</p>
+                    <p class="footText">Events&nbsp4&nbspAll&nbsp;&copy;@DateTime.Now.Year </p>
 
                 </div>
                 <div id="right">
@@ -112,7 +112,7 @@
                         <img src="https://img.icons8.com/color/48/000000/instagram-new.png">
                     </a>
                 </div>
-            </span>
+            </div>
         </footer>
     </div>
 

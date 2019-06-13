@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using Events4All.DBQuery;
 using Events4All.Web.Models;
-using Events4All.DBQuery;
-using Events4All.Web.Controllers;
-using Events4All.DB.Models;
-using System.IO;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Web.Mvc;
 
 
 namespace Events4All.Web.Controllers
@@ -45,6 +38,13 @@ namespace Events4All.Web.Controllers
                 dto.NumberOfTicket = participantsViewModel.NumberOfTicket;
                 dto.Reminder = participantsViewModel.Reminder;
                 dto.eventId = id;
+                dto.Barcodes = new List<Guid>();
+
+                for(int i = 0; i < dto.NumberOfTicket; i++)
+                {
+                    Guid barcode = Guid.NewGuid();
+                    dto.Barcodes.Add(barcode);
+                }
 
                 int participantID = query.CreateParticipant(dto);
 
@@ -61,63 +61,47 @@ namespace Events4All.Web.Controllers
             ParticipantDTO participantDTO = new ParticipantDTO();
             EventQuery eventQuery = new EventQuery();
             EventDTO eventDTO = new EventDTO();
-            UserDTO userDTO = new UserDTO();
-            UserQuery userQuery = new UserQuery();
 
             ParticipantsViewModel vm = new ParticipantsViewModel();
 
             participantDTO = participantQuery.FindParticipant(id);
             eventDTO = eventQuery.FindEvent(participantDTO.eventId);
-            userDTO = userQuery.FindCurrentUser();
 
             vm.EventName = eventDTO.Name;
             vm.NumberOfTicket = participantDTO.NumberOfTicket;
             vm.EventStartDate = eventDTO.TimeStart;
+            vm.Barcodes = participantDTO.Barcodes;
 
-            ViewBag.NumberOfTickets = participantDTO.NumberOfTicket;
-            ViewBag.Username = userDTO.Username.Replace("@","").Replace(".com","");
-            ViewBag.UserId = userDTO.Id;
-            ViewBag.EventName = eventDTO.Name;
             ViewBag.EventId = eventDTO.Id;
 
             return View(vm);
         }
-        // public ParticipantsController() { }
-        //GET REMINDER
-        //public Participants pt = new Participants();
-        //public IQueryable<ParticipantDTO> GetParticipants()
-        //{ 
-        //    var participants = from p in 
-
-        //}
 
 
         [HttpGet]
         public ActionResult Reminders(int id)
-        {         
-            ParticipantsViewModel pvm = new ParticipantsViewModel();
+        {
+            RemindersViewModel rvm = new RemindersViewModel();
             ParticipantQuery pq = new ParticipantQuery();
             EventQuery eq = new EventQuery();
 
             ParticipantDTO pDTO = pq.FindParticipant(id);
             EventDTO evDTO = eq.FindEvent(pDTO.eventId);
 
-            //Map DTO fields to pvm
-            pvm.EventStartDate = evDTO.TimeStart;
-            pvm.Reminder = pDTO.Reminder;
-            //if (pvm.emailNotificationOn == true)
-                
-            pvm.emailNotificationOn = pDTO.emailNotificationOn;
-            pvm.SMSNotificationOn = pDTO.SMSNotificationOn;
+            //Map DTO fields to rvm            
+            rvm.EventStartDate = evDTO.TimeStart;
+            rvm.Reminder = pDTO.Reminder;
+            rvm.emailNotificationOn = pDTO.emailNotificationOn;
+            rvm.SMSNotificationOn = pDTO.SMSNotificationOn;
              
-            return View(pvm);
+            return View(rvm);
         }
 
 
         //POST REMINDER
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Reminders(int id, [Bind(Include ="reminder, emailNotificationOn, SMSNotificationOn, TimeStart")] ParticipantsViewModel participantsViewModel)
+        public ActionResult Reminders(int id, [Bind(Include ="Reminder, emailNotificationOn, SMSNotificationOn, TimeStart")] RemindersViewModel remindersViewModel)
         {
             if(id <= 0)
             {
@@ -128,16 +112,18 @@ namespace Events4All.Web.Controllers
             {
                 ParticipantQuery pq = new ParticipantQuery();
                 ParticipantDTO pDTO = new ParticipantDTO();
-                pDTO.Reminder = participantsViewModel.Reminder;
-                pDTO.emailNotificationOn= participantsViewModel.emailNotificationOn;
-                pDTO.SMSNotificationOn= participantsViewModel.SMSNotificationOn;
+                
+                pDTO.Reminder = remindersViewModel.Reminder;
+                pDTO.emailNotificationOn = remindersViewModel.emailNotificationOn;
+                pDTO.SMSNotificationOn = remindersViewModel.SMSNotificationOn;
                 pDTO.Id = id;
 
                 pq.UpdateParticipantReminders(pDTO);
-                return RedirectToAction("Index", "Home");
+                
+                 return RedirectToAction("ReminderConfirmation", "Participants");
             }
 
-            return View(participantsViewModel);
+            return View(remindersViewModel);
         }
 
 
@@ -145,7 +131,20 @@ namespace Events4All.Web.Controllers
         {
             return RedirectToAction("Index", "Home");
         }
+        
+        public ActionResult ReminderConfirmation()
+        {
+            return View();
+        }
 
+        //public ActionResult SetReminder(int eventID)
+        //{
+        //    ParticipantQuery pq = new ParticipantQuery();
+            
+        //    var ParticipantID = pq.GetParticipantID(eventID);
+            
+        //    return RedirectToAction("Reminders/"+ ParticipantID,"Participants");
+        //}
     }
 }
 

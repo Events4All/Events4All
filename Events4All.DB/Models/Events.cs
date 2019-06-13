@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace Events4All.DB.Models
@@ -49,6 +46,9 @@ namespace Events4All.DB.Models
 
         [StringLength(50)]
         public string HashTag { get; set; }
+
+        [Required]
+        public int AttendeeCap { get; set; }
 
     }
 
