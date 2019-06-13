@@ -20,8 +20,10 @@ dd
 
 div#pagelink a:link.link, a:visited.link, a:active.link 
 {
+    
     color: blue;
 }
+
 
 a:link#home, a:visited#home, a:active#home 
 {
@@ -351,6 +353,11 @@ a:hover, a:active, a:focus
 {
     position: relative;
     top: 1px;
+}
+
+.SocialLinks{
+    float:left;
+    padding-top:15px;
 }
 /*---------------------------------------------*/
 /* End of header(nav bar) and footer styles*/

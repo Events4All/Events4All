@@ -135,8 +135,7 @@ namespace Events4All.Web.Controllers
         {
             EventDTO Edto = new EventDTO();
             EventQuery Equery = new EventQuery();
-
-
+        
             //ModelState.Remove("CreatedBy");
             if (ModelState.IsValid)
             {
@@ -640,14 +639,8 @@ namespace Events4All.Web.Controllers
             return Json(new { errorColor = colorCode, error = errorMessage });
         }
 
-
-            var serializer = new CalendarSerializer();
-            var serializedCalendar = serializer.SerializeToString(calendar);
-            byte[] calendarBytes = System.Text.Encoding.UTF8.GetBytes(serializedCalendar);
-            return calendarBytes;
-
         }
 
     }
-}
+
 

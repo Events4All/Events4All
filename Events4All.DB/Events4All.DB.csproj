@@ -78,6 +78,10 @@
     <Compile Include="Migrations\201906091355384_AddEmailNtfctnSntTimeToPrtcpnts.Designer.cs">
       <DependentUpon>201906091355384_AddEmailNtfctnSntTimeToPrtcpnts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906131736431_null.cs" />
+    <Compile Include="Migrations\201906131736431_null.Designer.cs">
+      <DependentUpon>201906131736431_null.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Barcodes.cs" />
     <Compile Include="Models\Base.cs" />
@@ -113,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906071502343_added_barcode_table.resx">
       <DependentUpon>201906071502343_added_barcode_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906131736431_null.resx">
+      <DependentUpon>201906131736431_null.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
