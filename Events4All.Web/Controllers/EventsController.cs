@@ -641,13 +641,6 @@ namespace Events4All.Web.Controllers
         }
 
 
-            var serializer = new CalendarSerializer();
-            var serializedCalendar = serializer.SerializeToString(calendar);
-            byte[] calendarBytes = System.Text.Encoding.UTF8.GetBytes(serializedCalendar);
-            return calendarBytes;
-
-        }
-
     }
 }
 
