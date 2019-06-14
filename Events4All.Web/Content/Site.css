@@ -13,6 +13,7 @@ a:link#details, a:visited#details, a:active#details
     color: blue;
 }
 
+
 dd 
 {
     margin-bottom: 10px;
@@ -232,6 +233,7 @@ a
 {
     height: 50px;
     width: 50px;
+    margin-right: 1%;
 }
 
 .logo1 
@@ -287,21 +289,23 @@ a:hover, a:active, a:focus
 #left 
 {
     float: left;
-    width: 50px;
-    margin-left: 5px;
+    width: 32%;
+    margin-left: 2%;
 }
 
 #center 
 {
     display: inline-block;
     margin: 0 auto;
-    width: 100px;
+    width: 32%;
 }
 
 #right 
 {
     float: right;
-    width: 185px;
+    text-align: right;
+    margin-right: 2%;
+    width: 32%;
 }
 
 .E4AButtons 
@@ -365,4 +369,28 @@ a:hover, a:active, a:focus
 
 td {
     text-align: left;
+}
+
+.smallOnly {
+    display: none
+}
+
+    @media only screen and (max-width: 619px) {
+        .smallOnly {
+            display: inline;
+        }
+    }
+
+.bigOnly {
+    display: normal
+}
+
+@media only screen and (max-width: 619px) {
+    .bigOnly {
+        display: none
+    }
+}
+
+.center {
+    text-align: center;
 }

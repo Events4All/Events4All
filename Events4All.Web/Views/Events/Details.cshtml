@@ -117,7 +117,7 @@
                     <div id="pagelink">
                         @Html.ActionLink("View Ticket", "RegistrationConfirmation", "Participants", new { id = ViewBag.ParticipantID }, new { style = "display:" + viewTicketStyleValue, @class = "E4AButtons", type = "button" })
                         @Html.ActionLink("Register", "Create/" + @Model.Id, "Participants", null, new { id = "register", style = "display:" + registerStyleValue, @class = "E4AButtons" }) |
-                        @Ajax.ActionLink("Add to Calendar", "SelectCalendarType", new { id = Model.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "E4AAJAXButton", type = "button" })|
+                        @Ajax.ActionLink("Add to Calendar", "SelectCalendarType", new { id = Model.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "E4AAJAXButton", type = "button" }) |
                         @Html.ActionLink("Set Reminders", "Reminders", "Participants", new { id = ViewBag.ParticipantID }, new { style = "display:" + viewTicketStyleValue, @class = "E4AButtons", type = "button" })
                         @*<div class="SocialLinks">
                 @Html.Partial("_SocialMediaShare")

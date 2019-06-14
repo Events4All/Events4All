@@ -20,8 +20,8 @@
         <div class="form-group">
             @Html.Label("Number Of Tickets", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NumberOfTicket, new { htmlAttributes = new { @class = "form-control", @id = "NumberOfTickets" } })
-                @Html.ValidationMessageFor(model => model.NumberOfTicket, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.NumberOfTicket, new { htmlAttributes = new { @class = "form-control", @id = "NumberOfTickets", @type = "number", @Value = "1", @min = "1", @max = "5" } })
+                @*@Html.ValidationMessageFor(model => model.NumberOfTicket, "", new { @class = "text-danger" })*@
             </div>
         </div>
 

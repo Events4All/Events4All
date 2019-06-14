@@ -6,10 +6,9 @@
     <title>@ViewBag.Title-Events4All</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
-<body>
 
+<body>
     <div class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
         <div class="containerFORnav">
             <div class="navbar-header">
@@ -88,7 +87,7 @@
     </div>
 
 
-    <div id="container">
+    <div id="container" class="bigOnly">
         <footer>
             <hr />
             <div class="foots">
@@ -102,6 +101,37 @@
 
                 </div>
                 <div id="right">
+                    <a href="https://www.facebook.com/events4all2019" target="_blank">
+                        <img src="https://img.icons8.com/color/48/000000/facebook.png">
+                    </a>
+                    <a href="https://twitter.com/events4_all" target="_blank">
+                        <img src="https://img.icons8.com/color/48/000000/twitter.png">
+                    </a>
+                    <a class="test" href=" https://www.instagram.com/events4_all/?hl=en" target="_blank">
+                        <img src="https://img.icons8.com/color/48/000000/instagram-new.png">
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+
+
+
+
+    <div id="container" class="smallOnly">
+        <footer>
+            <hr />
+            <div class="center">
+                <div>
+                    <a class="footIcons" href="/">
+                        <img class="logo2" src="~/images/eLogo.png">
+                    </a>
+                    <span class="footText">Events&nbsp4&nbspAll&nbsp;&copy;@DateTime.Now.Year </span>
+
+                </div>
+                <div>
                     <a href="https://www.facebook.com/events4all2019" target="_blank">
                         <img src="https://img.icons8.com/color/48/000000/facebook.png">
                     </a>
@@ -141,8 +171,6 @@
         <script src="~/Scripts/DisplayMap.js" type="text/javascript"></script>
 
     </div>
-
-
 
 </body>
 </html>
