@@ -2,24 +2,31 @@
 /* Start default MVC styles*/
 /*---------------------------------------------*/
 
-#warning {
+#warning 
+{
     color: red;
     font-weight: bold;
 }
 
-a:link#details, a:visited#details, a:active#details {
+a:link#details, a:visited#details, a:active#details 
+{
     color: blue;
 }
 
-dd {
+dd 
+{
     margin-bottom: 10px;
 }
 
-div#pagelink a:link.link, a:visited.link, a:active.link {
+div#pagelink a:link.link, a:visited.link, a:active.link 
+{
+    
     color: blue;
 }
 
-a:link#home, a:visited#home, a:active#home {
+
+a:link#home, a:visited#home, a:active#home 
+{
     color: blue !important;
 }
 
@@ -28,6 +35,7 @@ a:link#home, a:visited#home, a:active#home {
     width: 300px;
     display: inline-block;
     height: 34px;
+    color: white;
 }
 
 .checkInDuplicate {
@@ -35,6 +43,7 @@ a:link#home, a:visited#home, a:active#home {
     width: 300px;
     display: inline-block;
     height: 34px;
+    color: black;
 }
 
 .checkInFailure {
@@ -42,16 +51,19 @@ a:link#home, a:visited#home, a:active#home {
     width: 300px;
     display: inline-block;
     height: 34px;
+    color: white;
 }
 
 
-body {
+body 
+{
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
-.body-content {
+.body-content 
+{
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -59,14 +71,16 @@ body {
 /* Override the default bootstrap behavior where horizontal description lists
   will truncate terms that are too long to fit in the left column
 */
-.dl-horizontal dt {
+.dl-horizontal dt 
+{
     white-space: normal;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
-textarea {
+textarea 
+{
     max-width: 280px;
 }
 
@@ -80,11 +94,13 @@ textarea {
 
 /* Nav bar */
 
-.nav-link {
+.nav-link 
+{
     color: white;
 }
 
-.navbar .navbar-nav {
+.navbar .navbar-nav 
+{
     float: none;
     text-align: center;
     background-color: #212529;
@@ -93,7 +109,8 @@ textarea {
     font-size: 14px;
 }
 
-.dropdown-menu {
+.dropdown-menu 
+{
     position: absolute;
     top: 100%;
     z-index: 1000;
@@ -103,8 +120,10 @@ textarea {
     border-top: 1px solid #212529;
 }
 
-@media only screen and (max-width: 768px) {
-    div.dropdown-menu {
+@media only screen and (max-width: 768px) 
+{
+    div.dropdown-menu 
+    {
         text-align: left;
         position: relative;
         width: 100%;
@@ -119,93 +138,112 @@ textarea {
     }
 }
 
-.navbar-header {
+.navbar-header 
+{
     background-color: #212529;
 }
 
-div.navbar-collapse.collapse.in, .navbar-collapse {
+div.navbar-collapse.collapse.in, .navbar-collapse 
+{
     padding: 0px;
     border-top: 1px solid #212529;
 }
 
-.navbar-brand {
+.navbar-brand 
+{
     text-decoration: none;
 }
 
-.fixedNav .nav-container {
+.fixedNav .nav-container 
+{
     position: fixed;
     top: 0;
     background-color: #D3D3D3;
     width: 100%;
 }
 
-ul.nav li.dropdown:hover div.dropdown-menu {
+ul.nav li.dropdown:hover div.dropdown-menu 
+{
     display: block;
 }
 
-.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus 
+{
     background-color: #212529;
     border-color: #212529;
 }
 
-.containerFORnav{
+.containerFORnav
+{
     width: 100%;
     padding: 0px;
 }
 
-.active {
+.active 
+{
     background-color: #0691F9;
 }
 
-.navbar-nav > li > a {
+.navbar-nav > li > a 
+{
     color: #D3D3D3;
 }
 
-.navbar-nav > li > a:hover {
+.navbar-nav > li > a:hover 
+{
      color: white;
      background-color: #212529;
 }
 
-.navbar-nav > li > a:focus {
+.navbar-nav > li > a:focus 
+{
      background-color: #212529;
 }
 
-.dropdown-menu > a:hover {
+.dropdown-menu > a:hover 
+{
       color: white;
 }
 
-.dropdown-menu > a {
+.dropdown-menu > a 
+{
     color: #D3D3D3;
     margin-left: 2px;
 }
 
-.dropdown-divider {
+.dropdown-divider 
+{
     margin-bottom: 14px;
 }
 
-a {
+a 
+{
     /*color: white;*/
     outline: 0;
 }
 
-.icon-bar {
+.icon-bar 
+{
     background-color: white;
 }
 
 /* Images */
-.logo2 {
+.logo2 
+{
     height: 50px;
     width: 50px;
 }
 
-.logo1 {
+.logo1 
+{
     height: 25px;
     width: 100px;
 }
 
 /* Footer */
 
-footer {
+footer 
+{
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -215,7 +253,8 @@ footer {
     bottom: 0;
 }
 
-.foots {
+.foots 
+{
     display: flex;
     justify-content: center;
     font-size: 1rem;
@@ -228,37 +267,98 @@ footer {
     padding: 0px;
 }
 
-.footText {
+.footText 
+{
     font-size: 25px;
 }
 
-a:hover, a:active, a:focus {
+a:hover, a:active, a:focus 
+{
     text-decoration: none;
     background-color: transparent;
 }
 
-#container {
+#container 
+{
     width: 100%;
     text-align: center;
 }
 
-#left {
+#left 
+{
     float: left;
     width: 50px;
     margin-left: 5px;
 }
 
-#center {
+#center 
+{
     display: inline-block;
     margin: 0 auto;
     width: 100px;
 }
 
-#right {
+#right 
+{
     float: right;
     width: 185px;
 }
 
+.E4AButtons 
+{
+    background-color: rgb(6,145,249);
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    cursor: pointer;
+    color: white;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 20px;
+    text-decoration: none;
+}
+
+.E4AButtons:hover
+{
+    background-color: cornflowerblue;
+}
+
+.E4AButtons:active 
+{
+    position: relative;
+    top: 1px;
+}
+.E4AAJAXButton 
+{
+    background-color: rgb(6,145,249);
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    cursor: pointer;
+    color: white;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 20px;
+    text-decoration: none;
+}
+
+.E4AAJAXButton:hover 
+{
+    background-color: cornflowerblue;
+}
+
+.E4AAJAXButton:active 
+{
+    position: relative;
+    top: 1px;
+}
+
+.SocialLinks{
+    float:left;
+    padding-top:15px;
+}
 /*---------------------------------------------*/
 /* End of header(nav bar) and footer styles*/
 /*---------------------------------------------*/

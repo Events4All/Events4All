@@ -10,14 +10,12 @@ namespace Events4All.Business.Rules
 {
     public class CheckInRules
     {
-        public int IsValidCheckInTime(int eventId)
+        public int IsValidCheckInTime(DateTime[] eventTimes)
         {
-            EventQuery eq = new EventQuery();
-            EventDTO eDTO = new EventDTO();
-            eDTO = eq.FindEvent(eventId);
             int isValidCode = 0;
-            DateTime checkinStart = eDTO.TimeStart.Value.AddHours(-2);
-            DateTime checkinEnd = eDTO.TimeStop.Value;
+
+            DateTime checkinStart = eventTimes[0].AddHours(-2);
+            DateTime checkinEnd = eventTimes[1];
 
             if (DateTime.Now < checkinStart)
             {
@@ -30,13 +28,19 @@ namespace Events4All.Business.Rules
 
             return isValidCode;
         }
-
-        public bool IsDuplicateCheckIn(string guid)
+        
+        public bool IsDuplicateCheckIn(List<DateTime> checkInTimes)
         {
-            CheckInQuery ciq = new CheckInQuery();
-            bool isDuplicate = ciq.IsDuplicateCheckIn(guid);
-            return isDuplicate;
-        }
+            bool isDuplicateCheckIn = false;
+            foreach(DateTime checkInTime in checkInTimes)
+            {
+                if(checkInTime.Day == DateTime.Now.Day)
+                {
+                    isDuplicateCheckIn = true;
+                }
+            }
 
+            return isDuplicateCheckIn;
+        }
     }
 }

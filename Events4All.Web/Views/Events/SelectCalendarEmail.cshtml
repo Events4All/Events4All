@@ -1,0 +1,21 @@
+﻿@{
+    string url = Url.Action("DownloadCalendar") + "/" + ViewBag.EventId;
+}
+<script src="~/Scripts/GenerateCalendarPopup.js"></script>
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" id="close1">&times;</button>
+        <h4 class="modal-title">Select Calendar Type</h4>
+    </div>
+    <div class="modal-body">
+        <button type="button" class="btn btn-light btn-block" id="outlook" onclick="Download('@url')">Outlook</button>
+        <button type="button" class="btn btn-light btn-block" id="google" onclick="Download('@url')">Google</button>
+        <button type="button" class="btn btn-light btn-block" id="apple" onclick="Download('@url')">Apple</button>
+        <button type="button" class="btn btn-light btn-block" id="yahoo" onclick="Download('@url')">Yahoo!</button>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="close2">Close</button>
+    </div>
+</div>
+
+

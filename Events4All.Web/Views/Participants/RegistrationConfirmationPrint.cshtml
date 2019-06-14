@@ -1,0 +1,89 @@
+﻿@model Events4All.Web.Models.ParticipantsViewModel
+
+@{
+    ViewBag.Title = "RegistrationConfirmationPrint";
+}
+<body onload="window.print()">
+    <h2>Registration Confirmation</h2>
+
+    <div>
+        <h4>Thank you for registering. See you there!</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayName("Event Name")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EventName)
+            </dd>
+            <dt>
+                @Html.DisplayName("Event Time")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EventStartDate)
+            </dd>
+            <dt>
+                @Html.DisplayName("Number Of Tickets")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NumberOfTicket)
+            </dd>
+        </dl>
+    </div>
+
+    @{
+        string barcodeUrl1 = Url.Action("RenderBarcode", "Barcode") + "/" + ViewBag.Username + ViewBag.EventName + "guest1";
+        string barcodeUrl2 = Url.Action("RenderBarcode", "Barcode") + "/" + ViewBag.Username + ViewBag.EventName + "guest2";
+        string barcodeUrl3 = Url.Action("RenderBarcode", "Barcode") + "/" + ViewBag.Username + ViewBag.EventName + "guest3";
+
+        string barcodeRaw1 = ViewBag.Username + ViewBag.EventName + "guest1";
+        string barcodeRaw2 = ViewBag.Username + ViewBag.EventName + "guest2";
+        string barcodeRaw3 = ViewBag.Username + ViewBag.EventName + "guest3";
+
+        string show2 = "display:none";
+        string show3 = "display:none";
+
+        if (ViewBag.NumberOfTickets > 1)
+        {
+            show2 = "display:inline";
+        }
+
+        if (ViewBag.NumberOfTickets > 2)
+        {
+            show3 = "display:inline";
+        }
+    }
+
+    <div class="row">
+        <div class="col-md-12" style="display:inline">
+            <div>Guest 1</div>
+            <iframe src=@barcodeUrl1 frameborder="0" height="100" width="1000"></iframe>
+            <div>@barcodeRaw1</div>
+        </div>
+        <div class="col-md-12" style=@show2>
+            <div>Guest 2</div>
+            <iframe src=@barcodeUrl2 frameborder="0" height="100" width="1000"></iframe>
+            <div>@barcodeRaw2</div>
+        </div>
+        <div class="col-md-12" style=@show3>
+            <div>Guest 3</div>
+            <iframe src=@barcodeUrl3 frameborder="0" height="100" width="1000"></iframe>
+            <div>@barcodeRaw3</div>
+        </div>
+    </div>
+    <p>
+        <div id="pagelink">
+            <button id="print" class="btn btn-primary">Print</button> |
+            @Html.ActionLink("Event Details", "Details", "Events", new { id = ViewBag.EventId }, new { @class = "link" })
+
+        </div>
+    </p>
+
+    @section Scripts {
+        @Scripts.Render("~/Scripts/PrintRegistration.js")
+
+    }
+</body>
