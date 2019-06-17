@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
+using Events4All.Web.CustomAnnotations;
 
 
 namespace Events4All.Web.Models
@@ -16,7 +18,7 @@ namespace Events4All.Web.Models
         public int parId { get; set; }
 
 
-        [Range(1, 5, ErrorMessage = "Please enter a value between 1 and 5."), Display(Name = "Number Of Tickets")]
+        [ConfigRange()]
         public int NumberOfTicket { get; set; }
 
         [Display(Name = "Reminder:")]

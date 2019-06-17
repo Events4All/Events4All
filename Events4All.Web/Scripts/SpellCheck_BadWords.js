@@ -1,15 +1,13 @@
 ﻿
     $Spelling.SpellCheckAsYouType('all')
     function validateFormSpelling() {
-        while ($Spelling.BinSpellCheckFields('all') != true) {
+        while ($Spelling.BinSpellCheckFields('nameInput, addressInput, cityInput, twitterInput, descInput, detailInput') != true) {
            alert("Please correct spelling errors and resubmit.");            
-            $Spelling.SpellCheckInWindow('all');
+            $Spelling.SpellCheckInWindow('nameInput,addressInput,cityInput,twitterInput,descInput,detailInput');
             return false;
         }
 
-        if ($Spelling.BinSpellCheckFields('all')) {
-            //alert("Spell Check OK - Submit The Form.");
-            //$Spelling.SubmitFormById = 'createform';
+        if ($Spelling.BinSpellCheckFields('nameInput,addressInput,cityInput,twitterInput,descInput,detailInput')) {
             return true;
         }
     }
@@ -41,3 +39,17 @@
         }
     }
 
+function SpellCheck_BadWordHandler() {  
+    if (validateFormSpelling()
+        && check_val('nameInput')
+        && check_val('addressInput')
+        && check_val('cityInput')
+        && check_val('webInput')
+        && check_val('twitterInput')
+        && check_val('descInput')
+        && check_val('detailInput')
+        && check_val('hashtagInput'))
+    { return true; }
+    else
+    { return false; }
+}
