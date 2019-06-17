@@ -11,16 +11,19 @@
 <p>
     @Html.ActionLink("Create New Event", "Create")
 </p>
-<table class="table tableOutline">
+<table class="table tableOutline" style="width: 100%;">
     <tr>
-        <th>
+        <th style="width: 25%;">
             @Html.DisplayName("Name")
         </th>
-        <th>
+        <th style="width: 25%;">
             @Html.DisplayName("Time Start")
         </th>
-        <th>
+        <th style="width: 25%;">
             @Html.DisplayName("Description")
+        </th>
+        <th style="width: 25%;">
+
         </th>
     </tr>
 
@@ -36,13 +39,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-
-            <td>
-
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+            <td  style="white-space:nowrap";>
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { style = "display: inline", @class = "btn btn-info", type = "button" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { style = "display: inline", @class = "btn btn-danger", type = "button" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { style = "display: inline", @class = "btn btn-warning", type = "button" })
             </td>
         </tr>
     }
