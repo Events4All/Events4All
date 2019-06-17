@@ -12,6 +12,11 @@ namespace Events4All.Web.Models
         public int Id { get; set; }
         public bool IsActive { get; set; }
 
+        [Display(Name = "Register/View Tickets")]
+        public bool isRegistered { get; set; }
+
+        public int participantId { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
         [Display(Name = "Event Name")]
@@ -62,7 +67,7 @@ namespace Events4All.Web.Models
         [Display(Name = "Hashtag")]
         public string HashTag { get; set; }
 
-        [Display(Name = "Attendee Cap")]
+        [Display(Name = "Attendee Capacity")]
         public int AttendeeCap { get; set; }
 
        // public string CreatedBy { get; set; }
