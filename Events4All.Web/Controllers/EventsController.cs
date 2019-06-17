@@ -41,8 +41,8 @@ namespace Events4All.Web.Controllers
             }
 
             EventsViewModel vm = new EventsViewModel();
-            
-           
+
+
             vm.Address = Edto.Address;
             vm.Categories = Edto.Categories;
             vm.City = Edto.City;
@@ -61,7 +61,7 @@ namespace Events4All.Web.Controllers
             vm.TwitterHandle = Edto.TwitterHandle;
             vm.Web = Edto.Web;
             vm.Zip = Edto.Zip;
-            
+
 
             string fullAddressRaw = Edto.Address + " " + Edto.City + " " + Edto.State + " " + Edto.Zip + " ";
             string trimRawAddress = fullAddressRaw.Trim(); //Edto.Address.Trim();
@@ -135,7 +135,7 @@ namespace Events4All.Web.Controllers
         {
             EventDTO Edto = new EventDTO();
             EventQuery Equery = new EventQuery();
-        
+
             //ModelState.Remove("CreatedBy");
             if (ModelState.IsValid)
             {
@@ -201,7 +201,7 @@ namespace Events4All.Web.Controllers
             vm.TwitterHandle = Edto.TwitterHandle;
             vm.Web = Edto.Web;
             vm.AttendeeCap = Edto.AttendeeCap;
-        
+
 
             return View(vm);
         }
@@ -272,7 +272,7 @@ namespace Events4All.Web.Controllers
             vm.TwitterHandle = Edto.TwitterHandle;
             vm.Web = Edto.Web;
             vm.AttendeeCap = Edto.AttendeeCap;
-           
+
 
             return View(vm);
 
@@ -336,7 +336,7 @@ namespace Events4All.Web.Controllers
             byte[] calendarBytes = System.Text.Encoding.UTF8.GetBytes(serializedCalendar);
             return calendarBytes;
         }
-                                   
+
         public PartialViewResult _EventsCreatedPartial()
         {
             {
@@ -537,7 +537,7 @@ namespace Events4All.Web.Controllers
 
                 List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
 
-              
+
 
                 foreach (EventDTO Edto in dtoUserEventsCreated)
                 {
@@ -591,7 +591,7 @@ namespace Events4All.Web.Controllers
         {
             EventQuery eq = new EventQuery();
             ParticipantQuery pq = new ParticipantQuery();
-            ParticipantDTO pDTO = new ParticipantDTO();           
+            ParticipantDTO pDTO = new ParticipantDTO();
             CheckInQuery ciq = new CheckInQuery();
             CheckInDTO ciDTO = new CheckInDTO();
             CheckInRules ciRules = new CheckInRules();
@@ -644,6 +644,8 @@ namespace Events4All.Web.Controllers
 
             return Json(new { errorColor = colorCode, error = errorMessage });
         }
+    }
+}
 
 
 

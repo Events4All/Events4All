@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
+using Events4All.Web.CustomAnnotations;
 
 
 namespace Events4All.Web.Models
@@ -12,7 +14,7 @@ namespace Events4All.Web.Models
         [Display(Name = "Event Start: ")]
         public DateTime? EventStartDate { get; set; }
 
-        [Range(1, 3, ErrorMessage = "Please enter a value between 1 and 3.")]
+        [ConfigRange()]
         public int NumberOfTicket { get; set; }
 
         [Display(Name = "Reminder:   ")]
