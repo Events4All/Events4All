@@ -21,5 +21,8 @@ namespace Events4All.DBQuery.DTO
         public string TimeStart12Hr { get; set; }
         public string TimeStop12Hr { get; set; }
         public string Subject { get; set; }
+        public string Phone { get; set; }
+        public bool SMSOn { get; set; }
+        public bool EmailOn { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace Events4All.DBQuery.Queries
             var reminderList = (from u in db.Users
                                 join e in db.Events on u.Id equals e.CreatedBy.Id
                                 join p in db.Participants on e.Id equals p.EventID.Id
-                                where p.emailNotificationOn == true
+                                where p.emailNotificationOn == true || p.SMSNotificationOn == true
                                 where p.Reminder.Value.Year == DateTime.Now.Year
                                 where p.Reminder.Value.Month == DateTime.Now.Month
                                 where p.Reminder.Value.Day == DateTime.Now.Day
@@ -37,7 +37,10 @@ namespace Events4All.DBQuery.Queries
                                 {
                                     p.EventID,
                                     p.Id,
+                                    p.SMSNotificationOn,
+                                    p.emailNotificationOn,
                                     u.Email,
+                                    u.PhoneNumber,
                                     e.Name,
                                     e.Address,
                                     e.City,
@@ -61,11 +64,14 @@ namespace Events4All.DBQuery.Queries
                 reminderDTO.EventId = u.EventID.ToString();
                 reminderDTO.ParticipantId = u.Id.ToString();
                 reminderDTO.Email = u.Email;
+                reminderDTO.Phone = u.PhoneNumber;
                 reminderDTO.Name = u.Name;
                 reminderDTO.Address = u.Address;
                 reminderDTO.City = u.City;
                 reminderDTO.State = u.State;
                 reminderDTO.Zip = u.Zip;
+                reminderDTO.SMSOn = u.SMSNotificationOn;
+                reminderDTO.EmailOn = u.emailNotificationOn;
                 reminderDTO.TimeStartShort = Convert.ToDateTime(u.TimeStart).ToShortDateString();
                 reminderDTO.TimeStart12Hr = Convert.ToDateTime(u.TimeStart).ToShortTimeString();
                 reminderDTO.TimeStopShort = Convert.ToDateTime(u.TimeStop).ToShortDateString();

@@ -1,4 +1,5 @@
 ﻿using Events4All.Business.ENotifications;
+using Events4All.Constants;
 using Events4All.DBQuery;
 using Events4All.Web.Models;
 using System;
@@ -130,6 +131,7 @@ namespace Events4All.Web.Controllers
         [HttpGet]
         public ActionResult Reminders(int id)
         {
+            ViewBag.PhoneValidation = ConstantValues.phoneValidation;
             RemindersViewModel rvm = new RemindersViewModel();
             ParticipantQuery pq = new ParticipantQuery();
             EventQuery eq = new EventQuery();
@@ -150,8 +152,10 @@ namespace Events4All.Web.Controllers
         //POST REMINDER
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Reminders(int id, [Bind(Include ="Reminder, emailNotificationOn, SMSNotificationOn, TimeStart")] RemindersViewModel remindersViewModel)
+        public ActionResult Reminders(int id, [Bind(Include ="Reminder, emailNotificationOn, SMSNotificationOn, TimeStart, PhoneNumber")] RemindersViewModel remindersViewModel)
         {
+            
+
             if(id <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -166,6 +170,7 @@ namespace Events4All.Web.Controllers
                 pDTO.emailNotificationOn = remindersViewModel.emailNotificationOn;
                 pDTO.SMSNotificationOn = remindersViewModel.SMSNotificationOn;
                 pDTO.Id = id;
+                pDTO.Phone = remindersViewModel.PhoneNumber;
 
                 pq.UpdateParticipantReminders(pDTO);
                 
@@ -186,14 +191,6 @@ namespace Events4All.Web.Controllers
             return View();
         }
 
-        //public ActionResult SetReminder(int eventID)
-        //{
-        //    ParticipantQuery pq = new ParticipantQuery();
-            
-        //    var ParticipantID = pq.GetParticipantID(eventID);
-            
-        //    return RedirectToAction("Reminders/"+ ParticipantID,"Participants");
-        //}
     }
 }
 
