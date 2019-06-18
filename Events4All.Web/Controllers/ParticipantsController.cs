@@ -68,9 +68,9 @@ namespace Events4All.Web.Controllers
 
                     int participantID = query.CreateParticipant(dto);
 
-                EventDTO eventDTO = new EventDTO();
+                //EventDTO eventDTO = new EventDTO();
                 ParticipantsViewModel vm = new ParticipantsViewModel();
-                EventQuery eventQuery = new EventQuery();
+                //EventQuery eventQuery = new EventQuery();
                 UserDTO userDTO = new UserDTO();
                 UserQuery userQuery = new UserQuery();
                 userDTO = userQuery.FindCurrentUser();
