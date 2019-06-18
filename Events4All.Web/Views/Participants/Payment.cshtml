@@ -1,0 +1,179 @@
+﻿@model Events4All.Web.Models.ParticipantsViewModel
+
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var mthList = new List<string>();
+    mthList.Add("01");
+    mthList.Add("02");
+    mthList.Add("03");
+    mthList.Add("04");
+    mthList.Add("05");
+    mthList.Add("06");
+    mthList.Add("07");
+    mthList.Add("08");
+    mthList.Add("09");
+    mthList.Add("10");
+    mthList.Add("11");
+    mthList.Add("12");
+}
+
+@{
+    var yrList = new List<string>();
+    for (int counter = 0; counter <= 6; counter++)
+    {
+        yrList.Add((DateTime.Now.Year + counter).ToString());
+    }
+}
+
+@{
+    var cardList = new List<string>();
+    cardList.Add("Visa");
+    cardList.Add("Master Card");
+    cardList.Add("American Express");
+    cardList.Add("Discover");
+    cardList.Add("PayPal");
+}
+
+<h2>Payment</h2>
+<h4>@ViewBag.Confirmation</h4>
+<div>
+    <a href="http://www.merchantequip.com/information-center/credit-card-logos/">
+        <img src="https://www.merchantequip.com/images/logos/visa-mc-amex-discover-paypal.gif" width="339" height="40"
+             alt="Merchant Equipment Store Credit Card Logos" />
+    </a>
+</div>
+<br />
+
+<body>
+    @using (Html.BeginForm("Payment", "Participants", "POST"))
+    {
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.Label("Number of Tickets", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NumberOfTicket, new { htmlAttributes = new { @class = "form-control", @maxlength = "10", @style = "width:125px", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.NumberOfTicket, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Ticket Price", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TicketPrice, new { htmlAttributes = new { @class = "form-control", @maxlength = "10", @style = "width:125px", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.TicketPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Purchase Amount", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Subtotal, new { htmlAttributes = new { @class = "form-control", @maxlength = "10", @style = "width:125px", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Subtotal, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Account Type", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("AccountType", new SelectList(cardList), "", new { @class = "form-control", @maxlength = "20", @style = "width:165px", @required = "required" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Name on Card", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("NameOnCard", null, new { @class = "form-control", @maxlength = "50", @required = "required" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Card Number", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("CardNumber", null, new { @class = "form-control", @maxlength = "16", @style = "width:165px", @required = "required" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Expire Month", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.TextBox("ExpireDate", null, new { @class = "form-control", @maxlength = "5", @style = "width:100px" })*@
+                @Html.DropDownList("ExpireMonth", new SelectList(mthList), "", new { @class = "form-control", @maxlength = "2", @style = "width:85px", @required = "required", @id = "ExpireMonth" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Expire Year", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.TextBox("ExpireDate", null, new { @class = "form-control", @maxlength = "5", @style = "width:100px" })*@
+                @Html.DropDownList("ExpireYear", new SelectList(yrList), "", new { @class = "form-control", @maxlength = "4", @style = "width:85px", @required = "required", @id = "ExpireYear" })
+            </div>
+        </div>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#ExpireYear").change(function ()
+                {
+                    var month = new Array();
+                    month[0] = "01";
+                    month[1] = "02";
+                    month[2] = "03";
+                    month[3] = "04";
+                    month[4] = "05";
+                    month[5] = "06";
+                    month[6] = "07";
+                    month[7] = "08";
+                    month[8] = "09";
+                    month[9] = "10";
+                    month[10] = "11";
+                    month[11] = "12";
+
+                    var d = new Date();
+                    var n = month[d.getMonth()];
+                    var y = new Date().getFullYear().toString();
+
+                    if ((document.getElementById("ExpireMonth").value <= n) && (document.getElementById("ExpireYear").value == y))
+                    {
+                        alert("The credit card is expired");
+                        location.reload();
+                    }
+                });
+            });
+        </script>
+
+        <div class="form-group">
+            @Html.Label("Security Code", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("SecurityCode", null, new { @class = "form-control", @maxlength = "3", @style = "width:50px", @required = "required" })
+            </div>
+            @*<span style="display:inline">the 3-digit number on the back-side of the card on the right</span>*@
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Zip Code", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("ZipCode", null, new { @class = "form-control", @maxlength = "5", @style = "width:70px", @required = "required" })
+            </div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit Payment" class="btn btn-default" id="Submit" />
+                <script type="text/javascript"></script>
+            </div>
+        </div>
+
+    </div>
+
+    }
+
+</body>

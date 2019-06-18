@@ -3,7 +3,12 @@
 @{
     ViewBag.Title = "RegistrationConfirmationPrint";
 }
-<body onload="window.print()">
+
+<head>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+</head>
+
+<body>
     <h2>Registration Confirmation</h2>
 
     <div>
@@ -74,16 +79,11 @@
             <div>@barcodeRaw3</div>
         </div>
     </div>
-    <p>
-        <div id="pagelink">
-            <button id="print" class="btn btn-primary">Print</button> |
-            @Html.ActionLink("Event Details", "Details", "Events", new { id = ViewBag.EventId }, new { @class = "link" })
+    <script type="text/javascript">
 
-        </div>
-    </p>
+        $(document).ready(function () {
+            window.print();
+        });
 
-    @section Scripts {
-        @Scripts.Render("~/Scripts/PrintRegistration.js")
-
-    }
+    </script>
 </body>

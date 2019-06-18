@@ -129,7 +129,7 @@ namespace Events4All.Web.Controllers
             return View(vmList);
         }
 
-
+        [Authorize]
         // GET: Events/Create
         public ActionResult Create()
         {
@@ -439,13 +439,15 @@ namespace Events4All.Web.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult allEvents(int? id)
         {
             {
                 EventQuery Equery = new EventQuery();
                 ParticipantQuery Pquery = new ParticipantQuery();
-
+                
                 allEventsViewModel UserEventsCreatedList = new allEventsViewModel();
+                
                 List<EventsViewModel> events = new List<EventsViewModel>();
 
                 List<EventDTO> dtoUserEventsCreated = Equery.QueryUserEventsCreated();
@@ -453,19 +455,21 @@ namespace Events4All.Web.Controllers
 
                 foreach (EventDTO Edto in dtoUserEventsCreated)
                 {
-                    EventsViewModel vm = new EventsViewModel();
+                   
+                        EventsViewModel vm = new EventsViewModel();
 
-                    vm.Id = Edto.Id;
-                    vm.Name = Edto.Name;
-                    vm.TimeStart = Edto.TimeStart;
-                    vm.Description = Edto.Description;
+                        vm.Id = Edto.Id;
+                        vm.Name = Edto.Name;
+                        vm.TimeStart = Edto.TimeStart;
+                        vm.Description = Edto.Description;
 
-                    vm.isRegistered = Pquery.IsRegistered(Edto.Id);
-                    if (vm.isRegistered)
-                    {
-                        vm.participantId = Pquery.FindParticipantByEventAndUser(Edto.Id);
-                    }
-                    events.Add(vm);
+                        vm.isRegistered = Pquery.IsRegistered(Edto.Id);
+                        if (vm.isRegistered)
+                        {
+                            vm.participantId = Pquery.FindParticipantByEventAndUser(Edto.Id);
+                        }
+                        events.Add(vm);
+                    
                 }
 
                 List<ParticipantsViewModel> Pevents = new List<ParticipantsViewModel>();
@@ -491,6 +495,7 @@ namespace Events4All.Web.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult eventsAttended()
         {
             {
@@ -536,6 +541,7 @@ namespace Events4All.Web.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult eventsCreated()
         {
             {

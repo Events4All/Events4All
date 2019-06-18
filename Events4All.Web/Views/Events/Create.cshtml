@@ -7,7 +7,7 @@
 
 <h2>Create Event</h2>
 
-@using (Html.BeginForm("Create", "Events", FormMethod.Post, new { id = "createform", onsubmit = "return (validateFormSpelling() && check_val('nameInput') && check_val('addressInput') && check_val('cityInput') && check_val('webInput') && check_val('twitterInput') && check_val('descInput') && check_val('detailInput') && check_val('hashtagInput'))" }))
+@using (Html.BeginForm("Create", "Events", FormMethod.Post, new { id = "createform", onsubmit = "return (SpellCheck_BadWordHandler())" }))
 {
     @Html.AntiForgeryToken()
 

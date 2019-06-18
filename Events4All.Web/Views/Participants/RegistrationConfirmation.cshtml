@@ -5,7 +5,8 @@
 }
 
 <h2>Registration Confirmation</h2>
-
+@*Gary added to show payment confirmation*@
+<h4>@ViewBag.Confirmation</h4>
 <div>
     <h4>Thank you for registering. See you there!</h4>
     <hr />
@@ -14,48 +15,47 @@
             @Html.DisplayName("Event Name")
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.EventName)
-        </dd>
-        <dt>
-            @Html.DisplayName("Event Time")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.EventName)
+            </dd>
+            <dt>
+                @Html.DisplayName("Event Time")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.EventStartDate)
-        </dd>
-        <dt>
-            @Html.DisplayName("Number Of Tickets")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.EventStartDate)
+            </dd>
+            <dt>
+                @Html.DisplayName("Number Of Tickets")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.NumberOfTicket)
-        </dd>
-    </dl>
-</div>
+            <dd>
+                @Html.DisplayFor(model => model.NumberOfTicket)
+            </dd>
+        </dl>
+    </div>
     <table class="table">
         <tr>
-            <th class="col-md-4" >Barcode</th>           
+            <th class="col-md-4">Barcode</th>
         </tr>
         @foreach (var item in Model.Barcodes)
         {
-        <tr>
-            <td class="col-md-4">
-                <iframe src=@Url.Action("RenderBarcode", "Barcode",new { id = item.ToString() }) frameborder="0" height="80" width="1100"></iframe>
-                <div style="margin-left: 4px;">@item.ToString()</div>
-            </td>
-         </tr>
-         }
+            <tr>
+                <td class="col-md-4">
+                    <iframe src=@Url.Action("RenderBarcode", "Barcode",new { id = item.ToString() }) frameborder="0" height="80" width="1100"></iframe>
+                    <div style="margin-left: 4px;">@item.ToString()</div>
+                </td>
+            </tr>
+        }
     </table>
-<p>
-    <div id="pagelink">
-        <button id="print" class="btn btn-primary">Print</button> |
-        @Html.ActionLink("Event Details", "Details", "Events", new {id = ViewBag.EventId}, new { @class = "link" }) 
-        
-    </div>
-</p>
+    <p>
+        <div id="pagelink">
+            <button id="print" class="btn btn-primary">Print</button> |
+            @Html.ActionLink("Event Details", "Details", "Events", new { id = ViewBag.EventId }, new { @class = "link" })
 
-@section Scripts {
-    @Scripts.Render("~/Scripts/PrintRegistration.js")
-    
-}
+        </div>
+    </p>
+
+    @section Scripts {
+        @Scripts.Render("~/Scripts/PrintRegistration.js")
+    }

@@ -150,7 +150,7 @@ namespace Events4All.DBQuery
             ApplicationUser user = db.Users.Find(userId);
 
             List<EventDTO> dtoList = new List<EventDTO>();
-            List<Events> eventList = db.Events.Where(i => i.CreatedBy.Id == userId).ToList();
+            List<Events> eventList = db.Events.Where(i => i.CreatedBy.Id == userId).Where(x => x.IsActive == true).ToList();
 
             foreach (Events userEvents in eventList)
             {

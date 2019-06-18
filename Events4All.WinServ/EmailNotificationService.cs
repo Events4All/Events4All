@@ -72,7 +72,6 @@ namespace Events4All.WinServ
                     var entry = rq.db.Entry(participants);
                     entry.Property(e => e.EmailNotificationSentTime).IsModified = true;
                     rq.db.SaveChanges();
-
                 }
             }
             catch (Exception ex)
@@ -85,14 +84,14 @@ namespace Events4All.WinServ
           -used to pass in any error messages (Windows Service doesn't have debugging functionality)
           -see Exception Handling above
           -can also be placed at different points in the code to display a test message as a way to see 
-          -if the Windows Service is firing blocks of code successfully e.g., WriteToFile("Testing") 
+           if the Windows Service is firing blocks of code successfully e.g., WriteToFile("Testing") 
         */
         private void WriteToFile(string text)
         {
             string path = "C:\\CC7\\ServiceLog.txt";
             using (StreamWriter writer = new StreamWriter(path, false))
             {
-                writer.WriteLine(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt") + ":" + text);
+                writer.WriteLine(DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt") + ":" + text);
                 writer.Close();
             }
         }
