@@ -137,15 +137,15 @@ namespace Events4All.Web.Controllers
             ParticipantDTO pDTO = pq.FindParticipant(id);
             EventDTO evDTO = eq.FindEvent(pDTO.eventId);
 
-            //Map DTO fields to rvm            
+            //Map DTO fields to rvm       
+
             rvm.EventStartDate = evDTO.TimeStart;
             rvm.Reminder = pDTO.Reminder;
             rvm.emailNotificationOn = pDTO.emailNotificationOn;
             rvm.SMSNotificationOn = pDTO.SMSNotificationOn;
-             
+
             return View(rvm);
         }
-
 
         //POST REMINDER
         [HttpPost]
@@ -161,17 +161,29 @@ namespace Events4All.Web.Controllers
             {
                 ParticipantQuery pq = new ParticipantQuery();
                 ParticipantDTO pDTO = new ParticipantDTO();
+                ParticipantDTO pdt = pq.FindParticipant(id);
+                ParticipantsViewModel pvm = new ParticipantsViewModel();
                 
+                EventQuery eq = new EventQuery();
+                EventDTO edto = eq.FindEvent(pdt.eventId);
+
                 pDTO.Reminder = remindersViewModel.Reminder;
                 pDTO.emailNotificationOn = remindersViewModel.emailNotificationOn;
                 pDTO.SMSNotificationOn = remindersViewModel.SMSNotificationOn;
                 pDTO.Id = id;
 
-                pq.UpdateParticipantReminders(pDTO);
-                
-                 return RedirectToAction("ReminderConfirmation", "Participants");
-            }
+                if (remindersViewModel.Reminder <= edto.TimeStart.Value)
+                {
+                    pq.UpdateParticipantReminders(pDTO);
 
+                    return RedirectToAction("ReminderConfirmation", "Participants");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Reminder date is after the event.");
+                }
+            }
+        
             return View(remindersViewModel);
         }
 
