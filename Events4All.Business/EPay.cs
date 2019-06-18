@@ -10,7 +10,7 @@ namespace Events4All.Business
     public class EPay
     {
         //Api request to Stripe Credit Card Processing Service to make a test transaction
-        public void MakeStripeApiRequest(double pmtAmt, string pmtRcptEmail)
+        public string MakeStripeApiRequest(double pmtAmt, string pmtRcptEmail)
         {
             // Set your secret key: remember to change this to your live secret key in production
             // See your keys here: https://dashboard.stripe.com/account/apikeys
@@ -25,6 +25,12 @@ namespace Events4All.Business
             };
             var service = new ChargeService();
             Charge charge = service.Create(options);
+
+            //var res = charge.StripeResponse;
+
+            string resp = charge.StripeResponse.IdempotencyKey + "," + charge.StripeResponse.StatusCode;
+            return resp;
+
         }
     }
 }

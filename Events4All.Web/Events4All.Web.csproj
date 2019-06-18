@@ -491,6 +491,7 @@
     <Content Include="Views\Events\eventsAttended.cshtml" />
     <Content Include="Views\Events\_SocialMediaShare.cshtml" />
     <Content Include="Views\Events\CheckIn.cshtml" />
+    <Content Include="Views\Participants\Payment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
