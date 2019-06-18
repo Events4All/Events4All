@@ -8,7 +8,7 @@
 
 <h2>Create Event</h2>
 
-@using (Html.BeginForm("Create", "Events", FormMethod.Post, new { id = "createform", onsubmit = "return (validateFormSpelling() && check_val('nameInput') && check_val('addressInput') && check_val('cityInput') && check_val('webInput') && check_val('twitterInput') && check_val('descInput') && check_val('detailInput') && check_val('hashtagInput'))" }))
+@using (Html.BeginForm("Create", "Events", FormMethod.Post, new { id = "createform", onsubmit = "return (SpellCheck_BadWordHandler())" }))
 {
     @Html.AntiForgeryToken()
 
@@ -169,8 +169,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" /> &emsp; &ensp; &emsp; &ensp; &emsp; &ensp;
-                @Html.ActionLink("Back to List", "Index2")
+                <input type="submit" value="Create" class="E4AButtons" /> &emsp; &ensp; &emsp; &ensp; &emsp; &ensp;
+                @Html.ActionLink("Back to List", "AllEvents")
             </div>
         </div>
     </div>

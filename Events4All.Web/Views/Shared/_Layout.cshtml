@@ -3,13 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title-Events4All</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
-<body>
 
+<body>
     <div class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
         <div class="containerFORnav">
             <div class="navbar-header">
@@ -55,7 +54,7 @@
                             <a class="dropdown-item">@Html.ActionLink("Browse All Events ", "Index", "Events")</a>
                             <div class="dropdown-divider">
                             </div>
-                            <a class="dropdown-item">@Html.ActionLink("Register For Event", "allEvents", "Events")</a>
+                            <a class="dropdown-item">@Html.ActionLink("Register For Event", "Index", "Events")</a>
                             <div class="dropdown-divider">
                             </div>
                             <a class="dropdown-item">@Html.ActionLink("Print Tickets", "Index", "Events")</a>
@@ -87,12 +86,8 @@
 
     </div>
 
-    
-           
-           
-   
 
-    <div id="container">
+    <div id="container" class="bigOnly">
         <footer>
             <hr />
             <div class="foots">
@@ -102,7 +97,7 @@
                     </a>
                 </div>
                 <div id="center">
-                    <p class="footText">Events&nbsp4&nbspAll&copy;</p>
+                    <p class="footText">Events&nbsp4&nbspAll&nbsp;&copy;@DateTime.Now.Year </p>
 
                 </div>
                 <div id="right">
@@ -120,8 +115,62 @@
         </footer>
     </div>
 
+
+
+
+
+
+    <div id="container" class="smallOnly">
+        <footer>
+            <hr />
+            <div class="center">
+                <div>
+                    <a class="footIcons" href="/">
+                        <img class="logo2" src="~/images/eLogo.png">
+                    </a>
+                    <span class="footText">Events&nbsp4&nbspAll&nbsp;&copy;@DateTime.Now.Year </span>
+
+                </div>
+                <div>
+                    <a href="https://www.facebook.com/events4all2019" target="_blank">
+                        <img src="https://img.icons8.com/color/48/000000/facebook.png">
+                    </a>
+                    <a href="https://twitter.com/events4_all" target="_blank">
+                        <img src="https://img.icons8.com/color/48/000000/twitter.png">
+                    </a>
+                    <a class="test" href=" https://www.instagram.com/events4_all/?hl=en" target="_blank">
+                        <img src="https://img.icons8.com/color/48/000000/instagram-new.png">
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
+    <div class="col-md-6 map_agile">
+        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyA0C1LPhGrh_jgCTNU0blCVCFfeJmRZCbo'></script>
+
+        <div style='overflow:hidden;height:599.4px;width:100%;'>
+            <div id='gmap_canvas' style='height:100%;width:520px;'></div>
+            <style>
+                #gmap_canvas img {
+                    max-width: none !important;
+                    background: none !important;
+                    visibility: visible !important;
+                }
+            </style>
+        </div>
+
+        <a href='http://casinos-1.com'>.</a>
+
+        <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=c55cd61f08514ba52d0b28d793953517c0185723'></script>
+        <script src="~/Scripts/DisplayMap.js" type="text/javascript"></script>
+
+    </div>
+
 </body>
 </html>

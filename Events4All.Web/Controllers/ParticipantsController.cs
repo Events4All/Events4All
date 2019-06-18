@@ -1,4 +1,5 @@
-﻿using Events4All.DBQuery;
+﻿using Events4All.Business.ENotifications;
+using Events4All.DBQuery;
 using Events4All.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -67,8 +68,29 @@ namespace Events4All.Web.Controllers
 
                     int participantID = query.CreateParticipant(dto);
 
-                    return RedirectToAction("RegistrationConfirmation/" + participantID, "Participants");
-                }
+                EventDTO eventDTO = new EventDTO();
+                ParticipantsViewModel vm = new ParticipantsViewModel();
+                EventQuery eventQuery = new EventQuery();
+                UserDTO userDTO = new UserDTO();
+                UserQuery userQuery = new UserQuery();
+                userDTO = userQuery.FindCurrentUser();
+                eventDTO = eventQuery.FindEvent(dto.eventId);
+
+                string content = System.IO.File.ReadAllText(Server.MapPath("~/ConfirmMail.cshtml"));
+                content = content.Replace("{{Name}}", eventDTO.Name);
+                content = content.Replace("{{Address}}", eventDTO.Address);
+                content = content.Replace("{{City}}", eventDTO.City);
+                content = content.Replace("{{State}}", eventDTO.State);
+                content = content.Replace("{{Zip}}", eventDTO.Zip.ToString());
+                content = content.Replace("{{TimeStart}}", eventDTO.TimeStart.ToString());
+                content = content.Replace("{{Ticket}}", dto.NumberOfTicket.ToString());
+                content = content.Replace("{{participantID}}", participantID.ToString());
+                content = content.Replace("{{eventID}}", eventDTO.Id.ToString());
+                var toEmail = userDTO.Username.ToString();
+                new EmailNotification().SendEmail(toEmail, content, "Confirmation : You have registered for an event!");
+
+                return RedirectToAction("RegistrationConfirmation/" + participantID, "Participants");
+            }
 
             }
 
@@ -105,6 +127,33 @@ namespace Events4All.Web.Controllers
             return View(vm);
         }
 
+        public ActionResult RegistrationConfirmationPrint(int id)
+        {
+            ParticipantQuery participantQuery = new ParticipantQuery();
+            ParticipantDTO participantDTO = new ParticipantDTO();
+            EventQuery eventQuery = new EventQuery();
+            EventDTO eventDTO = new EventDTO();
+            UserDTO userDTO = new UserDTO();
+            UserQuery userQuery = new UserQuery();
+
+            ParticipantsViewModel vm = new ParticipantsViewModel();
+
+            participantDTO = participantQuery.FindParticipant(id);
+            eventDTO = eventQuery.FindEvent(participantDTO.eventId);
+            userDTO = userQuery.FindCurrentUser();
+
+            vm.EventName = eventDTO.Name;
+            vm.NumberOfTicket = participantDTO.NumberOfTicket;
+            vm.EventStartDate = eventDTO.TimeStart;
+
+            ViewBag.NumberOfTickets = participantDTO.NumberOfTicket;
+            ViewBag.Username = userDTO.Username.Replace("@", "").Replace(".com", "");
+            ViewBag.UserId = userDTO.Id;
+            ViewBag.EventName = eventDTO.Name;
+            ViewBag.EventId = eventDTO.Id;
+
+            return View(vm);
+        }
 
         [HttpGet]
         public ActionResult Reminders(int id)

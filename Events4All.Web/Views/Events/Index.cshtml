@@ -1,15 +1,14 @@
 ﻿@model IEnumerable<Events4All.Web.Models.EventsViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Events";
 }
 
 <h2>Events</h2>
-
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table tableOutline">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -17,7 +16,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Address)
         </th>
         <th>
@@ -34,11 +33,11 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TwitterHandle)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.TimeStart)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.TimeStop)
         </th>
         <th>
@@ -51,12 +50,15 @@
             @Html.DisplayNameFor(model => model.HashTag)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.isRegistered)
+        </th>*@
+        <th>
             @Html.DisplayNameFor(model => model.AttendeeCap)
         </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -64,7 +66,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Address)
         </td>
         <td>
@@ -81,11 +83,11 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TwitterHandle)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.TimeStart)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.TimeStop)
         </td>
         <td>
@@ -96,18 +98,36 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.HashTag)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.AttendeeCap)
         </td>
 
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @id = "details" }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @id = "details" }) |
-            <br />
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @id = "details" })
+        <td style="white-space:nowrap;">
+
+            @{
+                string registerStyleValue;
+                string viewTicketStyleValue;
+
+                if (item.isRegistered == false)
+                {
+                    registerStyleValue = "inline";
+                    viewTicketStyleValue = "none";
+                }
+                else
+                {
+                    registerStyleValue = "none";
+                    viewTicketStyleValue = "inline";
+                }
+            }
+            @Html.ActionLink("View Ticket", "RegistrationConfirmation/" + @item.participantId, "Participants", new { id = ViewBag.ParticipantID }, new { style = "display:" + viewTicketStyleValue, @class = "btn btn-primary", type = "button" })
+            @Html.ActionLink("Register", "Create/" + item.Id, "Participants", null, new { id = "register", style = "display:" + registerStyleValue, @class = "btn btn-success", type = "button" })
+
+            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { style = "display: inline", @class = "btn btn-info", type = "button" })
+            @*@Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { style = registerStyleValue, @class = "btn btn-primary", type = "button" })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { style = registerStyleValue, @class = "btn btn-primary", type = "button" })*@
         </td>
     </tr>
-}
+    }
 
 </table>

@@ -12,6 +12,11 @@ namespace Events4All.Web.Models
         public int Id { get; set; }
         public bool IsActive { get; set; }
 
+        [Display(Name = "Register/View Tickets")]
+        public bool isRegistered { get; set; }
+
+        public int participantId { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
         [Display(Name = "Event Name")]
@@ -38,6 +43,7 @@ namespace Events4All.Web.Models
         [Display(Name = "Twitter Handle")]
         public string TwitterHandle { get; set; }
 
+        [Required(ErrorMessage = "You must enter {0}")]
         [Display(Name = "Start Time")]
         [DisplayFormat(DataFormatString ="{0:MM/dd/yyyy hh:mm tt}")]
         public DateTime? TimeStart { get; set; }
@@ -46,9 +52,12 @@ namespace Events4All.Web.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy hh:mm tt}")]
         public DateTime? TimeStop { get; set; }
 
+        [Required(ErrorMessage = "You must enter {0}")]
         public string Description { get; set; }
         public string Detail { get; set; }
         public byte?[] Logo { get; set; }
+        public String Number { get; set; }
+        public string Street { get; set; }
 
         [Display(Name = "Ticket Price")]
         //[DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
@@ -58,7 +67,7 @@ namespace Events4All.Web.Models
         [Display(Name = "Hashtag")]
         public string HashTag { get; set; }
 
-        [Display(Name = "Attendee Cap")]
+        [Display(Name = "Attendee Capacity")]
         public int AttendeeCap { get; set; }
 
        // public string CreatedBy { get; set; }

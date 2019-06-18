@@ -18,7 +18,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -198,6 +199,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ParticipantsController.cs" />
+    <Compile Include="CustomAnnotations\ConfigRange.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -212,6 +214,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ConfirmMail.cshtml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -418,6 +421,7 @@
     <Content Include="JavaScriptSpellCheck\extensions\modalbox\README" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CalculateTicketPrice.js" />
+    <Content Include="Scripts\DisplayMap.js" />
     <Content Include="Scripts\GenerateCalendarPopup.js" />
     <Content Include="Scripts\ParseBarcode.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -427,8 +431,6 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
-    <Content Include="Scripts\jquery.cookie.js" />
-    <Content Include="Scripts\jquery.flashmessage.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -489,8 +491,11 @@
     <Content Include="Views\Events\_eventsAttended.cshtml" />
     <Content Include="Views\Events\eventsCreated.cshtml" />
     <Content Include="Views\Events\eventsAttended.cshtml" />
+    <Content Include="Views\Participants\RegistrationConfirmationPrint.cshtml" />
+    <Content Include="Views\Events\SelectCalendarEmail.cshtml" />
     <Content Include="Views\Events\_SocialMediaShare.cshtml" />
     <Content Include="Views\Events\CheckIn.cshtml" />
+    <Content Include="Views\Events\_Results.cshtml" />
     <Content Include="Views\Participants\Payment.cshtml" />
   </ItemGroup>
   <ItemGroup>

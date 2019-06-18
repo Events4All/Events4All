@@ -6,21 +6,24 @@
     @Html.ActionLink("Attend An Event", "Index")
 </p>
 
-<table class="table tableOutline">
+<table class="table tableOutline" style="width: 100%;">
     <tr>
-        <th>
+        <th style="width: 25%;">
             @Html.DisplayName("Name")
         </th>
-        <th>
+        <th style="width: 25%;">
             @Html.DisplayName("Time Start")
         </th>
-        <th>
+        <th style="width: 25%;">
             @Html.DisplayName("Description")
+        </th>
+        <th style="width: 25%;">
+
         </th>
     </tr>
 
     @foreach (var item in Model.EventsAttend)
-    {
+     {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.EventName)
@@ -31,13 +34,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.id })
+        <td style="white-space:nowrap;" align="left">
+            @Html.ActionLink("View Ticket", "RegistrationConfirmation", "Participants", new { id = item.parId }, new { style = "display: inline", @class = "btn btn-primary", type = "button" })
+            @Html.ActionLink("Details", "Details", new { id = item.id }, new { style = "display: inline", @class = "btn btn-info", type = "button" })
+        </td>
 
-            @*@Html.ActionLink("Cancel Registration", "Details", new { id = item.id })*@
-            @*@Html.ActionLink("Delete", "Delete", new { id = item.id }) |
-        @Html.ActionLink("Edit", "Edit", new { id = item.id })*@
-        </td>            
+       
     </tr>
-    }
+     }
+
 </table>

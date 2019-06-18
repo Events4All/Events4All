@@ -142,13 +142,13 @@ namespace Events4All.DBQuery
             db.SaveChanges();
         }
 
-           public List<EventDTO> QueryUserEventsCreated()
+        public List<EventDTO> QueryUserEventsCreated()
         {
             string userId = HttpContext.Current.User.Identity.GetUserId();
             ApplicationUser user = db.Users.Find(userId);
 
             List<EventDTO> dtoList = new List<EventDTO>();
-            List<Events> eventList = db.Events.Where(i => i.CreatedBy.Id == userId).ToList();
+            List<Events> eventList = db.Events.Where(i => i.CreatedBy.Id == userId).Where(x => x.IsActive == true).ToList();
 
             foreach (Events userEvents in eventList)
             {
@@ -159,6 +159,15 @@ namespace Events4All.DBQuery
             return dtoList;
         }
 
+        public DateTime[] QueryEventTimes(int eventId)
+        {
+            EventDTO eDTO = new EventDTO();
+            eDTO = FindEvent(eventId);
+            DateTime checkinStart = eDTO.TimeStart.Value;
+            DateTime checkinEnd = eDTO.TimeStop.Value;
+            DateTime[] eventTimes = { checkinStart, checkinEnd };
+            return eventTimes;
+        }
     }
 }
 

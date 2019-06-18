@@ -26,23 +26,26 @@ function LoadCheckInResult(error, colorCode) {
     var $colormsg = $('#colormsg');
     var $barcode = $('#barcode');
     $confirmation.empty();
-    $confirmation.html(error);
+    $colormsg.val(error);
     $('#lastbarcode').html('Last Barcode: ' + $barcode.val());
     $barcode.val("");
     $barcode.focus();
 
     if (colorCode == "green") {
+        $colormsg.removeClass("hidden");
         $colormsg.removeClass("checkInDuplicate");
         $colormsg.removeClass("checkInFailure");
         $colormsg.addClass("checkInSuccess");
     }
     else if (colorCode == "yellow") {
+        $colormsg.removeClass("hidden");
         $colormsg.removeClass("checkInSuccess");
         $colormsg.removeClass("checkInFailure");
         $colormsg.addClass("checkInDuplicate");
     }
     else
     {
+        $colormsg.removeClass("hidden");
         $colormsg.removeClass("checkInSuccess");
         $colormsg.addClass("checkInFailure");
         $colormsg.removeClass("checkInDuplicate");
