@@ -199,6 +199,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ParticipantsController.cs" />
+    <Compile Include="CustomAnnotations\ConfigRange.cs" />
     <Compile Include="CustomDataAnnotations\PhoneReminderValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -422,7 +423,6 @@
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CalculateTicketPrice.js" />
     <Content Include="Scripts\DisplayMap.js" />
-    <Content Include="Scripts\DispMultipleMarkers.js" />
     <Content Include="Scripts\GenerateCalendarPopup.js" />
     <Content Include="Scripts\ParseBarcode.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -498,6 +498,7 @@
     <Content Include="Views\Events\_SocialMediaShare.cshtml" />
     <Content Include="Views\Events\CheckIn.cshtml" />
     <Content Include="Views\Events\_Results.cshtml" />
+    <Content Include="Views\Participants\Payment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
