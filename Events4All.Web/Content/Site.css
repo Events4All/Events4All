@@ -367,7 +367,7 @@ a:hover, a:active, a:focus
 /* End of header(nav bar) and footer styles*/
 /*---------------------------------------------*/
 
-td {
+td,th {
     text-align: left;
 }
 

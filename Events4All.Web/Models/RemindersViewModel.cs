@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using Events4All.Web.Models;
+using Events4All.Web.CustomDataAnnotations;
 
 namespace Events4All.Web.Models
 {
@@ -21,7 +22,12 @@ namespace Events4All.Web.Models
 
         [Display(Name = "Text: ")]
         public bool SMSNotificationOn { get; set; }
-         
+
+        [Display(Name = "Phone Number")]
+        [PhoneReminderValidation]
+        public string PhoneNumber { get; set; }
+        
+        public string PhoneValidation { get; set; }
         //public virtual EventsViewModel EventID { get; set; }
        //public IEnumerable<EventsViewModel> EventID { get; set; }
     }

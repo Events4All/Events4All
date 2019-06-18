@@ -3,15 +3,17 @@
 @{
     ViewBag.Title = "RegistrationConfirmation";
 }
-    <h2>Registration Confirmation</h2>
 
-    <div>
-        <h4>Thank you for registering. See you there!</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayName("Event Name")
-            </dt>
+<h2>Registration Confirmation</h2>
+@*Gary added to show payment confirmation*@
+<h4>@ViewBag.Confirmation</h4>
+<div>
+    <h4>Thank you for registering. See you there!</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Event Name")
+        </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.EventName)

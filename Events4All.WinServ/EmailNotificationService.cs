@@ -36,15 +36,29 @@ namespace Events4All.WinServ
                     string startTime = dto.TimeStart12Hr;
                     string endDate = dto.TimeStopShort;
                     string endTime = dto.TimeStop12Hr;
+                    string phone = dto.Phone;
+                    
 
                     string adminEmail = "samnasr@live.com";
 
                     //List of participant email address along with admin email address
                     List<string> emailAddresses = new List<string>();
-                    emailAddresses.Add(email);
+                    List<string> phoneNumbers = new List<string>();
                     emailAddresses.Add(adminEmail);
 
+                    if (dto.EmailOn)
+                    {
+                        emailAddresses.Add(email);
+                    }
+
+                    if (dto.SMSOn)
+                    {
+                        phoneNumbers.Add(phone);
+                    }
+                    
+
                     Business.ENotifications.EmailNotification emailNotification = new Business.ENotifications.EmailNotification();
+                    Business.ENotifications.SMSNotification SMSNotification = new Business.ENotifications.SMSNotification();
 
                     string body = ($"This is a reminder: " + "<br />" + "<br />" +
                                     $"You're scheduled to attend the event <b>{eventName}</b> on <b>{startDate}</b>" +
@@ -60,6 +74,10 @@ namespace Events4All.WinServ
                     {
                         emailNotification.SendEmail(emailAddress, body, subject);
                     }
+                    foreach (string phoneNumber in phoneNumbers)
+                    {
+                        SMSNotification.SendSMS(phoneNumber, body, subject);
+                    }
 
                     /* Timestamps when the email notification was sent 
                             -updates the current participant record with the current datetime
@@ -72,7 +90,6 @@ namespace Events4All.WinServ
                     var entry = rq.db.Entry(participants);
                     entry.Property(e => e.EmailNotificationSentTime).IsModified = true;
                     rq.db.SaveChanges();
-
                 }
             }
             catch (Exception ex)
@@ -85,14 +102,14 @@ namespace Events4All.WinServ
           -used to pass in any error messages (Windows Service doesn't have debugging functionality)
           -see Exception Handling above
           -can also be placed at different points in the code to display a test message as a way to see 
-          -if the Windows Service is firing blocks of code successfully e.g., WriteToFile("Testing") 
+           if the Windows Service is firing blocks of code successfully e.g., WriteToFile("Testing") 
         */
         private void WriteToFile(string text)
         {
             string path = "C:\\CC7\\ServiceLog.txt";
             using (StreamWriter writer = new StreamWriter(path, false))
             {
-                writer.WriteLine(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt") + ":" + text);
+                writer.WriteLine(DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt") + ":" + text);
                 writer.Close();
             }
         }

@@ -1,4 +1,5 @@
-﻿using Events4All.DB.Models;
+﻿using Events4All.Constants;
+using Events4All.DB.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -143,6 +144,11 @@ namespace Events4All.DBQuery
             pRec.Reminder = pDTO.Reminder;
             pRec.emailNotificationOn = pDTO.emailNotificationOn;
             pRec.SMSNotificationOn = pDTO.SMSNotificationOn;
+
+            if(pDTO.Phone != ConstantValues.phoneValidation && pDTO.Phone != null)
+            {
+                user.PhoneNumber = pDTO.Phone;
+            }
 
             db.Entry(pRec).State = EntityState.Modified;
             db.SaveChanges();                     

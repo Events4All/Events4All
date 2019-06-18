@@ -92,6 +92,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\ConstantValues.cs" />
     <Compile Include="DTO\CheckInDTO.cs" />
     <Compile Include="DTO\EventDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
