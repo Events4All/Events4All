@@ -77,20 +77,23 @@ namespace Events4All.Web.Controllers
                 userDTO = userQuery.FindCurrentUser();
                 eventDTO = eventQuery.FindEvent(dto.eventId);
 
-                string content = System.IO.File.ReadAllText(Server.MapPath("~/ConfirmMail.cshtml"));
-                content = content.Replace("{{Name}}", eventDTO.Name);
-                content = content.Replace("{{Address}}", eventDTO.Address);
-                content = content.Replace("{{City}}", eventDTO.City);
-                content = content.Replace("{{State}}", eventDTO.State);
-                content = content.Replace("{{Zip}}", eventDTO.Zip.ToString());
-                content = content.Replace("{{TimeStart}}", eventDTO.TimeStart.ToString());
-                content = content.Replace("{{Ticket}}", dto.NumberOfTicket.ToString());
-                content = content.Replace("{{participantID}}", participantID.ToString());
-                content = content.Replace("{{eventID}}", eventDTO.Id.ToString());
-                var toEmail = userDTO.Username.ToString();
-                new EmailNotification().SendEmail(toEmail, content, "Confirmation : You have registered for an event!");
+                    double totalCharge = dto.NumberOfTicket * eventDTO.TicketPrice;
 
-                return RedirectToAction("RegistrationConfirmation/" + participantID, "Participants");
+                    string content = System.IO.File.ReadAllText(Server.MapPath("~/views/Shared/ConfirmMail.cshtml"));
+                    content = content.Replace("{{Name}}", eventDTO.Name);
+                    content = content.Replace("{{Address}}", eventDTO.Address);
+                    content = content.Replace("{{City}}", eventDTO.City);
+                    content = content.Replace("{{State}}", eventDTO.State);
+                    content = content.Replace("{{Zip}}", eventDTO.Zip.ToString());
+                    content = content.Replace("{{TimeStart}}", eventDTO.TimeStart.ToString());
+                    content = content.Replace("{{Price}}", eventDTO.TicketPrice.ToString());
+                    content = content.Replace("{{Ticket}}", dto.NumberOfTicket.ToString());
+                    content = content.Replace("{{Total}}", totalCharge.ToString());
+                    content = content.Replace("{{eventID}}", eventDTO.Id.ToString());
+                    var toEmail = userDTO.Username.ToString();
+                    new EmailNotification().SendEmail(toEmail, content, "Confirmation : You have registered for an event");
+
+                    return RedirectToAction("RegistrationConfirmation/" + participantID, "Participants");
             }
 
             }
@@ -182,7 +185,6 @@ namespace Events4All.Web.Controllers
         public ActionResult Reminders(int id, [Bind(Include ="Reminder, emailNotificationOn, SMSNotificationOn, TimeStart, PhoneNumber")] RemindersViewModel remindersViewModel)
         {
             
-
             if(id <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -289,6 +291,33 @@ namespace Events4All.Web.Controllers
                     }
 
                     int participantID = query.CreateParticipant(dto);
+
+                    EventDTO eventDTO = new EventDTO();
+                    EventQuery eventQuery = new EventQuery();
+                    eventDTO.TicketPrice = eventQuery.FindEvent(id).TicketPrice;
+
+
+                    ParticipantsViewModel vm = new ParticipantsViewModel();
+                    UserDTO userDTO = new UserDTO();
+                    userDTO = userQuery.FindCurrentUser();
+                    eventDTO = eventQuery.FindEvent(dto.eventId);
+
+                    double totalCharge = dto.NumberOfTicket * eventDTO.TicketPrice;
+
+                    string content = System.IO.File.ReadAllText(Server.MapPath("~/views/Shared/confirmMailPurchase.cshtml"));
+                    content = content.Replace("{{Name}}", eventDTO.Name);
+                    content = content.Replace("{{Address}}", eventDTO.Address);
+                    content = content.Replace("{{City}}", eventDTO.City);
+                    content = content.Replace("{{State}}", eventDTO.State);
+                    content = content.Replace("{{Zip}}", eventDTO.Zip.ToString());
+                    content = content.Replace("{{TimeStart}}", eventDTO.TimeStart.ToString());
+                    content = content.Replace("{{Price}}", eventDTO.TicketPrice.ToString());
+                    content = content.Replace("{{Ticket}}", dto.NumberOfTicket.ToString());
+                    content = content.Replace("{{Total}}", totalCharge.ToString());
+                    content = content.Replace("{{eventID}}", eventDTO.Id.ToString());
+                    content = content.Replace("{{RegistrationConfirmation}}", confirmCode);
+                    var toEmail = userDTO.Username.ToString();
+                    new EmailNotification().SendEmail(toEmail, content, "Confirmation : You have purchased tickets to an event");
 
                     return RedirectToAction("RegistrationConfirmation/" + participantID, "Participants");                    
                 }

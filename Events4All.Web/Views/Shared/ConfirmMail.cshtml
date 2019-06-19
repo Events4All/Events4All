@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Info : {{Name}}</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    Event : {{Name}}<br />
+    Address : {{Address}}, {{City}}, {{State}} {{Zip}}<br />
+    Time : {{TimeStart}}<br />
+    Number Of Tickets: {{Ticket}}<br />
+
+
+
+    <a href="http://localhost:60069/Participants/RegistrationConfirmationPrint/{{participantID}}">Print Your Ticket</a>
+    <a href="http://localhost:60069/Events/SelectCalendarEmail/{{eventID}}">Add to Calendar</a>
+    &emsp; &ensp; &emsp; &ensp; &emsp; &ensp;&emsp; &ensp; &emsp; &ensp; &emsp; &ensp;&emsp; &ensp; &emsp; &ensp; &emsp; &ensp;
+    <span id="right">
+        Share Event:&nbsp;
+        <a href="http://www.facebook.com/share" target="_blank">
+            <img title="facebook" src="https://img.icons8.com/metro/26/000000/facebook.png">
+        </a>
+        <a href='https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A60069%2FEvents%2FDetails%2F{{eventID}}&text=Check out this event on events4all.com: {{Name}} is happening on {{TimeStart}}'>
+            <img title="twitter" src="https://img.icons8.com/metro/26/000000/twitter.png">
+        </a>
+        <a href="mailto:?subject=Check out this event!&amp;body=Check out this event on events4all.com: {{Name}} is happening on {{TimeStart}}
+           http%3A%2F%2Flocalhost%3A60069%2FEvents%2FDetails%2F{{eventID}}">
+            <img title="email" src="https://img.icons8.com/windows/32/000000/message-group.png">
+        </a>
+    </span>
+</body>
+</html>
