@@ -27,7 +27,7 @@
         </th>
     </tr>
 
-    @foreach (var item in Model.EventsCreated)
+    @foreach (var item in Model.EventsCreated.OrderBy(item => item.TimeStart))
     {
         <tr>
             <td>

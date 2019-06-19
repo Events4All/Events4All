@@ -1,4 +1,5 @@
-﻿using Events4All.DB.Models;
+﻿using Events4All.Constants;
+using Events4All.DB.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -121,7 +122,8 @@ namespace Events4All.DBQuery
             List<Participants> participantsList = db.Participants
                 .Include(i => i.EventID)
                 .Include(i => i.AccountID)
-                .Where(i => i.AccountID.Id == userId)
+                .Where(i => i.AccountID.Id == userId && i.EventID.IsActive==true && i.EventID.TimeStart >= DateTime.Now)
+                //.OrderBy(i => i.EventID.TimeStart)
                 .ToList();
 
             foreach (Participants userEvents in participantsList)
@@ -143,6 +145,11 @@ namespace Events4All.DBQuery
             pRec.Reminder = pDTO.Reminder;
             pRec.emailNotificationOn = pDTO.emailNotificationOn;
             pRec.SMSNotificationOn = pDTO.SMSNotificationOn;
+
+            if(pDTO.Phone != ConstantValues.phoneValidation && pDTO.Phone != null)
+            {
+                user.PhoneNumber = pDTO.Phone;
+            }
 
             db.Entry(pRec).State = EntityState.Modified;
             db.SaveChanges();                     

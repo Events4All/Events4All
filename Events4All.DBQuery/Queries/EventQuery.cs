@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 
 namespace Events4All.DBQuery
@@ -24,6 +25,7 @@ namespace Events4All.DBQuery
         {
             List<EventDTO> eventDtoList = new List<EventDTO>();
             List<Events> eventList = db.Events.ToList();
+
 
             foreach (Events events in eventList)
             {
@@ -62,8 +64,8 @@ namespace Events4All.DBQuery
 
         public void CreateEvent(EventDTO EventsDTO)
         {
-            try
-            {
+            //try
+            //{
                 string userId = HttpContext.Current.User.Identity.GetUserId();
                 ApplicationUser user = db.Users.Find(userId);
 
@@ -92,22 +94,23 @@ namespace Events4All.DBQuery
 
                 db.Events.Add(Events);
                 db.SaveChanges();
-            }
-            catch (DbEntityValidationException e)
-            {
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
-                    }
-                }
-                throw;
-            }
+//        }
+//            catch (DbEntityValidationException e)
+//            {
+//                foreach (var eve in e.EntityValidationErrors)
+//                {
+//                    Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:", eve.Entry.Entity.GetType().Name, eve.Entry.State);
+
+//                    foreach (var ve in eve.ValidationErrors)
+//                    {
+//                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",  ve.PropertyName, ve.ErrorMessage);
+//                    }
+//}
+//                throw;
+//            }
         }
+
+
         public void DeleteConfirmed(int id)
         {
             Events Ev = db.Events.Find(id);
