@@ -17,12 +17,14 @@ namespace Events4All.Web.Controllers
         public ActionResult Create(int id)
         {         
             ParticipantsViewModel vm = new ParticipantsViewModel();
-            EventQuery query = new EventQuery();
-            EventDTO dto = new EventDTO();
+            EventQuery eventQuery = new EventQuery();
+            EventDTO eventDto = new EventDTO();
 
-            dto = query.FindEvent(id);
-            vm.TicketsAvailable = query.GetRemainingTickets(dto.Id);
-            vm.TicketPrice = dto.TicketPrice;
+            
+            vm.TicketsAvailable = eventQuery.GetRemainingTickets(dto.Id);
+            
+            eventDto = eventQuery.FindEvent(id);
+            vm.TicketPrice = eventDto.TicketPrice;
 
             return View(vm);
         }
@@ -34,8 +36,8 @@ namespace Events4All.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "NumberOfTicket, Reminder, RemainingTickets")] ParticipantsViewModel participantsViewModel, int id)
         {
-            ParticipantDTO dto = new ParticipantDTO();
-            ParticipantQuery query = new ParticipantQuery();
+            ParticipantDTO participantDto = new ParticipantDTO();
+            ParticipantQuery participantQuery = new ParticipantQuery();
 
             //Gary added to find ticket price
             EventDTO eventDTO = new EventDTO();
@@ -58,42 +60,45 @@ namespace Events4All.Web.Controllers
                 }
                 else
                 {
-                    dto.NumberOfTicket = participantsViewModel.NumberOfTicket;
-                    dto.Reminder = participantsViewModel.Reminder;
-                    dto.eventId = id;
-                    dto.Barcodes = new List<Guid>();
+                    participantDto.NumberOfTicket = participantsViewModel.NumberOfTicket;
+                    participantDto.Reminder = participantsViewModel.Reminder;
+                    participantDto.eventId = id;
+                    participantDto.Barcodes = new List<Guid>();
 
-                    for (int i = 0; i < dto.NumberOfTicket; i++)
+                    for (int i = 0; i < participantDto.NumberOfTicket; i++)
                     {
                         Guid barcode = Guid.NewGuid();
-                        dto.Barcodes.Add(barcode);
+                        participantDto.Barcodes.Add(barcode);
                     }
 
-                    int participantID = query.CreateParticipant(dto);
+                    int participantID = participantQuery.CreateParticipant(participantDto);
 
-                    //EventDTO eventDTO = new EventDTO();
-                    ParticipantsViewModel vm = new ParticipantsViewModel();
-                    //EventQuery eventQuery = new EventQuery();
-                    UserDTO userDTO = new UserDTO();
-                    UserQuery userQuery = new UserQuery();
-                    userDTO = userQuery.FindCurrentUser();
-                    eventDTO = eventQuery.FindEvent(dto.eventId);
+                //EventDTO eventDTO = new EventDTO();
+                ParticipantsViewModel vm = new ParticipantsViewModel();
+                //EventQuery eventQuery = new EventQuery();
+                UserDTO userDTO = new UserDTO();
+                UserQuery userQuery = new UserQuery();
+                userDTO = userQuery.FindCurrentUser();
+                eventDTO = eventQuery.FindEvent(participantDto.eventId);
 
-                    string content = System.IO.File.ReadAllText(Server.MapPath("~/ConfirmMail.cshtml"));
+                    double totalCharge = dto.NumberOfTicket * eventDTO.TicketPrice;
+
+                    string content = System.IO.File.ReadAllText(Server.MapPath("~/views/Shared/ConfirmMail.cshtml"));
                     content = content.Replace("{{Name}}", eventDTO.Name);
                     content = content.Replace("{{Address}}", eventDTO.Address);
                     content = content.Replace("{{City}}", eventDTO.City);
                     content = content.Replace("{{State}}", eventDTO.State);
                     content = content.Replace("{{Zip}}", eventDTO.Zip.ToString());
                     content = content.Replace("{{TimeStart}}", eventDTO.TimeStart.ToString());
+                    content = content.Replace("{{Price}}", eventDTO.TicketPrice.ToString());
                     content = content.Replace("{{Ticket}}", dto.NumberOfTicket.ToString());
-                    content = content.Replace("{{participantID}}", participantID.ToString());
+                    content = content.Replace("{{Total}}", totalCharge.ToString());
                     content = content.Replace("{{eventID}}", eventDTO.Id.ToString());
                     var toEmail = userDTO.Username.ToString();
-                    new EmailNotification().SendEmail(toEmail, content, "Confirmation : You have registered for an event!");
+                    new EmailNotification().SendEmail(toEmail, content, "Confirmation : You have registered for an event");
 
                     return RedirectToAction("RegistrationConfirmation/" + participantID, "Participants");
-                }
+            }
 
             }
 
@@ -124,9 +129,16 @@ namespace Events4All.Web.Controllers
             string confirmCode = "";
             if (TempData.ContainsKey("ConfirmationCode"))
                 confirmCode = TempData["ConfirmationCode"].ToString();
-            ViewBag.Confirmation = "The payment processed successfully.  " +
+            if (confirmCode == "")
+            {
+                ViewBag.Confirmation = "";
+            }
+            else
+            {
+                ViewBag.Confirmation = "The payment processed successfully.  " +
                         "Your confirmation number is " + confirmCode;
-
+            }
+            
             participantDTO = participantQuery.FindParticipant(id);
             eventDTO = eventQuery.FindEvent(participantDTO.eventId);
 
@@ -134,9 +146,15 @@ namespace Events4All.Web.Controllers
             vm.NumberOfTicket = participantDTO.NumberOfTicket;
             vm.EventStartDate = eventDTO.TimeStart;
             vm.Barcodes = participantDTO.Barcodes;
+            vm.Address = eventDTO.Address;
+            vm.City = eventDTO.City;
+            vm.State = eventDTO.State;
+            vm.Zip = eventDTO.Zip;
 
             ViewBag.EventId = eventDTO.Id;
-            
+
+            ViewBag.Location = ($"{vm.Address}, {vm.City}, {vm.State} {vm.Zip}");
+
             return View(vm);
         }
 
@@ -179,21 +197,22 @@ namespace Events4All.Web.Controllers
             ParticipantDTO pDTO = pq.FindParticipant(id);
             EventDTO evDTO = eq.FindEvent(pDTO.eventId);
 
-            //Map DTO fields to rvm            
+            //Map DTO fields to rvm       
+
             rvm.EventStartDate = evDTO.TimeStart;
             rvm.Reminder = pDTO.Reminder;
             rvm.emailNotificationOn = pDTO.emailNotificationOn;
             rvm.SMSNotificationOn = pDTO.SMSNotificationOn;
-             
+
             return View(rvm);
         }
-
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Reminders(int id, [Bind(Include ="Reminder, emailNotificationOn, SMSNotificationOn, TimeStart, PhoneNumber")] RemindersViewModel remindersViewModel)
+        public ActionResult Reminders(int id, [Bind(Include = "Reminder, emailNotificationOn, SMSNotificationOn, EventStartDate, PhoneNumber")] RemindersViewModel remindersViewModel)
         {
-
+            
             if(id <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -203,21 +222,25 @@ namespace Events4All.Web.Controllers
             {
                 ParticipantQuery pq = new ParticipantQuery();
                 ParticipantDTO pDTO = new ParticipantDTO();
+                ParticipantDTO pdt = pq.FindParticipant(id);
+                ParticipantsViewModel pvm = new ParticipantsViewModel();
                 
+                EventQuery eq = new EventQuery();
+                EventDTO edto = eq.FindEvent(pdt.eventId);
+
                 pDTO.Reminder = remindersViewModel.Reminder;
                 pDTO.emailNotificationOn = remindersViewModel.emailNotificationOn;
                 pDTO.SMSNotificationOn = remindersViewModel.SMSNotificationOn;
                 pDTO.Id = id;
                 pDTO.Phone = remindersViewModel.PhoneNumber;
 
-                pq.UpdateParticipantReminders(pDTO);
-                
-                 return RedirectToAction("ReminderConfirmation", "Participants");
+                    pq.UpdateParticipantReminders(pDTO);
+
+                    return RedirectToAction("ReminderConfirmation", "Participants");
             }
-
-            return View(remindersViewModel);
+ 
+           return View(remindersViewModel);
         }
-
 
         public ActionResult BackToIndex()
         {
@@ -257,8 +280,8 @@ namespace Events4All.Web.Controllers
         [HttpPost]
         public ActionResult Payment([Bind(Include = "NumberOfTicket, Reminder")] ParticipantsViewModel participantsViewModel, int id)
         {
-            ParticipantDTO dto = new ParticipantDTO();
-            ParticipantQuery query = new ParticipantQuery();
+            ParticipantDTO participantDto = new ParticipantDTO();
+            ParticipantQuery participantQuery = new ParticipantQuery();
             UserQuery userQuery = new UserQuery();
             EPay ePay = new EPay();
 
@@ -288,18 +311,45 @@ namespace Events4All.Web.Controllers
                     TempData.Keep("ConfirmationCode");
                     ViewBag.Confirmation = "The payment processed successfully.  " +
                         "Your confirmation number is " + confirmCode;
-                    dto.NumberOfTicket = participantsViewModel.NumberOfTicket;
-                    dto.Reminder = participantsViewModel.Reminder;
-                    dto.eventId = id;
-                    dto.Barcodes = new List<Guid>();
+                    participantDto.NumberOfTicket = participantsViewModel.NumberOfTicket;
+                    participantDto.Reminder = participantsViewModel.Reminder;
+                    participantDto.eventId = id;
+                    participantDto.Barcodes = new List<Guid>();
 
-                    for (int i = 0; i < dto.NumberOfTicket; i++)
+                    for (int i = 0; i < participantDto.NumberOfTicket; i++)
                     {
                         Guid barcode = Guid.NewGuid();
-                        dto.Barcodes.Add(barcode);
+                        participantDto.Barcodes.Add(barcode);
                     }
 
-                    int participantID = query.CreateParticipant(dto);
+                    int participantID = participantQuery.CreateParticipant(participantDto);
+
+                    EventDTO eventDTO = new EventDTO();
+                    EventQuery eventQuery = new EventQuery();
+                    eventDTO.TicketPrice = eventQuery.FindEvent(id).TicketPrice;
+
+
+                    ParticipantsViewModel vm = new ParticipantsViewModel();
+                    UserDTO userDTO = new UserDTO();
+                    userDTO = userQuery.FindCurrentUser();
+                    eventDTO = eventQuery.FindEvent(dto.eventId);
+
+                    double totalCharge = dto.NumberOfTicket * eventDTO.TicketPrice;
+
+                    string content = System.IO.File.ReadAllText(Server.MapPath("~/views/Shared/confirmMailPurchase.cshtml"));
+                    content = content.Replace("{{Name}}", eventDTO.Name);
+                    content = content.Replace("{{Address}}", eventDTO.Address);
+                    content = content.Replace("{{City}}", eventDTO.City);
+                    content = content.Replace("{{State}}", eventDTO.State);
+                    content = content.Replace("{{Zip}}", eventDTO.Zip.ToString());
+                    content = content.Replace("{{TimeStart}}", eventDTO.TimeStart.ToString());
+                    content = content.Replace("{{Price}}", eventDTO.TicketPrice.ToString());
+                    content = content.Replace("{{Ticket}}", dto.NumberOfTicket.ToString());
+                    content = content.Replace("{{Total}}", totalCharge.ToString());
+                    content = content.Replace("{{eventID}}", eventDTO.Id.ToString());
+                    content = content.Replace("{{RegistrationConfirmation}}", confirmCode);
+                    var toEmail = userDTO.Username.ToString();
+                    new EmailNotification().SendEmail(toEmail, content, "Confirmation : You have purchased tickets to an event");
 
                     return RedirectToAction("RegistrationConfirmation/" + participantID, "Participants");                    
                 }

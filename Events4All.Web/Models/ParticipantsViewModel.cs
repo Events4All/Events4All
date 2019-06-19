@@ -15,8 +15,15 @@ namespace Events4All.Web.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy hh:mm tt}")]
         public DateTime? EventStartDate { get; set; }
 
-        public int parId { get; set; }
+        public string Address { get; set; }
 
+        public string City { get; set; }
+
+        public string State { get; set; }
+
+        public string Zip { get; set; }
+
+        public int parId { get; set; }
 
         [ConfigRange()]
         public int NumberOfTicket { get; set; }

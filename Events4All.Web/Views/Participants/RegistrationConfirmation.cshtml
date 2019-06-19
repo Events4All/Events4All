@@ -4,9 +4,21 @@
     ViewBag.Title = "RegistrationConfirmation";
 }
 
+@*Gary added to not show payment confirmation verbiage for free events*@
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (ViewBag.Confirmation = "")
+        {
+            document.getElementById("pmtConfirm").style.display = "none";
+        }
+	});
+</script>
+
 <h2>Registration Confirmation</h2>
 @*Gary added to show payment confirmation*@
-<h4>@ViewBag.Confirmation</h4>
+<h4 id="pmtConfirm">@ViewBag.Confirmation</h4>
 <div>
     <h4>Thank you for registering. See you there!</h4>
     <hr />
@@ -15,19 +27,25 @@
             @Html.DisplayName("Event Name")
         </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.EventName)
-            </dd>
-            <dt>
-                @Html.DisplayName("Event Time")
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EventName)
+        </dd>
+        <dt>
+            @Html.DisplayName("Event Time")
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.EventStartDate)
-            </dd>
-            <dt>
-                @Html.DisplayName("Number Of Tickets")
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EventStartDate)
+        </dd>
+        <dt>
+            @Html.DisplayName("Location")
+        </dt>
+        <dd>
+            @ViewBag.Location
+        </dd>
+        <dt>
+            @Html.DisplayName("Number Of Tickets")
+        </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.NumberOfTicket)
@@ -50,9 +68,9 @@
             <button id="print" class="btn btn-primary">Print</button> |
             @Html.ActionLink("Event Details", "Details", "Events", new { id = ViewBag.EventId }, new { @class = "link" })
 
-        </div>
-    </p>
+    </div>
+</p>
 
-    @section Scripts {
-        @Scripts.Render("~/Scripts/PrintRegistration.js")
-    }
+@section Scripts {
+    @Scripts.Render("~/Scripts/PrintRegistration.js")
+}
