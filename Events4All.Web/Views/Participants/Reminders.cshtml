@@ -60,7 +60,7 @@
             </div>
         }
 
-        @Html.HiddenFor(m=>m.PhoneValidation, new { @Value = ViewBag.PhoneValidation, id = "validationConstant" })
+        @Html.HiddenFor(m=>m.PhoneValidation, new { @Value = ViewBag.PhoneValidation, @id= "validationConstant" })
     </div>
     @*<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         @if (Model.emailNotificationOn == true)

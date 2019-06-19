@@ -71,6 +71,8 @@ namespace Events4All.Web.Models
         [Display(Name = "Attendee Capacity")]
         public int AttendeeCap { get; set; }
 
+        public int RemainingTickets { get; set; }
+
 
         //Custom Attributes
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using Events4All.Web.Models;
-using Events4All.Web.CustomDataAnnotations;
+using Events4All.Web.CustomAnnotations;
 
 namespace Events4All.Web.Models
 {

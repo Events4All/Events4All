@@ -1,12 +1,11 @@
 ﻿using Events4All.DB.Models;
+using Events4All.DBQuery.Queries;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
-
 
 namespace Events4All.DBQuery
 {
@@ -169,6 +168,16 @@ namespace Events4All.DBQuery
             DateTime checkinEnd = eDTO.TimeStop.Value;
             DateTime[] eventTimes = { checkinStart, checkinEnd };
             return eventTimes;
+        }
+
+        public int GetRemainingTickets(int eventId)
+        {
+            BarcodeQuery bq = new BarcodeQuery();
+
+            int attendeeCap = FindEvent(eventId).AttendeeCap;
+            int attendees = bq.GetNumberOfAttendees(eventId);
+            int remainingTickets = attendeeCap - attendees;
+            return remainingTickets;
         }
     }
 }

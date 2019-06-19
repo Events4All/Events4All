@@ -5,11 +5,12 @@
     string fullAddress = Model.Address + ", " + Model.City + " " + Model.State + ", " + Model.Zip;
 
 
-    string registerStyleValue;
-    string viewTicketStyleValue;
+    string registerStyleValue = "none";
+    string viewTicketStyleValue = "none";
 }
 <h2>@Html.DisplayFor(model => model.Name)</h2>
 <h3 id="warning">@ViewBag.Registered</h3>
+<h3 id="warning">@ViewBag.SoldOut</h3>
 
 <div>
     <div class="row">
@@ -101,23 +102,34 @@
                 </dd>
                 <dd>
                     @{
-                        if (ViewBag.Registered == null)
+                        string pipe1 = "|";
+                        string pipe2 = "|";
+
+                        if (ViewBag.Registered == null && ViewBag.SoldOut == null)
                         {
+                            pipe2 = "";
                             registerStyleValue = "inline";
                             viewTicketStyleValue = "none";
                         }
-                        else
+                        else if(ViewBag.Registered != null)
                         {
                             registerStyleValue = "none";
                             viewTicketStyleValue = "inline";
+                        }
+                        else if(ViewBag.SoldOut != null)
+                        {
+                            pipe1 = "";
+                            pipe2 = "";
+                            registerStyleValue = "none";
+                            viewTicketStyleValue = "none";
                         }
                     }
 
 
                     <div id="pagelink">
                         @Html.ActionLink("View Ticket", "RegistrationConfirmation", "Participants", new { id = ViewBag.ParticipantID }, new { style = "display:" + viewTicketStyleValue, @class = "E4AButtons", type = "button" })
-                        @Html.ActionLink("Register", "Create/" + @Model.Id, "Participants", null, new { id = "register", style = "display:" + registerStyleValue, @class = "E4AButtons" }) |
-                        @Ajax.ActionLink("Add to Calendar", "SelectCalendarType", new { id = Model.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "E4AAJAXButton", type = "button" }) |
+                        @Html.ActionLink("Register", "Create/" + @Model.Id, "Participants", null, new { id = "register", style = "display:" + registerStyleValue, @class = "E4AButtons" }) @pipe1
+                        @Ajax.ActionLink("Add to Calendar", "SelectCalendarType", new { id = Model.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "E4AAJAXButton", type = "button" }) @pipe2
                         @Html.ActionLink("Set Reminders", "Reminders", "Participants", new { id = ViewBag.ParticipantID }, new { style = "display:" + viewTicketStyleValue, @class = "E4AButtons", type = "button" })
                         @*<div class="SocialLinks">
                 @Html.Partial("_SocialMediaShare")

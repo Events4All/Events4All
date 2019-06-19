@@ -1,23 +1,13 @@
 ﻿$('document').ready(function () {
-    var $form = $('form')
-    $form.validate();
-    $validatr = $form.data('validator');
-    $settngs = $validatr.settings;
-    $settngs.errorClass = "text-danger field-validation-error";
-    $settngs.errorElement = "span";
-    
+    var $tickets = $('#NumberOfTickets');
+    var $ticketsAvailable = $("#ticketsAvailable");
+    $("#RemainingTickets").val($ticketsAvailable.val() - $tickets.val());
 
-    $('#NumberOfTickets').change(function () {
-        var $tickets = $(this);
+    $tickets.change(function () {      
         var $price = $("#price");
-        var $subtotal = $("#subtotal")
-        $('span#NumberOfTickets-error').hide();
-        $validatr.element($tickets);
+        var $subtotal = $("#subtotal")       
+        $("#RemainingTickets").val($ticketsAvailable.val() - $tickets.val());
         CalculateTicketPrice($tickets.val(),$price.val(),$subtotal);
-    });
-
-    $('#NumberOfTickets').focusout(function () {
-        $('span#NumberOfTickets-error').hide();
     });
 });
 

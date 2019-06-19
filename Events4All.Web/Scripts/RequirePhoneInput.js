@@ -2,10 +2,14 @@
     $sms = $('#sms');
     $phone = $('#PhoneNumber');
     $phonediv = $('#phonediv');
-    $validationConstant = $('#validationConstant').val();
-
+   
     if ($sms.is(':checked')) {
         $phonediv.attr("style", "display:block");
+    }
+
+    if (!$sms.is(':checked')) {
+        $phonediv.attr("style", "display:none");
+        $phone.val("not_required");
     }
 
     $sms.change(function () {
@@ -14,7 +18,7 @@
             $phone.val("");
         }
         else if (!$sms.is(':checked')) {
-            $phone.val($validationConstant);
+            $phone.val("not_required");
             $phonediv.attr("style", "display:none");
         }
     });  

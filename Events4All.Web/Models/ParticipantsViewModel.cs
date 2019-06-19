@@ -37,8 +37,10 @@ namespace Events4All.Web.Models
         public string Description { get; set; }
         public List<Guid> Barcodes { get; set; }
 
-     
+        [Display(Name = "Tickets Available")]
+        public int TicketsAvailable { get; set; }
+
+        [Range(0,Int32.MaxValue, ErrorMessage = "There are not enough tickets available")]
+        public int RemainingTickets { get; set; }     
     }
-
-
 }

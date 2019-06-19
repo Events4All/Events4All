@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace Events4All.Web.CustomDataAnnotations
+namespace Events4All.Web.CustomAnnotations
 {
     public class PhoneReminderValidation : ValidationAttribute
     {

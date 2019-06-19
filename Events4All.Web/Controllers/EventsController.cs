@@ -22,6 +22,8 @@ namespace Events4All.Web.Controllers
             EventQuery Equery = new EventQuery();
             EventDTO Edto = new EventDTO();
 
+            
+
             if (participantQuery.IsRegistered(id))
             {
                 ViewBag.Registered = "You have already registered for this event.";
@@ -38,6 +40,18 @@ namespace Events4All.Web.Controllers
             if (Edto == null)
             {
                 return HttpNotFound();
+            }
+
+            int ticketsRemaining = Equery.GetRemainingTickets(Edto.Id);
+
+            if(ticketsRemaining == 0)
+            {
+                ViewBag.SoldOut = "This event is sold out";
+            }
+            else if(ticketsRemaining < 0)
+            {
+                Exception ex = new Exception("There are a negative number of tickets remaining for this event. This should never execute. If so, there is a bug");
+                throw ex;
             }
 
             EventsViewModel vm = new EventsViewModel();

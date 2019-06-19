@@ -199,8 +199,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ParticipantsController.cs" />
+    <Compile Include="CustomAnnotations\AtendeeCapValidation.cs" />
     <Compile Include="CustomAnnotations\ConfigRange.cs" />
-    <Compile Include="CustomDataAnnotations\PhoneReminderValidation.cs" />
+    <Compile Include="CustomAnnotations\PhoneReminderValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -216,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ConfirmMail.cshtml" />
+    <Content Include="Audio\haha.wav" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -265,6 +267,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\nelson.jpg" />
     <Content Include="images\slide2.jpg" />
     <Content Include="images\slide1.jpg" />
     <Content Include="images\events4AllLogo.png" />
@@ -499,6 +502,7 @@
     <Content Include="Views\Events\CheckIn.cshtml" />
     <Content Include="Views\Events\_Results.cshtml" />
     <Content Include="Views\Participants\Payment.cshtml" />
+    <Content Include="Views\Participants\_nelsonError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

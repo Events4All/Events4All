@@ -1,4 +1,5 @@
 ﻿using Events4All.DB.Models;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -34,6 +35,16 @@ namespace Events4All.DBQuery.Queries
             }
 
             return valid;
+        }
+
+        public int GetNumberOfAttendees(int eventId)
+        {
+            int barcodesCount = db.Participants
+                .Include(b => b.Barcodes)
+                .Where(p => p.EventID.Id == eventId && p.IsActive == true)
+                .Select(b => b.Barcodes.Where(c => c.IsActive == true)).Count();
+
+            return barcodesCount;
         }
     }
 }

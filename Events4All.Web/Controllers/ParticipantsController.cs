@@ -21,6 +21,7 @@ namespace Events4All.Web.Controllers
             EventDTO dto = new EventDTO();
 
             dto = query.FindEvent(id);
+            vm.TicketsAvailable = query.GetRemainingTickets(dto.Id);
             vm.TicketPrice = dto.TicketPrice;
 
             return View(vm);
@@ -31,7 +32,7 @@ namespace Events4All.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NumberOfTicket, Reminder")] ParticipantsViewModel participantsViewModel, int id)
+        public ActionResult Create([Bind(Include = "NumberOfTicket, Reminder, RemainingTickets")] ParticipantsViewModel participantsViewModel, int id)
         {
             ParticipantDTO dto = new ParticipantDTO();
             ParticipantQuery query = new ParticipantQuery();
@@ -40,8 +41,9 @@ namespace Events4All.Web.Controllers
             EventDTO eventDTO = new EventDTO();
             EventQuery eventQuery = new EventQuery();
             eventDTO.TicketPrice = eventQuery.FindEvent(id).TicketPrice;
+            int remainingTickets = eventQuery.GetRemainingTickets(id);
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && remainingTickets >= participantsViewModel.NumberOfTicket)
             {
                 //Gary added if statement for payment screen
                 if ((participantsViewModel.NumberOfTicket > 0) && (eventDTO.TicketPrice > 0))
@@ -69,32 +71,42 @@ namespace Events4All.Web.Controllers
 
                     int participantID = query.CreateParticipant(dto);
 
-                //EventDTO eventDTO = new EventDTO();
-                ParticipantsViewModel vm = new ParticipantsViewModel();
-                //EventQuery eventQuery = new EventQuery();
-                UserDTO userDTO = new UserDTO();
-                UserQuery userQuery = new UserQuery();
-                userDTO = userQuery.FindCurrentUser();
-                eventDTO = eventQuery.FindEvent(dto.eventId);
+                    //EventDTO eventDTO = new EventDTO();
+                    ParticipantsViewModel vm = new ParticipantsViewModel();
+                    //EventQuery eventQuery = new EventQuery();
+                    UserDTO userDTO = new UserDTO();
+                    UserQuery userQuery = new UserQuery();
+                    userDTO = userQuery.FindCurrentUser();
+                    eventDTO = eventQuery.FindEvent(dto.eventId);
 
-                string content = System.IO.File.ReadAllText(Server.MapPath("~/ConfirmMail.cshtml"));
-                content = content.Replace("{{Name}}", eventDTO.Name);
-                content = content.Replace("{{Address}}", eventDTO.Address);
-                content = content.Replace("{{City}}", eventDTO.City);
-                content = content.Replace("{{State}}", eventDTO.State);
-                content = content.Replace("{{Zip}}", eventDTO.Zip.ToString());
-                content = content.Replace("{{TimeStart}}", eventDTO.TimeStart.ToString());
-                content = content.Replace("{{Ticket}}", dto.NumberOfTicket.ToString());
-                content = content.Replace("{{participantID}}", participantID.ToString());
-                content = content.Replace("{{eventID}}", eventDTO.Id.ToString());
-                var toEmail = userDTO.Username.ToString();
-                new EmailNotification().SendEmail(toEmail, content, "Confirmation : You have registered for an event!");
+                    string content = System.IO.File.ReadAllText(Server.MapPath("~/ConfirmMail.cshtml"));
+                    content = content.Replace("{{Name}}", eventDTO.Name);
+                    content = content.Replace("{{Address}}", eventDTO.Address);
+                    content = content.Replace("{{City}}", eventDTO.City);
+                    content = content.Replace("{{State}}", eventDTO.State);
+                    content = content.Replace("{{Zip}}", eventDTO.Zip.ToString());
+                    content = content.Replace("{{TimeStart}}", eventDTO.TimeStart.ToString());
+                    content = content.Replace("{{Ticket}}", dto.NumberOfTicket.ToString());
+                    content = content.Replace("{{participantID}}", participantID.ToString());
+                    content = content.Replace("{{eventID}}", eventDTO.Id.ToString());
+                    var toEmail = userDTO.Username.ToString();
+                    new EmailNotification().SendEmail(toEmail, content, "Confirmation : You have registered for an event!");
 
-                return RedirectToAction("RegistrationConfirmation/" + participantID, "Participants");
+                    return RedirectToAction("RegistrationConfirmation/" + participantID, "Participants");
+                }
+
             }
 
+            if(remainingTickets < participantsViewModel.NumberOfTicket && remainingTickets > 0)
+            {
+                ViewBag.RemainingTicketsError1 = "Oops! The number of remaining tickets is less than what you ordered.";
+            }
+            else if(remainingTickets == 0)
+            {
+                ViewBag.RemainingTicketsError2 = "Sorry, there are no tickets left";
             }
 
+            participantsViewModel.TicketsAvailable = eventQuery.GetRemainingTickets(id);
             return View(participantsViewModel);
         }
 
@@ -124,7 +136,7 @@ namespace Events4All.Web.Controllers
             vm.Barcodes = participantDTO.Barcodes;
 
             ViewBag.EventId = eventDTO.Id;
-
+            
             return View(vm);
         }
 
@@ -181,7 +193,6 @@ namespace Events4All.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Reminders(int id, [Bind(Include ="Reminder, emailNotificationOn, SMSNotificationOn, TimeStart, PhoneNumber")] RemindersViewModel remindersViewModel)
         {
-            
 
             if(id <= 0)
             {
@@ -299,6 +310,11 @@ namespace Events4All.Web.Controllers
             }
 
             return View(participantsViewModel);
+        }
+
+        public ActionResult _nelsonError()
+        {
+            return PartialView();
         }
     }
 }
