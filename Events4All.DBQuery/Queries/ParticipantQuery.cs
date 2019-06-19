@@ -80,8 +80,8 @@ namespace Events4All.DBQuery
                 .Include(i=>i.AccountID)
                 .SingleOrDefault(x => x.Id == id);
 
-            ParticipantDTO dto = MapParticipantToDTO(participant);
-            return dto;
+            ParticipantDTO participantDto = MapParticipantToDTO(participant);
+            return participantDto;
         }
 
         public int FindParticipantByEventAndUser(int? id)
@@ -100,17 +100,17 @@ namespace Events4All.DBQuery
 
         public ParticipantDTO MapParticipantToDTO(Participants participant)
         {
-            ParticipantDTO dto = new ParticipantDTO();
-            dto.Id = participant.Id;
-            dto.eventId = participant.EventID.Id;
-            dto.NumberOfTicket = participant.NumberOfTicket;
-            dto.Reminder = participant.Reminder;
-            dto.userId = participant.AccountID.Id;
-            dto.emailNotificationOn = participant.emailNotificationOn;
-            dto.SMSNotificationOn = participant.SMSNotificationOn;
-            dto.Barcodes = GetBarcodeGuidsByParticipant(participant.Id);
+            ParticipantDTO participantDto = new ParticipantDTO();
+            participantDto.Id = participant.Id;
+            participantDto.eventId = participant.EventID.Id;
+            participantDto.NumberOfTicket = participant.NumberOfTicket;
+            participantDto.Reminder = participant.Reminder;
+            participantDto.userId = participant.AccountID.Id;
+            participantDto.emailNotificationOn = participant.emailNotificationOn;
+            participantDto.SMSNotificationOn = participant.SMSNotificationOn;
+            participantDto.Barcodes = GetBarcodeGuidsByParticipant(participant.Id);
 
-            return dto;
+            return participantDto;
         }
 
         public List<ParticipantDTO> QueryUserEventsAttending()
@@ -128,8 +128,8 @@ namespace Events4All.DBQuery
 
             foreach (Participants userEvents in participantsList)
             {
-                ParticipantDTO dto = MapParticipantToDTO(userEvents);
-                dtoList.Add(dto);
+                ParticipantDTO participantDto = MapParticipantToDTO(userEvents);
+                dtoList.Add(participantDto);
             }
 
             return dtoList;

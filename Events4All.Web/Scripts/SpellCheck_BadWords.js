@@ -1,13 +1,13 @@
 ﻿
     $Spelling.SpellCheckAsYouType('all')
     function validateFormSpelling() {
-        while ($Spelling.BinSpellCheckFields('nameInput, addressInput, cityInput, twitterInput, descInput, detailInput') != true) {
+        while ($Spelling.BinSpellCheckFields('nameInput, addressInput, cityInput, descInput, detailInput') != true) {
            alert("Please correct spelling errors and resubmit.");            
-            $Spelling.SpellCheckInWindow('nameInput,addressInput,cityInput,twitterInput,descInput,detailInput');
+            $Spelling.SpellCheckInWindow('nameInput,addressInput,cityInput,descInput,detailInput');
             return false;
         }
 
-        if ($Spelling.BinSpellCheckFields('nameInput,addressInput,cityInput,twitterInput,descInput,detailInput')) {
+        if ($Spelling.BinSpellCheckFields('nameInput,addressInput,cityInput,descInput,detailInput')) {
             return true;
         }
     }
