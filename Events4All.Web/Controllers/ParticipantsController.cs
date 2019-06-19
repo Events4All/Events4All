@@ -20,10 +20,8 @@ namespace Events4All.Web.Controllers
             EventQuery eventQuery = new EventQuery();
             EventDTO eventDto = new EventDTO();
 
-            
-            vm.TicketsAvailable = eventQuery.GetRemainingTickets(dto.Id);
-            
             eventDto = eventQuery.FindEvent(id);
+            vm.TicketsAvailable = eventQuery.GetRemainingTickets(eventDto.Id);                       
             vm.TicketPrice = eventDto.TicketPrice;
 
             return View(vm);
@@ -81,7 +79,7 @@ namespace Events4All.Web.Controllers
                 userDTO = userQuery.FindCurrentUser();
                 eventDTO = eventQuery.FindEvent(participantDto.eventId);
 
-                    double totalCharge = dto.NumberOfTicket * eventDTO.TicketPrice;
+                    double totalCharge = participantDto.NumberOfTicket * eventDTO.TicketPrice;
 
                     string content = System.IO.File.ReadAllText(Server.MapPath("~/views/Shared/ConfirmMail.cshtml"));
                     content = content.Replace("{{Name}}", eventDTO.Name);
@@ -91,7 +89,7 @@ namespace Events4All.Web.Controllers
                     content = content.Replace("{{Zip}}", eventDTO.Zip.ToString());
                     content = content.Replace("{{TimeStart}}", eventDTO.TimeStart.ToString());
                     content = content.Replace("{{Price}}", eventDTO.TicketPrice.ToString());
-                    content = content.Replace("{{Ticket}}", dto.NumberOfTicket.ToString());
+                    content = content.Replace("{{Ticket}}", participantDto.NumberOfTicket.ToString());
                     content = content.Replace("{{Total}}", totalCharge.ToString());
                     content = content.Replace("{{eventID}}", eventDTO.Id.ToString());
                     var toEmail = userDTO.Username.ToString();
@@ -332,9 +330,9 @@ namespace Events4All.Web.Controllers
                     ParticipantsViewModel vm = new ParticipantsViewModel();
                     UserDTO userDTO = new UserDTO();
                     userDTO = userQuery.FindCurrentUser();
-                    eventDTO = eventQuery.FindEvent(dto.eventId);
+                    eventDTO = eventQuery.FindEvent(participantDto.eventId);
 
-                    double totalCharge = dto.NumberOfTicket * eventDTO.TicketPrice;
+                    double totalCharge = participantDto.NumberOfTicket * eventDTO.TicketPrice;
 
                     string content = System.IO.File.ReadAllText(Server.MapPath("~/views/Shared/confirmMailPurchase.cshtml"));
                     content = content.Replace("{{Name}}", eventDTO.Name);
@@ -344,7 +342,7 @@ namespace Events4All.Web.Controllers
                     content = content.Replace("{{Zip}}", eventDTO.Zip.ToString());
                     content = content.Replace("{{TimeStart}}", eventDTO.TimeStart.ToString());
                     content = content.Replace("{{Price}}", eventDTO.TicketPrice.ToString());
-                    content = content.Replace("{{Ticket}}", dto.NumberOfTicket.ToString());
+                    content = content.Replace("{{Ticket}}", participantDto.NumberOfTicket.ToString());
                     content = content.Replace("{{Total}}", totalCharge.ToString());
                     content = content.Replace("{{eventID}}", eventDTO.Id.ToString());
                     content = content.Replace("{{RegistrationConfirmation}}", confirmCode);
