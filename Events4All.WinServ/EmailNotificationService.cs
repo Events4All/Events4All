@@ -36,15 +36,29 @@ namespace Events4All.WinServ
                     string startTime = dto.TimeStart12Hr;
                     string endDate = dto.TimeStopShort;
                     string endTime = dto.TimeStop12Hr;
+                    string phone = dto.Phone;
+                    
 
                     string adminEmail = "samnasr@live.com";
 
                     //List of participant email address along with admin email address
                     List<string> emailAddresses = new List<string>();
-                    emailAddresses.Add(email);
+                    List<string> phoneNumbers = new List<string>();
                     emailAddresses.Add(adminEmail);
 
+                    if (dto.EmailOn)
+                    {
+                        emailAddresses.Add(email);
+                    }
+
+                    if (dto.SMSOn)
+                    {
+                        phoneNumbers.Add(phone);
+                    }
+                    
+
                     Business.ENotifications.EmailNotification emailNotification = new Business.ENotifications.EmailNotification();
+                    Business.ENotifications.SMSNotification SMSNotification = new Business.ENotifications.SMSNotification();
 
                     string body = ($"This is a reminder: " + "<br />" + "<br />" +
                                     $"You're scheduled to attend the event <b>{eventName}</b> on <b>{startDate}</b>" +
@@ -59,6 +73,10 @@ namespace Events4All.WinServ
                     foreach (string emailAddress in emailAddresses)
                     {
                         emailNotification.SendEmail(emailAddress, body, subject);
+                    }
+                    foreach (string phoneNumber in phoneNumbers)
+                    {
+                        SMSNotification.SendSMS(phoneNumber, body, subject);
                     }
 
                     /* Timestamps when the email notification was sent 

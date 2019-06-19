@@ -17,6 +17,7 @@ namespace Events4All.DBQuery
         public bool emailNotificationOn { get; set; }
         public bool SMSNotificationOn { get; set; }
         public List<Guid> Barcodes { get; set; }
+        public string Phone { get; set; }
         //public DateTime? EventStart { get; set; }
     }
 }
