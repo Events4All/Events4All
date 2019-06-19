@@ -16,48 +16,48 @@ namespace Events4All.DBQuery
         public EventDTO FindEvent(int? id)
         {
             Events events = db.Events.Where(x => x.Id == id).Where(x => x.IsActive == true).FirstOrDefault();
-            EventDTO dto = MapEventToDTO(events);
-            return dto;
+            EventDTO eventDto = MapEventToDTO(events);
+            return eventDto;
         }
 
         public List<EventDTO> QueryIndexData()
         {
-            List<EventDTO> dtoList = new List<EventDTO>();
+            List<EventDTO> eventDtoList = new List<EventDTO>();
             List<Events> eventList = db.Events.ToList();
 
             foreach (Events events in eventList)
             {
-                EventDTO dto = MapEventToDTO(events);
-                dtoList.Add(dto);
+                EventDTO eventDto = MapEventToDTO(events);
+                eventDtoList.Add(eventDto);
             }
 
-            return dtoList;
+            return eventDtoList;
         }
 
         public EventDTO MapEventToDTO(Events events)
         {
-            EventDTO dto = new EventDTO();
-            dto.Address = events.Address;
-            dto.Categories = events.Categories;
-            dto.City = events.City;
-            dto.CreatedDate = events.CreatedDate;
-            dto.Description = events.Description;
-            dto.Detail = events.Detail;
-            dto.HashTag = events.HashTag;
-            dto.Id = events.Id;
-            dto.IsActive = events.IsActive;
-            dto.Logo = events.Logo;
-            dto.Name = events.Name;
-            dto.State = events.State;
-            dto.TicketPrice = events.TicketPrice;
-            dto.TimeStart = events.TimeStart;
-            dto.TimeStop = events.TimeStop;
-            dto.TwitterHandle = events.TwitterHandle;
-            dto.Web = events.Web;
-            dto.Zip = events.Zip;
-            dto.AttendeeCap = events.AttendeeCap;
+            EventDTO eventDto = new EventDTO();
+            eventDto.Address = events.Address;
+            eventDto.Categories = events.Categories;
+            eventDto.City = events.City;
+            eventDto.CreatedDate = events.CreatedDate;
+            eventDto.Description = events.Description;
+            eventDto.Detail = events.Detail;
+            eventDto.HashTag = events.HashTag;
+            eventDto.Id = events.Id;
+            eventDto.IsActive = events.IsActive;
+            eventDto.Logo = events.Logo;
+            eventDto.Name = events.Name;
+            eventDto.State = events.State;
+            eventDto.TicketPrice = events.TicketPrice;
+            eventDto.TimeStart = events.TimeStart;
+            eventDto.TimeStop = events.TimeStop;
+            eventDto.TwitterHandle = events.TwitterHandle;
+            eventDto.Web = events.Web;
+            eventDto.Zip = events.Zip;
+            eventDto.AttendeeCap = events.AttendeeCap;
 
-            return dto;
+            return eventDto;
         }
 
         public void CreateEvent(EventDTO EventsDTO)
@@ -147,16 +147,16 @@ namespace Events4All.DBQuery
             string userId = HttpContext.Current.User.Identity.GetUserId();
             ApplicationUser user = db.Users.Find(userId);
 
-            List<EventDTO> dtoList = new List<EventDTO>();
+            List<EventDTO> eventDtoList = new List<EventDTO>();
             List<Events> eventList = db.Events.Where(i => i.CreatedBy.Id == userId).Where(x => x.IsActive == true).ToList();
 
             foreach (Events userEvents in eventList)
             {
-                EventDTO dto = MapEventToDTO(userEvents);
-                dtoList.Add(dto);
+                EventDTO eventDto = MapEventToDTO(userEvents);
+                eventDtoList.Add(eventDto);
             }
 
-            return dtoList;
+            return eventDtoList;
         }
 
         public DateTime[] QueryEventTimes(int eventId)

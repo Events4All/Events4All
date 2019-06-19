@@ -20,22 +20,22 @@ namespace Events4All.WinServ
                 List<ReminderDTO> reminderDTOList = new List<ReminderDTO>();
                 reminderDTOList = rq.GetReminderData();
 
-                foreach (ReminderDTO dto in reminderDTOList)
+                foreach (ReminderDTO reminderDto in reminderDTOList)
                 {
                     ReminderDTO reminderDTO = new ReminderDTO();
 
-                    string eventId = dto.EventId;
-                    string participantId = dto.ParticipantId;
-                    string email = dto.Email;
-                    string eventName = dto.Name;
-                    string address = dto.Address;
-                    string city = dto.City;
-                    string state = dto.State;
-                    string zip = dto.Zip;
-                    string startDate = dto.TimeStartShort;
-                    string startTime = dto.TimeStart12Hr;
-                    string endDate = dto.TimeStopShort;
-                    string endTime = dto.TimeStop12Hr;
+                    string eventId = reminderDto.EventId;
+                    string participantId = reminderDto.ParticipantId;
+                    string email = reminderDto.Email;
+                    string eventName = reminderDto.Name;
+                    string address = reminderDto.Address;
+                    string city = reminderDto.City;
+                    string state = reminderDto.State;
+                    string zip = reminderDto.Zip;
+                    string startDate = reminderDto.TimeStartShort;
+                    string startTime = reminderDto.TimeStart12Hr;
+                    string endDate = reminderDto.TimeStopShort;
+                    string endTime = reminderDto.TimeStop12Hr;
 
                     string adminEmail = "samnasr@live.com";
 

@@ -91,36 +91,36 @@ namespace Events4All.Web.Controllers
             List<EventsViewModel> vmList = new List<EventsViewModel>();
             List<EventDTO> dtoEventList = Equery.QueryIndexData();
 
-            foreach (EventDTO dto in dtoEventList)
+            foreach (EventDTO eventDto in dtoEventList)
             {
-                if (dto.IsActive == true)
+                if (eventDto.IsActive == true)
                 {
                     EventsViewModel vm = new EventsViewModel();
 
-                    vm.Address = dto.Address;
-                    vm.Categories = dto.Categories;
-                    vm.City = dto.City;
-                    vm.CreatedDate = dto.CreatedDate;
-                    vm.Description = dto.Description;
-                    vm.Detail = dto.Detail;
-                    vm.HashTag = dto.HashTag;
-                    vm.Id = dto.Id;
-                    vm.IsActive = dto.IsActive;
-                    vm.Logo = dto.Logo;
-                    vm.Name = dto.Name;
-                    vm.State = dto.State;
-                    vm.TicketPrice = dto.TicketPrice;
-                    vm.TimeStart = dto.TimeStart;
-                    vm.TimeStop = dto.TimeStop;
-                    vm.TwitterHandle = dto.TwitterHandle;
-                    vm.Web = dto.Web;
-                    vm.Zip = dto.Zip;
-                    vm.AttendeeCap = dto.AttendeeCap;
+                    vm.Address = eventDto.Address;
+                    vm.Categories = eventDto.Categories;
+                    vm.City = eventDto.City;
+                    vm.CreatedDate = eventDto.CreatedDate;
+                    vm.Description = eventDto.Description;
+                    vm.Detail = eventDto.Detail;
+                    vm.HashTag = eventDto.HashTag;
+                    vm.Id = eventDto.Id;
+                    vm.IsActive = eventDto.IsActive;
+                    vm.Logo = eventDto.Logo;
+                    vm.Name = eventDto.Name;
+                    vm.State = eventDto.State;
+                    vm.TicketPrice = eventDto.TicketPrice;
+                    vm.TimeStart = eventDto.TimeStart;
+                    vm.TimeStop = eventDto.TimeStop;
+                    vm.TwitterHandle = eventDto.TwitterHandle;
+                    vm.Web = eventDto.Web;
+                    vm.Zip = eventDto.Zip;
+                    vm.AttendeeCap = eventDto.AttendeeCap;
 
-                    vm.isRegistered = participantQuery.IsRegistered(dto.Id);
+                    vm.isRegistered = participantQuery.IsRegistered(eventDto.Id);
                     if (vm.isRegistered)
                     {
-                        vm.participantId = participantQuery.FindParticipantByEventAndUser(dto.Id);
+                        vm.participantId = participantQuery.FindParticipantByEventAndUser(eventDto.Id);
                     }                  
                     vmList.Add(vm);
                 }
@@ -317,31 +317,31 @@ namespace Events4All.Web.Controllers
 
         public void DownloadCalendar(int id)
         {
-            EventQuery query = new EventQuery();
-            EventDTO dto = query.FindEvent(id);
-            byte[] ics = GenerateICSFile(dto);
+            EventQuery eventQuery = new EventQuery();
+            EventDTO eventDto = eventQuery.FindEvent(id);
+            byte[] ics = GenerateICSFile(eventDto);
             Response.Clear();
             Response.ContentType = "text/calendar";
-            Response.AddHeader("content-disposition", "attachment; filename=" + dto.Name + ".ics");
+            Response.AddHeader("content-disposition", "attachment; filename=" + eventDto.Name + ".ics");
             Response.BinaryWrite(ics);
             Response.End();
         }
 
-        public byte[] GenerateICSFile(EventDTO dto)
+        public byte[] GenerateICSFile(EventDTO eventDto)
         {
             var calendar = new Calendar();
 
             calendar.Events.Add(new CalendarEvent
             {
                 Class = "PUBLIC",
-                Summary = dto.Name + " - " + dto.Description,
+                Summary = eventDto.Name + " - " + eventDto.Description,
                 Created = new CalDateTime(DateTime.Now),
                 //Description = dto.Detail,
-                Start = new CalDateTime(dto.TimeStart.Value),
-                End = new CalDateTime(dto.TimeStop.Value),
+                Start = new CalDateTime(eventDto.TimeStart.Value),
+                End = new CalDateTime(eventDto.TimeStop.Value),
                 Sequence = 0,
                 Uid = Guid.NewGuid().ToString(),
-                Location = dto.Address + " " + dto.City + " " + dto.State + " " + dto.Zip,
+                Location = eventDto.Address + " " + eventDto.City + " " + eventDto.State + " " + eventDto.Zip,
             });
 
             var serializer = new CalendarSerializer();
