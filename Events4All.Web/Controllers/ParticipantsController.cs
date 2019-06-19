@@ -176,15 +176,12 @@ namespace Events4All.Web.Controllers
 
             return View(rvm);
         }
-
-        //POST REMINDER
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Reminders(int id, [Bind(Include ="Reminder, emailNotificationOn, SMSNotificationOn, TimeStart, PhoneNumber")] RemindersViewModel remindersViewModel)
+        public ActionResult Reminders(int id, [Bind(Include = "Reminder, emailNotificationOn, SMSNotificationOn, EventStartDate, PhoneNumber")] RemindersViewModel remindersViewModel)
         {
-            
-
             if(id <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -206,21 +203,13 @@ namespace Events4All.Web.Controllers
                 pDTO.Id = id;
                 pDTO.Phone = remindersViewModel.PhoneNumber;
 
-                if (remindersViewModel.Reminder <= edto.TimeStart.Value)
-                {
                     pq.UpdateParticipantReminders(pDTO);
 
                     return RedirectToAction("ReminderConfirmation", "Participants");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Reminder date is after the event.");
-                }
             }
-        
-            return View(remindersViewModel);
+ 
+           return View(remindersViewModel);
         }
-
 
         public ActionResult BackToIndex()
         {
