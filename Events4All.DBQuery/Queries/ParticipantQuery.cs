@@ -121,7 +121,8 @@ namespace Events4All.DBQuery
             List<Participants> participantsList = db.Participants
                 .Include(i => i.EventID)
                 .Include(i => i.AccountID)
-                .Where(i => i.AccountID.Id == userId)
+                .Where(i => i.AccountID.Id == userId && i.EventID.IsActive==true && i.EventID.TimeStart >= DateTime.Now)
+                //.OrderBy(i => i.EventID.TimeStart)
                 .ToList();
 
             foreach (Participants userEvents in participantsList)

@@ -17,6 +17,7 @@ namespace Events4All.DBQuery
         public EventDTO FindEvent(int? id)
         {
             Events events = db.Events.Where(x => x.Id == id).Where(x => x.IsActive == true).FirstOrDefault();
+
             EventDTO dto = MapEventToDTO(events);
             return dto;
         }
@@ -24,7 +25,8 @@ namespace Events4All.DBQuery
         public List<EventDTO> QueryIndexData()
         {
             List<EventDTO> dtoList = new List<EventDTO>();
-            List<Events> eventList = db.Events.ToList();
+            List<Events> eventList = db.Events.Where(x => x.TimeStart >= DateTime.Now).Where(x => x.IsActive == true).ToList();
+
 
             foreach (Events events in eventList)
             {
@@ -150,7 +152,7 @@ namespace Events4All.DBQuery
             ApplicationUser user = db.Users.Find(userId);
 
             List<EventDTO> dtoList = new List<EventDTO>();
-            List<Events> eventList = db.Events.Where(i => i.CreatedBy.Id == userId).Where(x => x.IsActive == true).ToList();
+            List<Events> eventList = db.Events.Where(i => i.CreatedBy.Id == userId).Where(x => x.IsActive == true).Where(x => x.TimeStart >= DateTime.Now).ToList();
 
             foreach (Events userEvents in eventList)
             {
