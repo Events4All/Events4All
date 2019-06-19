@@ -4,9 +4,21 @@
     ViewBag.Title = "RegistrationConfirmation";
 }
 
+@*Gary added to not show payment confirmation verbiage for free events*@
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (ViewBag.Confirmation = "")
+        {
+            document.getElementById("pmtConfirm").style.display = "none";
+        }
+	});
+</script>
+
 <h2>Registration Confirmation</h2>
 @*Gary added to show payment confirmation*@
-<h4>@ViewBag.Confirmation</h4>
+<h4 id="pmtConfirm">@ViewBag.Confirmation</h4>
 <div>
     <h4>Thank you for registering. See you there!</h4>
     <hr />
@@ -15,47 +27,53 @@
             @Html.DisplayName("Event Name")
         </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.EventName)
-            </dd>
-            <dt>
-                @Html.DisplayName("Event Time")
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EventName)
+        </dd>
+        <dt>
+            @Html.DisplayName("Event Time")
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.EventStartDate)
-            </dd>
-            <dt>
-                @Html.DisplayName("Number Of Tickets")
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EventStartDate)
+        </dd>
+        <dt>
+            @Html.DisplayName("Location")
+        </dt>
+        <dd>
+            @ViewBag.Location
+        </dd>
+        <dt>
+            @Html.DisplayName("Number Of Tickets")
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.NumberOfTicket)
-            </dd>
-        </dl>
-    </div>
-    <table class="table">
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfTicket)
+        </dd>
+    </dl>
+</div>
+<table class="table">
+    <tr>
+        <th class="col-md-4">Barcode</th>
+    </tr>
+    @foreach (var item in Model.Barcodes)
+    {
         <tr>
-            <th class="col-md-4">Barcode</th>
+            <td class="col-md-4">
+                <iframe src=@Url.Action("RenderBarcode", "Barcode",new { id = item.ToString() }) frameborder="0" height="80" width="1100"></iframe>
+                <div style="margin-left: 4px;">@item.ToString()</div>
+            </td>
         </tr>
-        @foreach (var item in Model.Barcodes)
-        {
-            <tr>
-                <td class="col-md-4">
-                    <iframe src=@Url.Action("RenderBarcode", "Barcode",new { id = item.ToString() }) frameborder="0" height="80" width="1100"></iframe>
-                    <div style="margin-left: 4px;">@item.ToString()</div>
-                </td>
-            </tr>
-        }
-    </table>
-    <p>
-        <div id="pagelink">
-            <button id="print" class="btn btn-primary">Print</button> |
-            @Html.ActionLink("Event Details", "Details", "Events", new { id = ViewBag.EventId }, new { @class = "link" })
-
-        </div>
-    </p>
-
-    @section Scripts {
-        @Scripts.Render("~/Scripts/PrintRegistration.js")
     }
+</table>
+<p>
+    <div id="pagelink">
+        <button id="print" class="btn btn-primary">Print</button> |
+        @Html.ActionLink("Event Details", "Details", "Events", new { id = ViewBag.EventId }, new { @class = "link" })
+
+    </div>
+</p>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/PrintRegistration.js")
+}

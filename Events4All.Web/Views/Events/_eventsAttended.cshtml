@@ -22,8 +22,8 @@
         </th>
     </tr>
 
-    @foreach (var item in Model.EventsAttend)
-     {
+    @foreach (var item in Model.EventsAttend.OrderBy(item => item.EventStartDate))
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.EventName)
@@ -38,9 +38,8 @@
             @Html.ActionLink("View Ticket", "RegistrationConfirmation", "Participants", new { id = item.parId }, new { style = "display: inline", @class = "btn btn-primary", type = "button" })
             @Html.ActionLink("Details", "Details", new { id = item.id }, new { style = "display: inline", @class = "btn btn-info", type = "button" })
         </td>
-
-       
     </tr>
-     }
+    }
+    
 
 </table>
