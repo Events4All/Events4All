@@ -214,7 +214,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ConfirmMail.cshtml" />
+    <None Include="Views\Shared\ConfirmMail.cshtml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -498,6 +498,7 @@
     <Content Include="Views\Events\CheckIn.cshtml" />
     <Content Include="Views\Events\_Results.cshtml" />
     <Content Include="Views\Participants\Payment.cshtml" />
+    <Content Include="Views\Shared\confirmMailPurchase.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
