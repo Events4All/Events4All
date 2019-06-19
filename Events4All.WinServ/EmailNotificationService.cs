@@ -44,14 +44,14 @@ namespace Events4All.WinServ
                     List<string> phoneNumbers = new List<string>();
                     emailAddresses.Add(adminEmail);
 
-                    if (dto.EmailOn)
+                    if (reminderDTO.EmailOn)
                     {
                         emailAddresses.Add(email);
                     }
 
-                    if (dto.SMSOn)
+                    if (reminderDTO.SMSOn)
                     {
-                        phoneNumbers.Add(phone);
+                        phoneNumbers.Add(reminderDTO.Phone);
                     }
                     
 
